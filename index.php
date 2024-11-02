@@ -59,9 +59,8 @@ $showModal = !isset($_COOKIE['university']);
                 <li><a href="#home">Home</a></li>
                 <li><a href="#campaigns">Campaigns</a></li>
                 <li><a href="#features">Features</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#contact" class="btn-primary">Get Started</a></li>
+
+                <li><a href="./login"><button class="btn-primary">Login</button></a></li>
             </ul>
         </div>
     </nav>
@@ -72,8 +71,8 @@ $showModal = !isset($_COOKIE['university']);
             <h1>Decentralized crowdfunding for universities and students</h1>
             <p>Let's make your university projects come to life with the power of community funding</p>
             <div class="cta-buttons">
-                <a href="#" class="btn-primary">Get Started</a>
-                <a href="#" class="btn-secondary">View Campaigns</a>
+                <a href="./signup" class="btn-primary">Get Started</a>
+                <a href="./campaigns" class="btn-secondary">View Campaigns</a>
             </div>
         </div>
         <div class="hero-image">
@@ -152,146 +151,80 @@ $showModal = !isset($_COOKIE['university']);
 
     <!-- Features Section -->
     <section id="features" class="features">
-    <h2>Platform Features</h2>
-    <div class="feature-grid">
-        <!-- Feature Card 1 -->
-        <div class="feature-card wow animate__animated animate__fadeInUp">
-            <i class="fas fa-pencil-alt"></i> 
-            <h3>Create Campaigns</h3>
-            <p>Effortlessly create and manage your fundraising campaigns.</p>
-        </div>
+        <h2>Platform Features</h2>
+        <div class="feature-grid">
+            <!-- Feature Card 1 -->
+            <div class="feature-card wow animate__animated animate__fadeInUp">
+                <i class="fas fa-pencil-alt"></i>
+                <h3>Create Campaigns</h3>
+                <p>Effortlessly create and manage your fundraising campaigns.</p>
+            </div>
 
-        <!-- Feature Card 2 -->
-        <div class="feature-card wow animate__animated animate__fadeInUp" data-wow-delay="0.2s">
-            <i class="fas fa-naira-sign"></i> 
-            <h3>Pay for Campaigns</h3>
-            <p>Make secure payments for your campaigns easily.</p>
-        </div>
+            <!-- Feature Card 2 -->
+            <div class="feature-card wow animate__animated animate__fadeInUp" data-wow-delay="0.2s">
+                <i class="fas fa-naira-sign"></i>
+                <h3>Pay for Campaigns</h3>
+                <p>Make secure payments for your campaigns easily.</p>
+            </div>
 
-        <!-- Feature Card 3 -->
-        <div class="feature-card wow animate__animated animate__fadeInUp" data-wow-delay="0.4s">
-            <i class="fas fa-file-spreadsheet"></i> 
-            <h3>Collect Info from Students</h3>
-            <p>Gather information from students who fund in a spreadsheet.</p>
-        </div>
+            <!-- Feature Card 3 -->
+            <div class="feature-card wow animate__animated animate__fadeInUp" data-wow-delay="0.4s">
+                <i class="fas fa-file-spreadsheet"></i>
+                <h3>Collect Info from Students</h3>
+                <p>Gather information from students who fund in a spreadsheet.</p>
+            </div>
 
-        <!-- Feature Card 4 -->
-        <div class="feature-card wow animate__animated animate__fadeInUp">
-            <i class="fas fa-share-alt"></i> 
-            <h3>Share Payment Links</h3>
-            <p>Share payment links with parents and guardians easily.</p>
-        </div>
+            <!-- Feature Card 4 -->
+            <div class="feature-card wow animate__animated animate__fadeInUp">
+                <i class="fas fa-share-alt"></i>
+                <h3>Share Payment Links</h3>
+                <p>Share payment links with parents and guardians easily.</p>
+            </div>
 
-        <!-- Feature Card 5 -->
-        <div class="feature-card wow animate__animated animate__fadeInUp" data-wow-delay="0.2s">
-            <i class="fas fa-comments"></i> 
-            <h3>Donor Engagement</h3>
-            <p>Keep your supporters updated and engaged throughout the campaign.</p>
-        </div>
+            <!-- Feature Card 5 -->
+            <div class="feature-card wow animate__animated animate__fadeInUp" data-wow-delay="0.2s">
+                <i class="fas fa-comments"></i>
+                <h3>Donor Engagement</h3>
+                <p>Keep your supporters updated and engaged throughout the campaign.</p>
+            </div>
 
-        <!-- Feature Card 6 -->
-        <div class="feature-card wow animate__animated animate__fadeInUp" data-wow-delay="0.4s">
-            <i class="fas fa-shield-alt"></i> 
-            <h3>Secure Payments</h3>
-            <p>Enjoy safe and transparent donation processing.</p>
+            <!-- Feature Card 6 -->
+            <div class="feature-card wow animate__animated animate__fadeInUp" data-wow-delay="0.4s">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Secure Payments</h3>
+                <p>Enjoy safe and transparent donation processing.</p>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- Benefits Section -->
-<!-- Benefits Section -->
-<section id="benefits" class="benefits wow animate__animated animate__fadeIn">
-    <h2>Mobilize Resources for</h2>
-    <div class="benefits-grid">
-        <div class="benefit-item">
-            <i class="fas fa-check-circle"></i>
-            <span>Handbooks</span>
-        </div>
-        <div class="benefit-item">
-            <i class="fas fa-check-circle"></i>
-            <span>Faculty/Department Dues</span>
-        </div>
-        <div class="benefit-item">
-            <i class="fas fa-check-circle"></i>
-            <span>Lab Equipment</span>
-        </div>
-        <div class="benefit-item">
-            <i class="fas fa-check-circle"></i>
-            <span>School Fees</span>
-        </div>
-        <div class="benefit-item">
-            <i class="fas fa-check-circle"></i>
-            <span>Transportation Help</span>
-        </div>
-    </div>
-</section>
-
-    <!-- Pricing Section -->
-    <section id="pricing" class="pricing">
-        <h2>Choose Your Plan</h2>
-        <div class="pricing-grid">
-            <!-- Free Plan -->
-            <div class="pricing-card wow animate__animated animate__fadeInUp">
-                <h3>Free</h3>
-                <div class="price">$0</div>
-                <ul>
-                    <li><i class="fas fa-check"></i> Basic campaign tools</li>
-                    <li><i class="fas fa-check"></i> Email support</li>
-                    <li><i class="fas fa-check"></i> Basic analytics</li>
-                    <li><i class="fas fa-check"></i> Single project</li>
-                </ul>
-                <button class="btn-secondary">Start Free</button>
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits wow animate__animated animate__fadeIn">
+        <h2>Mobilize Resources for</h2>
+        <div class="benefits-grid">
+            <div class="benefit-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Handbooks</span>
             </div>
-
-            <!-- Pro Plan -->
-            <div class="pricing-card featured wow animate__animated animate__fadeInUp" data-wow-delay="0.2s">
-                <h3>Pro</h3>
-                <div class="price">$8</div>
-                <ul>
-                    <li><i class="fas fa-check"></i> Advanced campaign tools</li>
-                    <li><i class="fas fa-check"></i> Priority support</li>
-                    <li><i class="fas fa-check"></i> Advanced analytics</li>
-                    <li><i class="fas fa-check"></i> Multiple projects</li>
-                    <li><i class="fas fa-check"></i> Custom branding</li>
-                </ul>
-                <button class="btn-primary">Go Pro</button>
+            <div class="benefit-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Faculty/Department Dues</span>
             </div>
-
-            <!-- Business Plan -->
-            <div class="pricing-card wow animate__animated animate__fadeInUp" data-wow-delay="0.4s">
-                <h3>Business</h3>
-                <div class="price">$16</div>
-                <ul>
-                    <li><i class="fas fa-check"></i> Enterprise features</li>
-                    <li><i class="fas fa-check"></i> 24/7 support</li>
-                    <li><i class="fas fa-check"></i> Custom analytics</li>
-                    <li><i class="fas fa-check"></i> Unlimited projects</li>
-                    <li><i class="fas fa-check"></i> API access</li>
-                </ul>
-                <button class="btn-secondary">Contact Sales</button>
+            <div class="benefit-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Lab Equipment</span>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-check-circle"></i>
+                <span>School Fees</span>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Transportation Help</span>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials">
-        <h2>What People Are Saying</h2>
-        <div class="testimonial-grid">
-            <div class="testimonial-card wow animate__animated animate__fadeIn">
-                <div class="testimonial-content">
-                    <p>"Infund helped us raise funds for our research project in record time!"</p>
-                </div>
-                <div class="testimonial-author">
-                    <img src="/api/placeholder/50/50" alt="User Avatar">
-                    <div>
-                        <h4>Jane Smith</h4>
-                        <p>Biology Department</p>
-                    </div>
-                </div>
-            </div>
-            <!-- More testimonials... -->
-        </div>
-    </section>
 
     <!-- Footer -->
     <footer>
@@ -309,7 +242,7 @@ $showModal = !isset($_COOKIE['university']);
             <div class="footer-section">
                 <h4>Support</h4>
                 <ul>
-                     <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
                 </ul>
             </div>
             <div class="footer-section">

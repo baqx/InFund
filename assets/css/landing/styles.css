@@ -1,8 +1,8 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat");
+@import url("https://fonts.googleapis.com/css?family=Inter");
 
 :root {
-    --primary-color: #DF7476;
-    --secondary-color: #4ECDC4;
+    --primary-color: #b36264;
+    --secondary-color: #755e28;
     --accent-color: #45B7AF;
     --text-color: #2C3E50;
     --background-color: #F7F9FC;
@@ -25,7 +25,7 @@ html {
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Inter', sans-serif;
     color: var(--text-color);
     line-height: 1.6;
     background-color: var(--background-color);
@@ -146,6 +146,7 @@ nav {
 
 .hero-image img {
     max-width: 100%;
+    min-width: 100%;
     height: auto;
 }
 
