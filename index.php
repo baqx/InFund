@@ -38,7 +38,7 @@ $showModal = !isset($_COOKIE['university']);
                         <option value="harvard">Harvard University</option>
                         <option value="oxford">Oxford</option>
                         <option value="FUNAAB">FUNAAB</option>
-                        
+                        <option value="brown">Brown University</option>                        
                         <option value="stanford">Stanford University</option>
                         <option value="unn">UNN</option>
                         <option value="princeton">Princeton University</option>
