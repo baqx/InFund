@@ -43,7 +43,7 @@ $showModal = !isset($_COOKIE['university']);
                         <option value="unn">UNN</option>
                         <option value="princeton">Princeton University</option>
                     </select>
-                    <button type="submit">Continue</button>
+                    <button type="submit" class="btn-primary">Continue</button>
                 </form>
             </div>
         </div>

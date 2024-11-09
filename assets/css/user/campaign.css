@@ -1,0 +1,262 @@
+/* Campaign Detail Styles */
+.campaign-detail-header {
+    background: var(--card-background);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.campaign-detail-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: var(--accent-color);
+}
+
+.campaign-title {
+    font-size: 2rem;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.campaign-meta {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    color: #666;
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.progress-section {
+    margin: 2rem 0;
+}
+
+.progress-bar {
+    height: 10px;
+    background: #eee;
+    border-radius: 5px;
+    margin: 1rem 0;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--accent-color);
+    border-radius: 5px;
+    transition: width 1s ease;
+}
+
+.progress-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    color: var(--text-color);
+}
+
+.donate-section {
+    position: sticky;
+    top: 2rem;
+    background: var(--card-background);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.donate-button {
+    width: 100%;
+    padding: 1rem;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.donate-button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.donation-input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #eee;
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.campaign-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.campaign-description {
+    background: var(--card-background);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+}
+
+.description-content {
+    color: #666;
+    line-height: 1.6;
+}
+
+.donor-list {
+    margin-top: 2rem;
+}
+
+.donor-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.donor-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.donor-info {
+    flex: 1;
+}
+
+.donor-name {
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.donation-amount {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.donation-time {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.share-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.share-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: var(--border-radius);
+    background: #eee;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.share-button:hover {
+    background: #e0e0e0;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1100;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--card-background);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+    .campaign-content {
+        grid-template-columns: 1fr;
+    }
+
+    .donate-section {
+        position: static;
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .campaign-meta {
+        gap: 1rem;
+    }
+
+    .meta-item {
+        flex: 1;
+        min-width: 150px;
+    }
+
+    .donor-card {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+}
+
+@media (max-width: 480px) {
+    .campaign-title {
+        font-size: 1.5rem;
+    }
+
+    .campaign-detail-header,
+    .campaign-description,
+    .donate-section {
+        padding: 1rem;
+    }
+}
