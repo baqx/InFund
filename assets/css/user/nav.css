@@ -96,7 +96,7 @@ body {
   background: var(--card-background);
   padding: 1rem 2rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   position: fixed;
   width: calc(100% - 250px);
@@ -325,6 +325,7 @@ body {
 
   .topnav {
     width: 100%;
+    justify-content: space-between;
   }
 
   .main-content {

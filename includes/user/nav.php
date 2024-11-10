@@ -54,11 +54,12 @@ $myid = $_SESSION['user_id'];
             </div>
             <ul class="nav-links">
                 <li class="nav-item">
-                    <a href="#" class="nav-link <?= isset($page) && $page == 'Overview' ? 'active' : ''; ?>">
+                    <a href="./overview" class="nav-link <?= isset($page) && $page == 'Overview' ? 'active' : ''; ?>">
                         <i class="fas fa-chart-pie"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
+                
                 <li class="nav-item">
                     <a href="./fees" class="nav-link <?= isset($page) && $page == 'School Fees' ? 'active' : ''; ?>">
                         <i class="fas fa-money-bill"></i>
@@ -71,7 +72,12 @@ $myid = $_SESSION['user_id'];
                         <span>My Campaigns</span>
                     </a>
                 </li>
-
+                <li class="nav-item">
+                    <a href="./transactions" class="nav-link <?= isset($page) && $page == 'Transactions' ? 'active' : ''; ?>">
+                        <i class="fas fa-exchange"></i>
+                        <span>Transactions</span>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a href="./logout" class="nav-link ">
                         <i class="fas fa-sign-out-alt"></i>
