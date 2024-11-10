@@ -25,6 +25,6 @@ function get_university($abbr)
     }
     
     $stmt->close(); 
-    $conn->close(); 
+
     return $university;
 }

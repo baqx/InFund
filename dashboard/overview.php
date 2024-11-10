@@ -1,18 +1,27 @@
 <?php
+ini_set('display_errors', 1);          // Enable displaying errors
+ini_set('display_startup_errors', 1);  // Enable displaying startup errors
+error_reporting(E_ALL);
 session_start();
 $page_title = "Overview";
 $page = "Overview";
 include '../config/config.php';
 include '../includes/get_universities.php';
+include '../includes/user/get_bills.php';
 include '../includes/user/nav.php';
+
+
 $university = get_university($my_details['university']);
+
+// Get campaigns and stats
+$campaigns = getCampaignsByUserId($_SESSION['user_id']);
+$campaign_stats = getCampaignStats($campaigns);
 ?>
 
 <main class="main-content">
     <div class="server-details">
-        <i class="fas fa-university"></i> <?php //fetch the university of the user from the saved cookie
+        <i class="fas fa-university"></i> <?php
                                             if (!empty($university)) {
-                                                // Assuming there is at least one result, access the name
                                                 $university_name = $university[0]['name'];
                                                 echo $university_name;
                                             } else {
@@ -23,11 +32,11 @@ $university = get_university($my_details['university']);
     </div>
     <div class="cards-grid">
         <div class="card">
-            <h2>₦45,000</h2>
-            <p>Outstanding Fees</p>
+            <h2>₦<?php echo $my_details['balance']; ?></h2>
+            <p>Balance </p>
         </div>
         <div class="card">
-            <h2>3</h2>
+            <h2><?php echo $campaign_stats['active_campaigns']; ?></h2>
             <p>Active Campaigns</p>
         </div>
         <div class="card">
@@ -35,7 +44,7 @@ $university = get_university($my_details['university']);
             <p>Pending Handbooks</p>
         </div>
         <div class="card">
-            <h2>₦120,000</h2>
+            <h2>₦<?php echo number_format($campaign_stats['total_raised'], 2); ?></h2>
             <p>Total Raised</p>
         </div>
     </div>
@@ -46,76 +55,22 @@ $university = get_university($my_details['university']);
                 <h2>Your Campaigns</h2>
                 <a href="./create" class="view-all">Create Campaign</a>
             </div>
-
-            <div class="campaign-card">
-                <div class="campaign-header">
-                    <div>
-                        <div class="campaign-title">Final Year Project Funding</div>
-                        <div class="campaign-meta">Created 5 days ago</div>
-                    </div>
-                    <span class="badge badge-warning">In Progress</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 65%"></div>
-                </div>
-                <div class="campaign-stats">
-                    <span>₦65,000 raised of ₦100,000</span>
-                    <span>15 donors</span>
-                </div>
-            </div>
-
-            <div class="campaign-card">
-                <div class="campaign-header">
-                    <div>
-                        <div class="campaign-title">Second Semester Fees</div>
-                        <div class="campaign-meta">Created 2 weeks ago</div>
-                    </div>
-                    <span class="badge badge-success">Completed</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 100%"></div>
-                </div>
-                <div class="campaign-stats">
-                    <span>₦150,000 raised of ₦150,000</span>
-                    <span>32 donors</span>
-                </div>
-            </div>
+            <?php echo displayCampaignSection($campaigns); ?>
         </section>
 
         <section class="feed-section">
             <div class="section-header">
                 <h2>Outstanding Payments</h2>
-                <a href="#" class="view-all">View All</a>
+                <a href="bills.php" class="view-all">View All</a>
             </div>
-
-            <div class="campaign-card">
-                <div class="campaign-header">
-                    <div>
-                        <div class="campaign-title">Engineering Mathematics Manual</div>
-                        <div class="campaign-meta">Due in 5 days</div>
-                    </div>
-                    <span class="badge badge-danger">Unpaid</span>
-                </div>
-                <div class="campaign-meta">
-                    Amount: ₦15,000
-                </div>
-            </div>
-
-            <div class="campaign-card">
-                <div class="campaign-header">
-                    <div>
-                        <div class="campaign-title">Physics Lab Manual</div>
-                        <div class="campaign-meta">Due in 10 days</div>
-                    </div>
-                    <span class="badge badge-info">Partially Paid</span>
-                </div>
-                <div class="campaign-meta">
-                    Amount: ₦12,000 (₦5,000 paid)
-                </div>
-            </div>
+            <?php
+            $bills = getBillsByDepartment($my_details['department'], $_SESSION['user_id']);
+            echo displayBillsSection($bills);
+            ?>
         </section>
     </div>
 </main>
+
 </div>
 
 <script>
