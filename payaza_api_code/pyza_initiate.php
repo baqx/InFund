@@ -54,7 +54,7 @@ curl_setopt_array($curl, array(
         }
     }',
     CURLOPT_HTTPHEADER => array(
-        'Authorization: Payaza {{put api key here(without the curly braces)}}', //UFo3OC1QS1RFU1QtNDZBRkFGNTItQTdGRi00M0E2LUIzNTMtOTMxMzYwOUZEQTA2
+        'Authorization: Payaza UFo3OC1QS1RFU1QtQTE2Qzg4N0QtMDFCQy00QjVGLThDMTMtODQ5NDJFREU4MDA1', //UFo3OC1QS1RFU1QtNDZBRkFGNTItQTdGRi00M0E2LUIzNTMtOTMxMzYwOUZEQTA2
         'X-tenantID: test',
         'Content-Type: application/json'
     ),

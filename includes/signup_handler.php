@@ -1,107 +1,80 @@
 <?php
+// signup_handler.php
+session_start();
 require_once '../config/config.php';
-require_once '../includes/signup_functions.php';
+require_once '../config/secrets.php';
+require_once '../vendor/autoload.php';
+include './signup_functions.php';
 
-header('Content-Type: application/json');
-
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
-    exit;
-}
-
-try {
-    // Sanitize and validate inputs
-    $username = sanitizeInput($_POST['username']);
-    $fullname = sanitizeInput($_POST['fullname']);
-    $email = sanitizeInput($_POST['email']);
-    $password = $_POST['password'];
-    $confirmPassword = $_POST['confirmPassword'];
-    $dob = sanitizeInput($_POST['dob']);
-    $country = sanitizeInput($_POST['country']);
-    $state = sanitizeInput($_POST['state']);
-    $university = sanitizeInput($_POST['university']);
-    $faculty = sanitizeInput($_POST['faculty']);
-    $department = sanitizeInput($_POST['department']);
-    $matric_no = sanitizeInput($_POST['matricno']);
-    $gender = sanitizeInput($_POST['gender']);
-    $phone = sanitizeInput($_POST['phone']);
-
-    $errors = [];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get form data
+    $username = mysqli_real_escape_string($conn, $_POST['username']);
+    $fullname = mysqli_real_escape_string($conn, $_POST['fullname']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
+    $gender = mysqli_real_escape_string($conn, $_POST['gender']);
+    $dob = mysqli_real_escape_string($conn, $_POST['dob']);
+    $country = mysqli_real_escape_string($conn, $_POST['country']);
+    $state = mysqli_real_escape_string($conn, $_POST['state']);
+    $university = mysqli_real_escape_string($conn, $_POST['university']);
+    $faculty = mysqli_real_escape_string($conn, $_POST['faculty']);
+    $department = mysqli_real_escape_string($conn, $_POST['department']);
+    $matric_no = mysqli_real_escape_string($conn, $_POST['matricno']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
+    $confirm_password = mysqli_real_escape_string($conn, $_POST['confirmPassword']);
 
     // Validation
-    if (!$username || strlen($username) < 3 || strlen($username) > 20) {
-        $errors['username'] = 'Username must be between 3 and 20 characters';
-    }
-    if (isUsernameTaken($username)) {
-        $errors['username'] = 'Username is already taken';
-    }
-    if (!validateEmail($email)) {
-        $errors['email'] = 'Invalid email address';
-    }
-    if (isEmailTaken($email)) {
-        $errors['email'] = 'Email is already registered';
-    }
-    if (!validatePassword($password)) {
-        $errors['password'] = 'Password must be at least 8 characters and contain uppercase, lowercase, and numbers';
-    }
-    if ($password !== $confirmPassword) {
-        $errors['confirmPassword'] = 'Passwords do not match';
-    }
-    if (isMatricNoTaken($matric_no)) {
-        $errors['matricno'] = 'Matric number is already registered';
+    $errors = [];
+
+    // Check if username exists
+    $check_username = mysqli_query($conn, "SELECT username FROM users WHERE username = '$username'");
+    if (mysqli_num_rows($check_username) > 0) {
+        $errors['username'] = "Username already exists";
     }
 
-    if (!empty($errors)) {
-        http_response_code(400);
-        echo json_encode(['status' => 'error', 'errors' => $errors]);
-        exit;
+    // Check if email exists
+    $check_email = mysqli_query($conn, "SELECT email FROM users WHERE email = '$email'");
+    if (mysqli_num_rows($check_email) > 0) {
+        $errors['email'] = "Email already exists";
     }
 
-    // Hash password
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    // Check if phone exists
+    $check_phone = mysqli_query($conn, "SELECT phone FROM users WHERE phone = '$phone'");
+    if (mysqli_num_rows($check_phone) > 0) {
+        $errors['phone'] = "Phone number already exists";
+    }
 
-    // Prepare SQL statement
-    $stmt = $conn->prepare("
-        INSERT INTO users (username, fullname, email, password, dob, country, state, 
-                         university, faculty, department, matric_no, gender, phone)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    ");
+    // Validate password match
+    if ($password !== $confirm_password) {
+        $errors['password'] = "Passwords do not match";
+    }
 
-    $stmt->bind_param(
-        "sssssssssssss",
-        $username,
-        $fullname,
-        $email,
-        $hashedPassword,
-        $dob,
-        $country,
-        $state,
-        $university,
-        $faculty,
-        $department,
-        $matric_no,
-        $gender,
-        $phone
-    );
+    // If there are no errors, proceed with registration
+    if (empty($errors)) {
+        // Hash password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    if ($stmt->execute()) {
-        // Send welcome email
-        $emailSent = sendWelcomeEmail($email, $fullname);
+        // Insert user data
+        $query = "INSERT INTO users (username, fullname, email, phone, gender, dob, country, state, university, faculty, department, matric_no, password) 
+                  VALUES ('$username', '$fullname', '$email', '$phone', '$gender', '$dob', '$country', '$state', '$university', '$faculty', '$department', '$matric_no', '$hashed_password')";
 
-        echo json_encode([
-            'status' => 'success',
-            'message' => 'Registration successful!',
-            'emailSent' => $emailSent
-        ]);
+        if (mysqli_query($conn, $query)) {
+            $sendwlcmemail = sendWelcomeEmail($email, $fullname);
+
+            if ($sendwlcmemail) {
+                $_SESSION['success_message'] = "Registration successful! Please login.";
+                header("Location: ../login");
+                exit();
+            }
+        } else {
+            $_SESSION['error_message'] = "Registration failed. Please try again.";
+            header("Location: ../signup");
+            exit();
+        }
     } else {
-        throw new Exception("Registration failed");
+        $_SESSION['form_errors'] = $errors;
+        $_SESSION['form_data'] = $_POST; // Save form data for repopulating
+        header("Location: ../signup.php");
+        exit();
     }
-} catch (Exception $e) {
-    error_log($e->getMessage());
-    http_response_code(500);
-    echo json_encode([
-        'status' => 'error',
-        'message' => 'An error occurred during registration'
-    ]);
 }

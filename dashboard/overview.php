@@ -2,13 +2,24 @@
 session_start();
 $page_title = "Overview";
 $page = "Overview";
+include '../config/config.php';
+include '../includes/get_universities.php';
 include '../includes/user/nav.php';
+$university = get_university($my_details['university']);
 ?>
 
 <main class="main-content">
     <div class="server-details">
         <i class="fas fa-university"></i> <?php //fetch the university of the user from the saved cookie
-                                            echo $_COOKIE['university']; ?>
+                                            if (!empty($university)) {
+                                                // Assuming there is at least one result, access the name
+                                                $university_name = $university[0]['name'];
+                                                echo $university_name;
+                                            } else {
+                                                echo "No university found with the abbreviation: " . $abbreviation;
+                                            } ?>
+        <br>
+        <i class="fas fa-columns"></i> <?php echo $my_details['department']; ?> department
     </div>
     <div class="cards-grid">
         <div class="card">

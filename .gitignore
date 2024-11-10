@@ -1,0 +1,3 @@
+# Ignore secrets file when pushing to github
+/config/secrets.php
+/payaza_api_code/

@@ -1,3 +1,18 @@
+<?php
+session_start();
+if (isset($_SESSION['user_id']) && isset($_SESSION['username']) && isset($_SESSION['email'])) {
+    // Redirect to home page if user is already logged
+    header("Location: ./dashboard/overview");
+}
+if (isset($_SESSION['form_errors'])) {
+    $errors = $_SESSION['form_errors'];
+    unset($_SESSION['form_errors']);
+}
+
+// Repopulate form data if available
+$form_data = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : [];
+unset($_SESSION['form_data']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +24,9 @@
     <link rel="stylesheet" href="./assets/css/signup.css">
     <link rel="icon" href="./assets/icons/favicon.ico">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -32,7 +50,8 @@
                 <h1 class="welcome-text">Create Account</h1>
                 <p class="subtitle">Join our community today</p>
 
-                <form id="registrationForm" action="register" method="POST" class="registration-form">
+                <form id="registrationForm" action="./includes/signup_handler" method="POST" class="registration-form">
+
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="username">Username*</label>
@@ -454,8 +473,23 @@
             </div>
         </div>
     </div>
-    <script src="countries.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        toastr.options.progressBar = true;
+    </script>
+    <script>
+        <?php if (isset($_SESSION['success_message'])) : ?>
+            toastr.success("<?php echo $_SESSION['success_message']; ?>");
+            <?php unset($_SESSION['success_message']); ?>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['error_message'])) : ?>
+            toastr.error("<?php echo $_SESSION['error_message']; ?>");
+            <?php unset($_SESSION['error_message']); ?>
+        <?php endif; ?>
+    </script>
     <script src="./assets/js/auth_pages/signup.js"></script>
 </body>
 

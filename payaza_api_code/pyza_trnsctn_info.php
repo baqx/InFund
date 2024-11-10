@@ -3,7 +3,7 @@
 $curl = curl_init();
 //this one is to get information about a particular transaction 
 
-$transactionReference = "TD93001234"; //this will be changed to an actual transaction reference from the db
+$transactionReference = "P-C-20241109-CAXU53E4IL"; //this will be changed to an actual transaction reference from the db
 
 curl_setopt_array($curl, array(
   CURLOPT_URL => 'https://api.payaza.africa/live/payaza-account/api/v1/mainaccounts/merchant/transaction/' . $transactionReference,
@@ -16,7 +16,7 @@ curl_setopt_array($curl, array(
   CURLOPT_CUSTOMREQUEST => 'GET',
   CURLOPT_HTTPHEADER => array(
     'X-TenantID: test',
-    'Authorization: Payaza {{put api key here(without the curly braces)}}'
+    'Authorization: Payaza UFo3OC1QS1RFU1QtQTE2Qzg4N0QtMDFCQy00QjVGLThDMTMtODQ5NDJFREU4MDA1'
   ),
 ));
 

@@ -1,4 +1,5 @@
-<?php session_start();
+<?php
+session_start();
 $page_title = "Create Campaign";
 $page = "Campaigns";
 $css1 = "create-campaign";
@@ -7,7 +8,7 @@ include '../includes/user/nav.php'; ?>
 
 <main class="main-content">
 
-    <form class="form-card" id="campaignForm">
+    <form class="form-card" id="campaignForm" enctype="multipart/form-data">
         <div class="form-header">
             <h1 class="form-title">Create a New Campaign</h1>
             <p class="form-subtitle">Share your story and start raising funds</p>
@@ -39,6 +40,30 @@ include '../includes/user/nav.php'; ?>
                 <label class="form-label" for="impact">Campaign Impact</label>
                 <textarea id="impact" name="impact" class="form-input" placeholder="How will this campaign make a difference?"></textarea>
                 <div class="form-hint">Explain the potential impact of your campaign</div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="image1">Campaign Image 1 (Required)*</label>
+                <input type="file" id="image1" name="image1" class="form-input" required accept="image/*">
+                <div class="form-hint">Upload a clear image representing your campaign</div>
+                <div class="error-message">Image is required</div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="image2">Campaign Image 2 (Optional)</label>
+                <input type="file" id="image2" name="image2" class="form-input" accept="image/*">
+                <div class="form-hint">Upload an additional image (optional)</div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="image3">Campaign Image 3 (Optional)</label>
+                <input type="file" id="image3" name="image3" class="form-input" accept="image/*">
+                <div class="form-hint">Upload another image (optional)</div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="image4">Campaign Image 4 (Optional)</label>
+                <input type="file" id="image4" name="image4" class="form-input" accept="image/*">
+                <div class="form-hint">Upload one more image (optional)</div>
             </div>
         </div>
 
@@ -190,30 +215,57 @@ include '../includes/user/nav.php'; ?>
         showStep(currentStep);
     });
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', function(e) {
         e.preventDefault();
         if (validateStep(currentStep)) {
-            // Here you would typically send the data to your server
-            const formData = {
-                title: document.getElementById('title').value,
-                description: document.getElementById('description').value,
-                impact: document.getElementById('impact').value,
-                importance: document.getElementById('importance').value,
-                goalAmount: document.getElementById('goalAmount').value,
-                startDate: document.getElementById('startDate').value,
-                endDate: document.getElementById('endDate').value,
-                // creator_id would be set server-side based on authenticated user
-            };
+            const formData = new FormData(form);
 
-            console.log('Submitting campaign:', formData);
-            alert('Campaign created successfully!');
-            // You would typically redirect to the new campaign page here
+            // Show loading spinner
+            $('#loadingSpinner').show();
+
+            $.ajax({
+                url: '../includes/user/create_campaign_handler',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.success) {
+                        toastr.success(response.message);
+                        setTimeout(function() {
+                            window.location.href = 'view_campaign?id=' + response.campaign_id;
+                        }, 1500);
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function() {
+                    toastr.error('An error occurred. Please try again.');
+                },
+                complete: function() {
+                    $('#loadingSpinner').hide();
+                }
+            });
         }
     });
 
+    // Configure toastr
+    toastr.options = {
+        closeButton: true,
+        progressBar: true,
+        positionClass: "toast-top-right",
+        timeOut: 3000
+    };
     // Initialize form
     showStep(1);
 </script>
+<div id="loadingSpinner" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9999;">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>

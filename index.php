@@ -1,6 +1,7 @@
 <?php
 session_start();
-
+include './config/config.php';
+include './includes/get_universities.php'; // Function that fetches list of universities from the database
 // Handle university selection
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['university'])) {
     $university = filter_var($_POST['university'], FILTER_SANITIZE_STRING);
@@ -10,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['university'])) {
 }
 
 $showModal = !isset($_COOKIE['university']);
+$universities = get_universities();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,13 +37,9 @@ $showModal = !isset($_COOKIE['university']);
                 <form method="POST" action="">
                     <select name="university" id="universitySelect" required>
                         <option value="">Choose your university</option>
-                        <option value="harvard">Harvard University</option>
-                        <option value="oxford">Oxford</option>
-                        <option value="FUNAAB">FUNAAB</option>
-                        <option value="brown">Brown University</option>                        
-                        <option value="stanford">Stanford University</option>
-                        <option value="unn">UNN</option>
-                        <option value="princeton">Princeton University</option>
+                        <?php foreach ($universities as $university) : ?>
+                            <option value="<?php echo htmlspecialchars($university['abbreviation']); ?>"><?php echo htmlspecialchars($university['name']); ?></option>
+                        <?php endforeach; ?>
                     </select>
                     <button type="submit" class="btn-primary">Continue</button>
                 </form>

@@ -1,6 +1,10 @@
 <?php
 session_start();
-include('./config/config.php'); 
+if (isset($_SESSION['user_id']) && isset($_SESSION['username']) && isset($_SESSION['email'])) {
+    // Redirect to home page if user is already logged
+    header("Location: ./dashboard/overview");
+}
+include('./config/config.php');
 require_once './includes/login_handler.php';
 ?>
 <!DOCTYPE html>
@@ -92,11 +96,17 @@ require_once './includes/login_handler.php';
         toastr.options.progressBar = true;
     </script>
     <script>
+        <?php if (isset($_SESSION['success_message'])) : ?>
+            toastr.success("<?php echo $_SESSION['success_message']; ?>");
+            <?php unset($_SESSION['success_message']); ?>
+        <?php endif; ?>
+    </script>
+    <script>
         <?php if ($successMessage) : ?>
             toastr.success("<?php echo $successMessage; ?>", "Success", {
-                timeOut: 3000, // Hide after 3 seconds
+                timeOut: 1, // Hide after 3 seconds
                 onHidden: function() {
-                    window.location.href = 'index.php'; // Redirect to homepage after success
+                    window.location.href = './dashboard/overview'; // Redirect to homepage after success
                 }
             });
         <?php elseif ($loginError) : ?>

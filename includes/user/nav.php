@@ -1,3 +1,15 @@
+<?php
+if (!isset($_SESSION['user_id']) && !isset($_SESSION['username']) && !isset($_SESSION['email'])) {
+    // Redirect to login page if user is not logged in
+    header("Location: ../login");
+}
+include '../config/config.php';
+include '../config/secrets.php';
+include '../includes/user/functions.php';
+// Fetch current user details
+$my_details = getUserDetails($_SESSION["user_id"]);
+$myid = $_SESSION['user_id'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,6 +18,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $page_title ?? "Overview" ?> - INFund</title>
     <link rel="icon" href="../assets/icons/favicon.ico">
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        toastr.options.progressBar = true;
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/user/nav.css">
     <!-- Adding dynamic css to the pages, the CSS file can be passed from the current page -->
@@ -41,25 +60,20 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link <?= isset($page) && $page == 'Handbooks' ? 'active' : ''; ?>">
-                        <i class="fas fa-book"></i>
-                        <span>Handbooks</span>
+                    <a href="./fees" class="nav-link <?= isset($page) && $page == 'School Fees' ? 'active' : ''; ?>">
+                        <i class="fas fa-money-bill"></i>
+                        <span>Fees</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link <?= isset($page) && $page == 'Campaigns' ? 'active' : ''; ?>">
+                    <a href="./campaigns" class="nav-link <?= isset($page) && $page == 'Campaigns' ? 'active' : ''; ?>">
                         <i class="fas fa-hand-holding-heart"></i>
                         <span>My Campaigns</span>
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a href="#" class="nav-link <?= isset($page) && $page == 'School Fees' ? 'active' : ''; ?>">
-                        <i class="fas fa-university"></i>
-                        <span>School Fees</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link ">
+                    <a href="./logout" class="nav-link ">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>Logout</span>
                     </a>
@@ -72,7 +86,7 @@
                 <i class="fas fa-bars"></i>
             </button>
             <div class="user-profile">
-                <span>John Doe - Engineering Student</span>
+                <span><?php echo $my_details['fullname']; ?></span>
                 <div class="avatar">
                     <i class="fas fa-user"></i>
                 </div>
