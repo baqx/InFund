@@ -31,8 +31,9 @@ if (!isset($bill['payment_status'])) {
 $progress = ($bill['amount_paid'] / $bill['price']) * 100;
 
 // Determine payment status class
-function getStatusClass($status) {
-    switch($status) {
+function getStatusClass($status)
+{
+    switch ($status) {
         case 'Paid':
             return 'status-paid';
         case 'Partially Paid':
@@ -69,11 +70,11 @@ include '../includes/user/nav.php';
                 <i class="fas fa-layer-group"></i>
                 <span><?php echo htmlspecialchars($bill['level']); ?> Level</span>
             </div>
-            <?php if ($bill['matric_no'] !== 'ALL'): ?>
-            <div class="meta-item">
-                <i class="fas fa-id-card"></i>
-                <span>Matric: <?php echo htmlspecialchars($bill['matric_no']); ?></span>
-            </div>
+            <?php if ($bill['matric_no'] !== 'ALL') : ?>
+                <div class="meta-item">
+                    <i class="fas fa-id-card"></i>
+                    <span>Matric: <?php echo htmlspecialchars($bill['matric_no']); ?></span>
+                </div>
             <?php endif; ?>
             <div class="meta-item">
                 <span class="status-badge <?php echo getStatusClass($bill['payment_status']); ?>">
@@ -140,7 +141,7 @@ include '../includes/user/nav.php';
                 </div>
             </div>
 
-            <?php if ($bill['last_payment_date'] && $bill['amount_paid'] > 0): ?>
+            <?php if ($bill['last_payment_date'] && $bill['amount_paid'] > 0) : ?>
                 <div class="payment-history">
                     <h2>Payment History</h2>
                     <div class="payment-card">
@@ -148,7 +149,10 @@ include '../includes/user/nav.php';
                             <i class="fas fa-receipt"></i>
                         </div>
                         <div class="payment-info">
-                            <div class="reference-id">Ref: <?php echo htmlspecialchars($bill['reference_id']); ?></div>
+                            <div class="reference-id">Ref: <?php echo htmlspecialchars($bill['reference_id']); ?> <div class="download-receipt">
+                                    <a href="./generate_receipt.php?id=<?php echo $bill['id']; ?>" class="download-button">Download Receipt as PDF</a>
+                                </div>
+                            </div>
                             <div class="payment-amount">₦<?php echo number_format($bill['amount_paid'], 2); ?></div>
                             <div class="payment-date">
                                 <?php echo date('F j, Y', strtotime($bill['last_payment_date'])); ?>
@@ -184,7 +188,7 @@ include '../includes/user/nav.php';
                     <span><?php echo date('F j, Y', strtotime($bill['end_date'])); ?></span>
                 </div>
             </div>
-            <?php if ($bill['payment_status'] !== 'Paid'): ?>
+            <?php if ($bill['payment_status'] !== 'Paid') : ?>
                 <button class="pay-button" onclick="openPaymentModal(<?php echo $bill['id']; ?>, <?php echo $bill['price'] - $bill['amount_paid']; ?>)">
                     Pay Now
                 </button>
@@ -204,68 +208,66 @@ include '../includes/user/nav.php';
         <form id="paymentForm" method="POST" action="../includes/user/process_payment.php">
             <input type="hidden" name="bill_id" id="billId">
             <input type="hidden" name="amount" id="paymentAmount">
-            <input type="email" name="email" class="payment-input" 
-                   value="<?php echo htmlspecialchars($my_details['email'] ?? ''); ?>" 
-                   placeholder="Email Address" required>
+            <input type="email" name="email" class="payment-input" value="<?php echo htmlspecialchars($my_details['email'] ?? ''); ?>" placeholder="Email Address" required>
             <button type="submit" class="pay-button">Proceed to Payment</button>
         </form>
     </div>
 </div>
 
 <script>
-// Payment Modal Functions
-function openPaymentModal(billId, amount) {
-    const modal = document.getElementById('paymentModal');
-    const modalAmount = document.getElementById('modalAmount');
-    const billIdInput = document.getElementById('billId');
-    const amountInput = document.getElementById('paymentAmount');
-    
-    modalAmount.textContent = `₦${formatNumber(amount.toFixed(2))}`;
-    billIdInput.value = billId;
-    amountInput.value = amount;
-    
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
+    // Payment Modal Functions
+    function openPaymentModal(billId, amount) {
+        const modal = document.getElementById('paymentModal');
+        const modalAmount = document.getElementById('modalAmount');
+        const billIdInput = document.getElementById('billId');
+        const amountInput = document.getElementById('paymentAmount');
 
-function closePaymentModal() {
-    const modal = document.getElementById('paymentModal');
-    modal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-}
+        modalAmount.textContent = `₦${formatNumber(amount.toFixed(2))}`;
+        billIdInput.value = billId;
+        amountInput.value = amount;
 
-// Progress Bar Animation
-const progressFill = document.querySelector('.progress-fill');
-const animateProgress = () => {
-    const rect = progressFill.getBoundingClientRect();
-    const isVisible = (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-
-    if (isVisible) {
-        progressFill.style.width = '<?php echo min(100, $progress); ?>%';
-        window.removeEventListener('scroll', animateProgress);
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
     }
-};
 
-// Format numbers with commas
-function formatNumber(num) {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+    function closePaymentModal() {
+        const modal = document.getElementById('paymentModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
 
-// Initialize
-window.addEventListener('scroll', animateProgress);
-animateProgress();
+    // Progress Bar Animation
+    const progressFill = document.querySelector('.progress-fill');
+    const animateProgress = () => {
+        const rect = progressFill.getBoundingClientRect();
+        const isVisible = (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
 
-// Close modal when clicking outside
-window.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('paymentModal').addEventListener('click', (e) => {
-        if (e.target === document.getElementById('paymentModal')) {
-            closePaymentModal();
+        if (isVisible) {
+            progressFill.style.width = '<?php echo min(100, $progress); ?>%';
+            window.removeEventListener('scroll', animateProgress);
         }
+    };
+
+    // Format numbers with commas
+    function formatNumber(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    // Initialize
+    window.addEventListener('scroll', animateProgress);
+    animateProgress();
+
+    // Close modal when clicking outside
+    window.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('paymentModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('paymentModal')) {
+                closePaymentModal();
+            }
+        });
     });
-});
 </script>

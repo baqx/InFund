@@ -84,6 +84,7 @@ function getBillDetails($bill_id, $user_id)
               p.amount_paid, 
               p.status as payment_status,
               p.last_payment_date,
+              p.reference_id,
               c.fullname as creator_name,
               DATEDIFF(b.end_date, CURRENT_DATE()) as days_remaining
               FROM bills b
