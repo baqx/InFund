@@ -80,7 +80,7 @@ function getBadgeClass($status) {
                     </div>
                     <?php if ($payment_status !== 'Paid'): ?>
                         <div class="bill-actions">
-                            <a href="pay_bill.php?id=<?php echo $bill['id']; ?>" class="pay-button">Pay Now</a>
+                            <a href="bill.php?id=<?php echo $bill['id']; ?>" class="pay-button">Pay Now</a>
                             <button class="remind-button"><i class="fas fa-bell"></i> Set Reminder</button>
                         </div>
                     <?php endif; ?>

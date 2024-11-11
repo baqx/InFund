@@ -56,7 +56,7 @@ $campaigns = getCampaignsByUserId($_SESSION['user_id']);
                 <div class="campaign-details">
                     <div class="progress-section">
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: <?php echo ($campaign['raised'] / $campaign['goal']) * 100; ?>%"></div>
+                        <div class="progress-fill" style="width: <?php echo ($campaign['amount_raised'] / ($campaign['goal_amount'] ?: 1)) * 100; ?>%"></div>
                         </div>
                         <div class="campaign-stats">
                             <span>₦<?php echo number_format($campaign['raised'], 2); ?> raised</span>
