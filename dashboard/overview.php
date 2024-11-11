@@ -41,7 +41,7 @@ $campaign_stats = getCampaignStats($campaigns);
         </div>
         <div class="card">
             <h2>2</h2>
-            <p>Pending Handbooks</p>
+            <p>Pending Bills</p>
         </div>
         <div class="card">
             <h2>₦<?php echo number_format($campaign_stats['total_raised'], 2); ?></h2>

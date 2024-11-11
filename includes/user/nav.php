@@ -61,9 +61,9 @@ $myid = $_SESSION['user_id'];
                 </li>
                 
                 <li class="nav-item">
-                    <a href="./fees" class="nav-link <?= isset($page) && $page == 'School Fees' ? 'active' : ''; ?>">
+                    <a href="./bills" class="nav-link <?= isset($page) && $page == 'Bills' ? 'active' : ''; ?>">
                         <i class="fas fa-money-bill"></i>
-                        <span>Fees</span>
+                        <span>Bills</span>
                     </a>
                 </li>
                 <li class="nav-item">

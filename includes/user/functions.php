@@ -115,11 +115,16 @@ function formatTimeAgo($interval)
 function getCampaignStats($campaigns)
 {
     global $conn;
-    $stats = [];
+    $stats = [
+        'total_raised' => 0,
+        'active_campaigns' => 0
+    ];
+
     if ($row = $campaigns->fetch_assoc()) {
         $stats['total_raised'] = $row['total_raised'] ?? 0;
         $stats['active_campaigns'] = $row['active_campaigns'] ?? 0;
     }
+
     $campaigns->data_seek(0); // Reset pointer for later use
     return $stats;
 }
