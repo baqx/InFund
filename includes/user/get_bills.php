@@ -52,7 +52,7 @@ function displayBillsSection($bills)
         $output .= sprintf(
             '
             <div class="campaign-card">
-                <a href="bill-detail.php?id=%d" class="campaign-header">
+                <a href="bill.php?id=%d" class="campaign-header">
                     <div>
                         <div class="campaign-title">%s</div>
                         <div class="campaign-meta">Due in %d days</div>
