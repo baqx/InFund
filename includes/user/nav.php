@@ -43,6 +43,7 @@ $myid = $_SESSION['user_id'];
     <?php if (isset($css5)) : ?>
         <link rel="stylesheet" href="../assets/css/user/<?= $css5 ?>.css">
     <?php endif; ?>
+    <script src="../assets/js/user/nav.js" defer></script>
 </head>
 
 <body>

@@ -18,13 +18,11 @@ function getUserDetails(string $email): array
 
     return $data;
 }
-function getCampaignsByUserId($user_id)
-{
+function getCampaignsByUserId($user_id) {
     global $conn;
-    $sql = "SELECT c.id, c.title, c.goal_amount, c.amount_raised, c.status, c.created_at,
+    $sql = "SELECT c.*, 
             (SELECT COUNT(*) FROM donations WHERE campaign_id = c.id) as donor_count,
-            (SELECT SUM(amount_raised) FROM campaigns WHERE uid = c.uid) as total_raised,
-            (SELECT COUNT(*) FROM campaigns WHERE uid = c.uid AND status = 'active') as active_campaigns
+            (SELECT SUM(amount) FROM donations WHERE campaign_id = c.id) as total_donations
             FROM campaigns c 
             WHERE c.uid = ? 
             ORDER BY c.created_at DESC";
@@ -33,7 +31,7 @@ function getCampaignsByUserId($user_id)
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
-
+    
     return $result;
 }
 
