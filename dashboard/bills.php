@@ -84,6 +84,11 @@ function getBadgeClass($status) {
                             <button class="remind-button"><i class="fas fa-bell"></i> Set Reminder</button>
                         </div>
                     <?php endif; ?>
+                    <?php if ($payment_status == 'Paid'): ?>
+                        <div class="bill-actions">
+                            <a href="bill.php?id=<?php echo $bill['id']; ?>"  class="remind-button"><i class="fas fa-info-circle"></i> Details</a>
+                        </div>
+                    <?php endif; ?>
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
