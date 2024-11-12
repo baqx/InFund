@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 session_start();
 
 $page_title = "Edit Profile";
@@ -196,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 const formData = new FormData(this);
 
                 $.ajax({
-                    url: './edit-profile',
+                    url: '../includes/user/profile-edit',
                     type: 'POST',
                     data: formData,
                     processData: false,
@@ -218,12 +215,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             });
                         }
                     },
-                    error: function() {
+                    error: function(xhr, status, error) {
                         Swal.fire({
                             title: 'Error!',
-                            text: 'An error occurred while updating your profile.',
+                            text: 'An error occurred while updating your profile: ' + error,
                             icon: 'error'
                         });
+                        console.error(xhr.responseText); // Log server response for debugging
                     }
                 });
             }

@@ -157,6 +157,12 @@ function updateUserProfile($user_id, $data) {
                   WHERE id = ?";
                   
         $stmt = $conn->prepare($query);
+        
+        // Check if prepare failed
+        if (!$stmt) {
+            throw new Exception("Preparation failed: " . $conn->error);
+        }
+        
         $stmt->bind_param("ssssssssisssi",
             $data['fullname'],
             $data['username'],
