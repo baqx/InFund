@@ -60,7 +60,7 @@ $myid = $_SESSION['user_id'];
                         <span>Dashboard</span>
                     </a>
                 </li>
-                
+
                 <li class="nav-item">
                     <a href="./bills" class="nav-link <?= isset($page) && $page == 'Bills' ? 'active' : ''; ?>">
                         <i class="fas fa-money-bill"></i>
@@ -94,8 +94,11 @@ $myid = $_SESSION['user_id'];
             </button>
             <div class="user-profile">
                 <span><?php echo $my_details['fullname']; ?></span>
-                <div class="avatar">
-                    <i class="fas fa-user"></i>
-                </div>
+                <a href="./profile">
+                    <div class="avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </a>
+
             </div>
         </div>

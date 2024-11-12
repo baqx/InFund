@@ -16,7 +16,8 @@ include '../includes/user/nav.php';
 $university = get_university($my_details['university']);
 $bills = getBillsByDepartment($my_details['department'], $_SESSION['user_id']);
 
-function getBadgeClass($status) {
+function getBadgeClass($status)
+{
     switch ($status) {
         case 'Paid':
             return 'badge-success';
@@ -49,8 +50,8 @@ function getBadgeClass($status) {
     </div>
 
     <div class="bills-grid">
-        <?php if (!empty($bills)): ?>
-            <?php foreach ($bills as $bill): ?>
+        <?php if (!empty($bills)) : ?>
+            <?php foreach ($bills as $bill) : ?>
                 <?php
                 $payment_status = $bill['payment_status'] ?? 'Unpaid';
                 $badge_class = getBadgeClass($payment_status);
@@ -78,20 +79,20 @@ function getBadgeClass($status) {
                             <?php echo htmlspecialchars($bill['faculty'] . ' - ' . $bill['level'] . ' Level'); ?>
                         </p>
                     </div>
-                    <?php if ($payment_status !== 'Paid'): ?>
+                    <?php if ($payment_status !== 'Paid') : ?>
                         <div class="bill-actions">
                             <a href="bill.php?id=<?php echo $bill['id']; ?>" class="pay-button">Pay Now</a>
-                            <button class="remind-button"><i class="fas fa-bell"></i> Set Reminder</button>
+                            <!--   <button class="remind-button"><i class="fas fa-bell"></i> Set Reminder</button> -->
                         </div>
                     <?php endif; ?>
-                    <?php if ($payment_status == 'Paid'): ?>
+                    <?php if ($payment_status == 'Paid') : ?>
                         <div class="bill-actions">
-                            <a href="bill.php?id=<?php echo $bill['id']; ?>"  class="remind-button"><i class="fas fa-info-circle"></i> Details</a>
+                            <a href="bill.php?id=<?php echo $bill['id']; ?>" class="remind-button"><i class="fas fa-info-circle"></i> Details</a>
                         </div>
                     <?php endif; ?>
                 </div>
             <?php endforeach; ?>
-        <?php else: ?>
+        <?php else : ?>
             <div class="empty-state">
                 <i class="fas fa-file-invoice-dollar"></i>
                 <h2>No Bills Found</h2>
@@ -101,31 +102,7 @@ function getBadgeClass($status) {
     </div>
 </main>
 
-<script>
-const filterSelect = document.querySelector('.filter-select');
-const searchInput = document.querySelector('.search-input');
-const billCards = document.querySelectorAll('.bill-card');
-
-function filterBills() {
-    const filterValue = filterSelect.value;
-    const searchValue = searchInput.value.toLowerCase();
-
-    billCards.forEach(card => {
-        const status = card.dataset.status;
-        const title = card.querySelector('h3').textContent.toLowerCase();
-        const description = card.querySelector('.bill-description').textContent.toLowerCase();
-
-        let matchesFilter = filterValue === 'all';
-        if (filterValue === 'unpaid') matchesFilter = status === 'unpaid';
-        if (filterValue === 'partially') matchesFilter = status === 'partially paid';
-        if (filterValue === 'paid') matchesFilter = status === 'paid';
-
-        const matchesSearch = title.includes(searchValue) || description.includes(searchValue);
-
-        card.style.display = matchesFilter && matchesSearch ? 'block' : 'none';
-    });
-}
-
-filterSelect.addEventListener('change', filterBills);
-searchInput.addEventListener('input', filterBills);
-</script>
+<?php
+$js1 = "bills";
+include '../includes/user/footer.php';
+?>
