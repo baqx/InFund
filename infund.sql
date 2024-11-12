@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2024 at 06:54 AM
+-- Generation Time: Nov 12, 2024 at 08:28 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -297,7 +297,7 @@ CREATE TABLE `campaigns` (
 
 INSERT INTO `campaigns` (`id`, `title`, `description`, `impact`, `importance`, `uid`, `goal_amount`, `amount_raised`, `start_date`, `end_date`, `status`, `created_at`, `updated_at`, `image1`, `image2`, `image3`, `image4`) VALUES
 (1, 'Lorel Ipsum', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, leo nec pellentesque finibus, ex tortor hendrerit sem, sit amet pulvinar nibh nunc quis nunc. Curabitur lectus orci, feugiat at ipsum ut, interdum feugiat leo. Quisque et semper augue, eget ullamcorper nisl. Quisque magna diam, congue ac enim et, finibus elementum diam. Phasellus nibh nunc, interdum ut dignissim eget, aliquet sit amet nisl. Sed tincidunt faucibus erat, feugiat sollicitudin lectus tincidunt in. Vivamus ac elit sit amet ante fringilla blandit. Vivamus pretium, massa tincidunt volutpat rhoncus, nunc lectus faucibus sem, eget congue justo neque eu enim. Aenean rutrum egestas suscipit. Duis id congue sapien.\r\n', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, leo nec pellentesque finibus, ex tortor hendrerit sem, sit amet pulvinar nibh nunc quis nunc. Curabitur lectus orci, feugiat at ipsum ut, interdum feugiat leo. Quisque et semper augue, eget ullamcorper nisl. Quisque magna diam, congue ac enim et, finibus elementum diam. Phasellus nibh nunc, interdum ut dignissim eget, aliquet sit amet nisl. Sed tincidunt faucibus erat, feugiat sollicitudin lectus tincidunt in. Vivamus ac elit sit amet ante fringilla blandit. Vivamus pretium, massa tincidunt volutpat rhoncus, nunc lectus faucibus sem, eget congue justo neque eu enim. Aenean rutrum egestas suscipit. Duis id congue sapien.\r\n\r\nPellentesque iaculis rhoncus lacinia. Aenean dignissim nisi leo, et vehicula tellus euismod vitae. Aliquam ac volutpat justo. Morbi a mollis lacus, nec pulvinar dolor. In auctor mi id velit maximus placerat. Integer ultricies quis leo iaculis vestibulum. Curabitur viverra porttitor eros et efficitur. Aenean lectus velit, consequat ut enim quis, bibendum luctus nunc. Maecenas dictum, est nec accumsan lobortis, risus nulla porta quam, quis feugiat lacus nibh a sem. Vivamus ut rutrum erat. Nam accumsan pulvinar turpis id faucibus. Ut in mi in lacus dictum fringilla sed eget arcu. Aliquam lobortis in eros eu efficitur. Quisque vel egestas mauris. Duis neque augue, dignissim at tempus vel, ultricies euismod metus. Praesent luctus elit nec metus ornare tristique.', '\r\nPellentesque iaculis rhoncus lacinia. Aenean dignissim nisi leo, et vehicula tellus euismod vitae. Aliquam ac volutpat justo. Morbi a mollis lacus, nec pulvinar dolor. In auctor mi id velit maximus placerat. Integer ultricies quis leo iaculis vestibulum. Curabitur viverra porttitor eros et efficitur. Aenean lectus velit, consequat ut enim quis, bibendum luctus nunc. Maecenas dictum, est nec accumsan lobortis, risus nulla porta quam, quis feugiat lacus nibh a sem. Vivamus ut rutrum erat. Nam accumsan pulvinar turpis id faucibus. Ut in mi in lacus dictum fringilla sed eget arcu. Aliquam lobortis in eros eu efficitur. Quisque vel egestas mauris. Duis neque augue, dignissim at tempus vel, ultricies euismod metus. Praesent luctus elit nec metus ornare tristique.', 3, 4000.00, 6000.00, '2024-11-10', '2024-11-19', 'completed', '2024-11-10 08:23:35', '2024-11-10 12:26:50', 'campaign_1731227015_67306d87e42b8.png', NULL, NULL, NULL),
-(2, 'Help me go to Rema\'s concert', 'Your support extends beyond attending a concert; it fuels fandom, community, and cultural appreciation. By contributing, you\'ll: 1. Enable a devoted fan to experience pure joy 2. Promote African music and cultural exchange 3. Encourage enthusiasm and dedication 4. Create lifelong memories Every donation counts! Thank you for helping make my Rema concert dream a reality!', 'Rema\'s music resonates deeply with me, providing motivation, comfort, and happiness. His artistry inspires me to pursue my passions, embrace individuality, and celebrate African culture. Attending the concert will be an unforgettable experience, allowing me to connect with fellow fans and witness his electrifying performance live. Your contribution will bring me closer to realizing this dream, fostering unforgettable memories.', 'Rema\'s music resonates deeply with me, providing motivation, comfort, and happiness. His artistry inspires me to pursue my passions, embrace individuality, and celebrate African culture. Attending the concert will be an unforgettable experience, allowing me to connect with fellow fans and witness his electrifying performance live. Your contribution will bring me closer to realizing this dream, fostering unforgettable memories.', 3, 50000.00, 10100.00, '2024-11-11', '2024-12-15', 'active', '2024-11-11 03:35:46', '2024-11-11 04:47:44', 'campaign_1731296146_67317b9222ddc.png', NULL, NULL, NULL);
+(2, 'Help me go to Rema\'s concert', 'Your support extends beyond attending a concert; it fuels fandom, community, and cultural appreciation. By contributing, you\'ll: 1. Enable a devoted fan to experience pure joy 2. Promote African music and cultural exchange 3. Encourage enthusiasm and dedication 4. Create lifelong memories Every donation counts! Thank you for helping make my Rema concert dream a reality!', 'Rema\'s music resonates deeply with me, providing motivation, comfort, and happiness. His artistry inspires me to pursue my passions, embrace individuality, and celebrate African culture. Attending the concert will be an unforgettable experience, allowing me to connect with fellow fans and witness his electrifying performance live. Your contribution will bring me closer to realizing this dream, fostering unforgettable memories.', 'Rema\'s music resonates deeply with me, providing motivation, comfort, and happiness. His artistry inspires me to pursue my passions, embrace individuality, and celebrate African culture. Attending the concert will be an unforgettable experience, allowing me to connect with fellow fans and witness his electrifying performance live. Your contribution will bring me closer to realizing this dream, fostering unforgettable memories.', 3, 50000.00, 15200.00, '2024-11-11', '2024-12-15', 'active', '2024-11-11 03:35:46', '2024-11-11 17:05:39', 'campaign_1731296146_67317b9222ddc.png', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -347,7 +347,9 @@ INSERT INTO `donations` (`id`, `campaign_id`, `donor_name`, `amount`, `email`, `
 (1, 1, 'Baqee', 1000.00, 'baqee20072007@gmail.com', '2024-11-10 12:04:20'),
 (2, 1, 'Corsair', 5000.00, 'baqeecodes@gmail.com', '2024-11-10 12:26:50'),
 (3, 2, '', 100.00, 'bgoldbaqee@yahoo.com', '2024-11-11 03:37:51'),
-(4, 2, 'Maddy', 10000.00, 'baqee20072007@gmail.com', '2024-11-11 04:47:44');
+(4, 2, 'Maddy', 10000.00, 'baqee20072007@gmail.com', '2024-11-11 04:47:44'),
+(5, 2, 'Corsair', 5000.00, 'baqee20072007@gmail.com', '2024-11-11 08:36:48'),
+(6, 2, '', 100.00, 'baqee20072007@gmail.com', '2024-11-11 17:05:39');
 
 -- --------------------------------------------------------
 
@@ -377,6 +379,38 @@ INSERT INTO `payments` (`id`, `uid`, `reference_id`, `bill_id`, `student_id`, `t
 (1, 3, 'ABC123', 1, 3, 15000.00, 15000.00, 'Paid', '2024-02-15', '2024-02-15 09:00:00', '2024-11-10 14:55:36'),
 (2, 3, 'DEF456', 2, 3, 12000.00, 5000.00, 'Partially Paid', '2024-02-20', '2024-02-20 09:00:00', '2024-11-10 14:55:36'),
 (3, 3, 'GHI789', 3, 3, 18000.00, 0.00, 'Unpaid', '2024-02-01', '2024-02-01 09:00:00', '2024-11-10 14:55:36');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transactions`
+--
+
+CREATE TABLE `transactions` (
+  `id` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `reference_id` int(11) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `amount` decimal(15,2) NOT NULL,
+  `transaction_type` enum('credit','debit') NOT NULL,
+  `details` text DEFAULT NULL,
+  `type` enum('donate','bill-payment','received-donation','bill-funded') NOT NULL,
+  `type_id` int(11) NOT NULL,
+  `status` enum('success','pending','failed','reversed','abandoned') NOT NULL DEFAULT 'pending',
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `transactions`
+--
+
+INSERT INTO `transactions` (`id`, `uid`, `reference_id`, `name`, `amount`, `transaction_type`, `details`, `type`, `type_id`, `status`, `timestamp`) VALUES
+(1, 3, NULL, 'Donation to Scholarship Fund', 150.00, 'debit', 'Contribution to university scholarship fund', 'donate', 102, 'success', '2024-11-11 17:49:54'),
+(2, 3, NULL, 'Payment for Library Bill', 30.00, 'debit', 'Payment for overdue library fees', 'bill-payment', 202, 'success', '2024-11-11 17:49:54'),
+(3, 3, NULL, 'Received Donation from Alumni Fund', 200.00, 'credit', 'Scholarship fund donation received from alumni association', 'received-donation', 102, 'success', '2024-11-11 17:49:54'),
+(4, 3, NULL, 'Failed Donation Attempt', 50.00, 'debit', 'Attempt to donate to environmental club campaign', 'donate', 103, 'failed', '2024-11-11 17:49:54'),
+(5, 3, NULL, 'Partially Funded University Bill', 300.00, 'debit', 'Partial payment toward university fee bill', 'bill-funded', 203, 'pending', '2024-11-11 17:49:54'),
+(6, 3, 5, 'Reversal of Failed Donation', 50.00, 'credit', 'Refund for previously failed donation attempt', 'donate', 103, 'reversed', '2024-11-11 17:49:54');
 
 -- --------------------------------------------------------
 
@@ -509,6 +543,10 @@ CREATE TABLE `users` (
   `department` varchar(1000) DEFAULT NULL,
   `matric_no` varchar(1000) NOT NULL,
   `password` varchar(1000) DEFAULT NULL,
+  `level` varchar(200) NOT NULL DEFAULT '100',
+  `bank_id` varchar(200) DEFAULT NULL,
+  `bank_account_name` varchar(200) DEFAULT NULL,
+  `account_number` int(30) DEFAULT NULL,
   `created_at` varchar(1000) DEFAULT current_timestamp(),
   `last_login` varchar(1000) DEFAULT current_timestamp(),
   `gender` varchar(1000) DEFAULT NULL
@@ -518,10 +556,10 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `fullname`, `email`, `balance`, `username`, `phone`, `dob`, `country`, `state`, `university`, `faculty`, `department`, `matric_no`, `password`, `created_at`, `last_login`, `gender`) VALUES
-(3, 'Adegbola AbdulBaqee', 'baqee20072007@gmail.com', 0.00, 'baqx', '09019659410', '2007-07-08', 'Nigeria', 'Ogun', 'FUNAAB', 'Engineering', 'Mathematics', 'baqx', '$2y$10$ZezJMEaMs5VWm7iIZ5VlbOV3YENFQY7w7p7AxTqIan1OCUEIP/1nq', '2024-11-10 07:28:45', '2024-11-11 06:53:30', 'male'),
-(4, 'Code Corsair ', 'baqeecodes@gmail.com', 0.00, 'iambaqx', '09019659420', '2007-11-10', 'Nigeria', 'Ogun', 'BabcockU', 'Engineering', 'Computer Science', '20243900', '$2y$10$9dGg1v6.UVAwtH2Ixm1ajOCCQlgf9Mzi4WsRWVCeaAtZBuH5lyB1G', '2024-11-10 13:25:38', '2024-11-11 06:20:17', 'male'),
-(5, 'Adeknle Gold', 'bgoldbaqee@yahoo.com', 0.00, 'baqxes', '09119659410', '2007-07-08', 'Nigeria', 'Ogun', 'FUNAAB', 'Engineering', 'Computer Science', '20143905', '$2y$10$5lcYZVBH5yrggt7H70HB5e3b689YL30FZhN97Ts39NihiT799RSQ6', '2024-11-11 06:04:05', '2024-11-11 06:08:22', 'male');
+INSERT INTO `users` (`id`, `fullname`, `email`, `balance`, `username`, `phone`, `dob`, `country`, `state`, `university`, `faculty`, `department`, `matric_no`, `password`, `level`, `bank_id`, `bank_account_name`, `account_number`, `created_at`, `last_login`, `gender`) VALUES
+(3, 'Adegbola AbdulBaqee', 'baqee20072007@gmail.com', 0.00, 'baqx', '09019659410', '2007-07-08', 'Nigeria', 'Ogun', 'FUNAAB', 'Engineering', 'Mathematics', 'baqx', '$2y$10$ZezJMEaMs5VWm7iIZ5VlbOV3YENFQY7w7p7AxTqIan1OCUEIP/1nq', '100', NULL, NULL, NULL, '2024-11-10 07:28:45', '2024-11-11 08:58:33', 'male'),
+(4, 'Code Corsair ', 'baqeecodes@gmail.com', 0.00, 'iambaqx', '09019659420', '2007-11-10', 'Nigeria', 'Ogun', 'BabcockU', 'Engineering', 'Computer Science', '20243900', '$2y$10$9dGg1v6.UVAwtH2Ixm1ajOCCQlgf9Mzi4WsRWVCeaAtZBuH5lyB1G', '100', NULL, NULL, NULL, '2024-11-10 13:25:38', '2024-11-12 07:18:19', 'male'),
+(5, 'Adeknle Gold', 'bgoldbaqee@yahoo.com', 0.00, 'baqxes', '09119659410', '2007-07-08', 'Nigeria', 'Ogun', 'FUNAAB', 'Engineering', 'Computer Science', '20143905', '$2y$10$5lcYZVBH5yrggt7H70HB5e3b689YL30FZhN97Ts39NihiT799RSQ6', '100', NULL, NULL, NULL, '2024-11-11 06:04:05', '2024-11-11 08:58:53', 'male');
 
 --
 -- Indexes for dumped tables
@@ -561,6 +599,13 @@ ALTER TABLE `payments`
   ADD KEY `bill_id` (`bill_id`);
 
 --
+-- Indexes for table `transactions`
+--
+ALTER TABLE `transactions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `uid` (`uid`);
+
+--
 -- Indexes for table `universities`
 --
 ALTER TABLE `universities`
@@ -598,13 +643,19 @@ ALTER TABLE `creators`
 -- AUTO_INCREMENT for table `donations`
 --
 ALTER TABLE `donations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `transactions`
+--
+ALTER TABLE `transactions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `universities`
@@ -639,6 +690,12 @@ ALTER TABLE `donations`
 --
 ALTER TABLE `payments`
   ADD CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`bill_id`) REFERENCES `bills` (`id`);
+
+--
+-- Constraints for table `transactions`
+--
+ALTER TABLE `transactions`
+  ADD CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
