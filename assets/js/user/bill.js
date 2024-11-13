@@ -1,23 +1,3 @@
-// Payment Modal Functions
-function openPaymentModal(billId, amount) {
-  const modal = document.getElementById("paymentModal");
-  const modalAmount = document.getElementById("modalAmount");
-  const billIdInput = document.getElementById("billId");
-  const amountInput = document.getElementById("paymentAmount");
-
-  modalAmount.textContent = `₦${formatNumber(amount.toFixed(2))}`;
-  billIdInput.value = billId;
-  amountInput.value = amount;
-
-  modal.classList.add("active");
-  document.body.style.overflow = "hidden";
-}
-
-function closePaymentModal() {
-  const modal = document.getElementById("paymentModal");
-  modal.classList.remove("active");
-  document.body.style.overflow = "auto";
-}
 
 // Progress Bar Animation
 const progressFill = document.querySelector(".progress-fill");
@@ -45,11 +25,4 @@ function formatNumber(num) {
 window.addEventListener("scroll", animateProgress);
 animateProgress();
 
-// Close modal when clicking outside
-window.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("paymentModal").addEventListener("click", (e) => {
-    if (e.target === document.getElementById("paymentModal")) {
-      closePaymentModal();
-    }
-  });
-});
+

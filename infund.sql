@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2024 at 08:28 PM
+-- Generation Time: Nov 13, 2024 at 01:25 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -264,6 +264,35 @@ INSERT INTO `bills` (`id`, `creator_id`, `name`, `university`, `faculty`, `depar
 (3, 1, 'Database Systems Guide', 'FUNAAB', 'Engineering', 'Mathematics', '100', 'ALL', 18000.00, '2024-01-01', '2024-12-15', '2024-01-01 09:00:00'),
 (4, 3, 'Software Engineering Project Guide', 'FUNAAB', 'Engineering', 'Mathematics', '100', 'ALL', 20000.00, '2024-01-01', '2024-12-01', '2024-01-01 09:00:00'),
 (5, 2, 'Computer Networks Manual', 'FUNAAB', 'Engineering', 'Mathematics', '100', 'ALL', 16500.00, '2024-01-01', '2024-11-20', '2024-01-01 09:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bill_invoice`
+--
+
+CREATE TABLE `bill_invoice` (
+  `id` int(11) NOT NULL,
+  `name` varchar(1000) DEFAULT NULL,
+  `bill_id` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `reference_id` varchar(1000) NOT NULL,
+  `due_date` date DEFAULT NULL,
+  `total_amount` decimal(10,2) NOT NULL,
+  `status` enum('Pending','Paid','Cancelled') DEFAULT 'Pending',
+  `got_funded` enum('True','False') DEFAULT 'False',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bill_invoice`
+--
+
+INSERT INTO `bill_invoice` (`id`, `name`, `bill_id`, `uid`, `reference_id`, `due_date`, `total_amount`, `status`, `got_funded`, `created_at`, `updated_at`) VALUES
+(1, NULL, 5, 3, 'INV-2024-0008', '2024-12-31', 500.00, 'Pending', 'False', '2024-11-13 05:42:42', '2024-11-13 11:16:25'),
+(2, 'Software Engineering Project Guide', 4, 3, 'FUNAAB-AD0-2B9-E3A-D', '2024-12-01', 20000.00, 'Pending', 'False', '2024-11-13 12:23:23', '2024-11-13 12:23:23'),
+(3, 'Database Systems Guide', 3, 3, 'FUNAAB-21B-359-B4D-7', '2024-12-15', 18000.00, 'Pending', 'False', '2024-11-13 12:24:20', '2024-11-13 12:24:20');
 
 -- --------------------------------------------------------
 
@@ -557,8 +586,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fullname`, `email`, `balance`, `username`, `phone`, `dob`, `country`, `state`, `university`, `faculty`, `department`, `matric_no`, `password`, `level`, `bank_id`, `bank_account_name`, `account_number`, `created_at`, `last_login`, `gender`) VALUES
-(3, 'Adegbola AbdulBaqee', 'baqee20072007@gmail.com', 0.00, 'baqx', '09019659410', '2007-07-08', 'Nigeria', 'Ogun', 'FUNAAB', 'Engineering', 'Mathematics', 'baqx', '$2y$10$ZezJMEaMs5VWm7iIZ5VlbOV3YENFQY7w7p7AxTqIan1OCUEIP/1nq', '100', NULL, NULL, NULL, '2024-11-10 07:28:45', '2024-11-11 08:58:33', 'male'),
-(4, 'Code Corsair ', 'baqeecodes@gmail.com', 0.00, 'iambaqx', '09019659420', '2007-11-10', 'Nigeria', 'Ogun', 'BabcockU', 'Engineering', 'Computer Science', '20243900', '$2y$10$9dGg1v6.UVAwtH2Ixm1ajOCCQlgf9Mzi4WsRWVCeaAtZBuH5lyB1G', '100', NULL, NULL, NULL, '2024-11-10 13:25:38', '2024-11-12 07:18:19', 'male'),
+(3, 'Adegbola AbdulBaqee', 'baqee20072007@gmail.com', 0.00, 'baqx', '09019659410', '2007-07-08', 'Nigeria', 'Ogun', 'FUNAAB', 'Engineering', 'Mathematics', 'baqx', '$2y$10$ZezJMEaMs5VWm7iIZ5VlbOV3YENFQY7w7p7AxTqIan1OCUEIP/1nq', '100', NULL, NULL, NULL, '2024-11-10 07:28:45', '2024-11-13 11:46:11', 'male'),
+(4, 'Code Corsair ', 'baqeecodes@gmail.com', 0.00, 'iambaqx', '09019659420', '2007-11-10', 'Nigeria', 'Ogun', 'BabcockU', 'Engineering', 'Computer Science', '20243900', '$2y$10$9dGg1v6.UVAwtH2Ixm1ajOCCQlgf9Mzi4WsRWVCeaAtZBuH5lyB1G', '100', NULL, NULL, NULL, '2024-11-10 13:25:38', '2024-11-13 12:26:25', 'male'),
 (5, 'Adeknle Gold', 'bgoldbaqee@yahoo.com', 0.00, 'baqxes', '09119659410', '2007-07-08', 'Nigeria', 'Ogun', 'FUNAAB', 'Engineering', 'Computer Science', '20143905', '$2y$10$5lcYZVBH5yrggt7H70HB5e3b689YL30FZhN97Ts39NihiT799RSQ6', '100', NULL, NULL, NULL, '2024-11-11 06:04:05', '2024-11-11 08:58:53', 'male');
 
 --
@@ -570,6 +599,13 @@ INSERT INTO `users` (`id`, `fullname`, `email`, `balance`, `username`, `phone`, 
 --
 ALTER TABLE `bills`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `bill_invoice`
+--
+ALTER TABLE `bill_invoice`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `bill_id` (`bill_id`);
 
 --
 -- Indexes for table `campaigns`
@@ -628,6 +664,12 @@ ALTER TABLE `bills`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `bill_invoice`
+--
+ALTER TABLE `bill_invoice`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `campaigns`
 --
 ALTER TABLE `campaigns`
@@ -672,6 +714,12 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `bill_invoice`
+--
+ALTER TABLE `bill_invoice`
+  ADD CONSTRAINT `bill_invoice_ibfk_1` FOREIGN KEY (`bill_id`) REFERENCES `bills` (`id`);
 
 --
 -- Constraints for table `campaigns`

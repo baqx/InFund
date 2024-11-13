@@ -1,3 +1,4 @@
+</div>
 <?php if (isset($js1)) : ?>
     <script src="../assets/js/user/<?= $js1 ?>.js"></script>
 <?php endif; ?>

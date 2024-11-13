@@ -15,39 +15,90 @@ if (!$invoice_details || $invoice_details['uid'] != $_SESSION['user_id']) {
     exit();
 }
 
-// Construct the payment URL
-$additional_details = urlencode(json_encode([
-    'user_id' => $_SESSION['user_id'],
-    'invoice_id' => $_GET['id']
-]));
-
-$redirect_url = urlencode('http://localhost/infund/dashboard/process_transaction.php?ref=' . $invoice_details['reference_id']);
-$fullname_parts = explode(' ', $invoice_details['fullname']);
-
-$payment_url = 'https://business.payaza.africa/payment-page/?' .
-    'merchant_key=PZ78-PKTEST-A16C887D-01BC-4B5F-8C13-84942EDE8005' .
-    '&connection_mode=Test' .
-    '&checkout_amount=' . $invoice_details['total_amount'] .
-    '&currency_code=NGN' .
-    '&email_address=' . urlencode($invoice_details['email']) .
-    '&first_name=' . urlencode(explode(' ', $invoice_details['fullname'])[0]) .
-    '&last_name=' . urlencode(end($fullname_parts)) .
-    '&phone_number=' . urlencode($invoice_details['phone']) .
-    '&transaction_reference=' . urlencode($invoice_details['reference_id']) .
-    '&additional_details=' . $additional_details .
-    '&redirect_url=' . $redirect_url;
-
 $page_title = "Invoice";
 $page = "Invoice";
 $css1 = "invoice";
 include '../includes/user/nav.php';
 ?>
 
+<!-- Add this in the head section after your other scripts -->
+<script src="https://checkout-v2.payaza.africa/js/v1/bundle.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Generate a unique reference ID if needed
+        function generateReference() {
+            return 'PL' + Date.now() + Math.floor(Math.random() * 1000);
+        }
+
+        function initializePayment() {
+            try {
+                const payazaCheckout = PayazaCheckout.setup({
+                    merchant_key: "<?php echo $PAYAZA_API_KEY; ?>",
+                    connection_mode: "Test",
+                    checkout_amount: parseFloat(<?php echo json_encode($invoice_details['total_amount']); ?>),
+                    currency_code: "NGN",
+                    email_address: <?php echo json_encode($invoice_details['email']); ?>,
+                    first_name: <?php echo json_encode(explode(' ', $invoice_details['fullname'])[0]); ?>,
+                    last_name: <?php echo json_encode(explode(' ', $invoice_details['fullname'])[1]); ?>,
+                    phone_number: <?php echo json_encode($invoice_details['phone']); ?>,
+                    transaction_reference: <?php echo json_encode($invoice_details['reference_id']); ?>,
+                    additional_details: {
+                        user_id: <?php echo json_encode($_SESSION['user_id']); ?>,
+                        invoice_id: <?php echo json_encode($_GET['id']); ?>
+                    }
+                });
+
+                // Callback function to handle payment response
+                function handlePaymentCallback(response) {
+                    console.log('Payment Response:', response);
+                    // You can add additional handling here based on the response
+                    if (response.status === 'successful') {
+                        window.location.href = 'process_transaction.php?ref=' +
+                            <?php echo json_encode($invoice_details['reference_id']); ?> +
+                            '&status=success';
+                    }
+                }
+
+                // Handle popup close
+                function handleClose() {
+                    console.log('Payment popup closed');
+                    window.location.href = 'process_transaction.php?ref=' +
+                        <?php echo json_encode($invoice_details['reference_id']); ?> +
+                        '&status=closed';
+                }
+
+                // Set up callbacks
+                payazaCheckout.setCallback(handlePaymentCallback);
+                payazaCheckout.setOnClose(handleClose);
+
+                // Show the payment popup
+                payazaCheckout.showPopup();
+            } catch (error) {
+                console.error('Payment initialization error:', error);
+                alert('Unable to initialize payment. Please try again later.');
+            }
+        }
+
+        // Add click event listeners after DOM is loaded
+        const payButton = document.getElementById('payButton');
+        if (payButton) {
+            payButton.addEventListener('click', initializePayment);
+        }
+
+        const printButton = document.getElementById('printButton');
+        if (printButton) {
+            printButton.addEventListener('click', () => {
+                window.print();
+            });
+        }
+    });
+</script>
+
 <main class="main-content invoice-container">
     <div class="invoice-header">
         <div class="invoice-title">
             <div>
-                <h1>Invoice</h1>
+                <h1><?php echo htmlspecialchars($invoice_details['name']); ?></h1>
                 <span class="invoice-id">REF: #<span id="referenceId"><?php echo htmlspecialchars($invoice_details['reference_id']); ?></span></span>
             </div>
             <span class="status-badge status-<?php echo strtolower($invoice_details['status']); ?>" id="statusBadge">
@@ -87,20 +138,22 @@ include '../includes/user/nav.php';
 
         <div class="action-buttons">
             <?php if ($invoice_details['status'] == 'Pending') : ?>
-                <a href="<?php echo htmlspecialchars($payment_url); ?>" class="btn btn-primary">
+                <button class="btn btn-primary" id="payButton">
                     <i class="fas fa-credit-card"></i>
                     Pay Now
-                </a>
+                </button>
             <?php endif; ?>
             <button class="btn btn-secondary" id="downloadButton">
                 <i class="fas fa-download"></i>
                 Download Invoice
             </button>
-            <button class="btn btn-secondary" onclick="window.print()">
+            <button class="btn btn-secondary" id="printButton">
                 <i class="fas fa-print"></i>
                 Print
             </button>
         </div>
-    </div>
 </main>
-</body>
+
+<?php
+include '../includes/user/footer.php';
+?>

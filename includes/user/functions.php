@@ -18,7 +18,8 @@ function getUserDetails(string $email): array
 
     return $data;
 }
-function getCampaignsByUserId($user_id) {
+function getCampaignsByUserId($user_id)
+{
     global $conn;
     $sql = "SELECT c.*, 
             (SELECT COUNT(*) FROM donations WHERE campaign_id = c.id) as donor_count,
@@ -31,7 +32,7 @@ function getCampaignsByUserId($user_id) {
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
-    
+
     return $result;
 }
 
@@ -126,4 +127,15 @@ function getCampaignStats($campaigns)
     $campaigns->data_seek(0); // Reset pointer for later use
     return $stats;
 }
+
+function generateUniqueCode()
+{
+    // Generate a secure random string of bytes and convert to hexadecimal
+    $randomString = bin2hex(random_bytes(5)); // 10 characters in hexadecimal
+    // Construct the code in 3-character segments
+    $code = strtoupper(substr($randomString, 0, 3) . '-' . substr($randomString, 3, 3) . '-' . substr($randomString, 6, 3) . '-' . substr($randomString, 9, 3));
+    return $code;
+}
+
+
 ?>

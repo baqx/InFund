@@ -189,30 +189,15 @@ include '../includes/user/nav.php';
                 </div>
             </div>
             <?php if ($bill['payment_status'] !== 'Paid') : ?>
-                <button class="pay-button" onclick="openPaymentModal(<?php echo $bill['id']; ?>, <?php echo $bill['price'] - $bill['amount_paid']; ?>)">
-                    Pay Now
-                </button>
+                <a href="../includes/user/create_bill_invoice?bill_id=<?php echo $bill_id; ?>"><button class="pay-button">
+                        Pay Now
+                    </button></a>
             <?php endif; ?>
         </div>
     </div>
 </main>
 
-<!-- Payment Modal -->
-<div class="modal" id="paymentModal">
-    <div class="modal-content">
-        <button class="close-modal" onclick="closePaymentModal()">×</button>
-        <h2>Complete Your Payment</h2>
-        <div class="payment-details">
-            <h3>Amount Due: <span id="modalAmount">₦0</span></h3>
-        </div>
-        <form id="paymentForm" method="POST" action="../includes/user/process_payment.php">
-            <input type="hidden" name="bill_id" id="billId">
-            <input type="hidden" name="amount" id="paymentAmount">
-            <input type="email" name="email" class="payment-input" value="<?php echo htmlspecialchars($my_details['email'] ?? ''); ?>" placeholder="Email Address" required>
-            <button type="submit" class="pay-button">Proceed to Payment</button>
-        </form>
-    </div>
-</div>
+
 <?php
 $js1 = "bill";
 include '../includes/user/footer.php';

@@ -1,5 +1,8 @@
 <?php
 
+// Import the secrets file
+require_once '../config/secrets.php'; 
+
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
@@ -12,7 +15,7 @@ curl_setopt_array($curl, array(
     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
     CURLOPT_CUSTOMREQUEST => 'GET',
     CURLOPT_HTTPHEADER => array(
-        'Authorization: Payaza UFo3OC1QS1RFU1QtQTE2Qzg4N0QtMDFCQy00QjVGLThDMTMtODQ5NDJFREU4MDA1'
+        'Authorization: Payaza ' . $PAYAZA_API_KEY_ENCODED // Use the imported API key here
     ),
 ));
 
