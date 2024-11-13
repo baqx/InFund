@@ -62,7 +62,7 @@ include '../includes/user/nav.php';
                 // Handle popup close
                 function handleClose() {
                     console.log('Payment popup closed');
-                    window.location.href = 'process_transaction.php?ref=' +
+                    window.location.href = '../includes/user/process_bill_payment?ref=' +
                         <?php echo json_encode($invoice_details['reference_id']); ?> +
                         '&status=closed';
                 }

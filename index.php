@@ -69,7 +69,7 @@ $universities = get_universities();
     <!-- Hero Section -->
     <section id="home" class="hero wow animate__animated animate__fadeIn">
         <div class="hero-content">
-            <h1>Decentralized crowdfunding for universities and students</h1>
+            <h1>Your next door crowdfunding solutions for universities and students</h1>
             <p>Let's make your university projects come to life with the power of community funding</p>
             <div class="cta-buttons">
                 <a href="./signup" class="btn-primary">Get Started</a>

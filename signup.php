@@ -34,7 +34,7 @@ unset($_SESSION['form_data']);
         <!-- Left Side - Hero Section -->
         <div class="hero-section">
             <div class="hero-content">
-                <h2 class="hero-title">Decentralized crowdfunding for universities</h2>
+                <h2 class="hero-title">Your next door crowdfunding solutions for universities</h2>
                 <img src="./assets/images/static/hero.png" alt="INFund" class="hero-image">
             </div>
         </div>
