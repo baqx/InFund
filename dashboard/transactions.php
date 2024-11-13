@@ -5,7 +5,7 @@ $page = "Transactions";
 $css1 = "transactions";
 include '../includes/user/nav.php'; ?>
 
-<body>
+
     <main class="main-content">
         <div class="transactions-header">
             <h1>Transactions</h1>
