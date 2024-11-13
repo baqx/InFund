@@ -114,5 +114,6 @@ if ($transactionStatus === "Completed") {
         exit();
     }
 } else {
-    echo "Transaction status is pending or unknown.";
+    header("Location: ../../dashboard/invoice.php?id=$invoice_id");
+    exit();
 }
