@@ -1,0 +1,207 @@
+/* Payouts Page Styles */
+.payouts-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Withdrawal Form Styles */
+.withdrawal-section {
+    background: var(--card-background);
+    padding: clamp(1rem, 4vw, 2rem);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.withdrawal-form {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 3vw, 1.5rem);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.form-group input,
+.form-group select {
+    padding: clamp(0.5rem, 2vw, 0.75rem);
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    width: 100%;
+    transition: var(--transition);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(179, 98, 100, 0.1);
+}
+
+.submit-btn {
+    background: var(--accent-color);
+    color: white;
+    padding: clamp(0.75rem, 2vw, 1rem);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.submit-btn:hover {
+    opacity: 0.9;
+}
+
+/* Transaction History Styles */
+.history-section {
+    background: var(--card-background);
+    padding: clamp(1rem, 4vw, 2rem);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.transactions-table {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Make table responsive */
+@media (max-width: 768px) {
+    /* Convert table to cards on mobile */
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr {
+        margin-bottom: 1rem;
+        border: 1px solid #eee;
+        border-radius: var(--border-radius);
+        padding: 0.5rem;
+    }
+
+    td {
+        position: relative;
+        padding: 0.5rem 0.5rem 0.5rem 50%;
+        border: none;
+        border-bottom: 1px solid #eee;
+    }
+
+    td:last-child {
+        border-bottom: none;
+    }
+
+    td:before {
+        position: absolute;
+        left: 0.5rem;
+        width: 45%;
+        padding-right: 0.5rem;
+        white-space: nowrap;
+        content: attr(data-label);
+        font-weight: 600;
+    }
+}
+
+@media (min-width: 769px) {
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+
+    th, td {
+        padding: clamp(0.5rem, 2vw, 1rem);
+        text-align: left;
+        border-bottom: 1px solid #eee;
+    }
+
+    th {
+        font-weight: 600;
+        color: var(--text-color);
+        background: #f8f9fa;
+    }
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.status-pending {
+    background: #fff3e0;
+    color: var(--warning-color);
+}
+
+.status-processed {
+    background: #e8f5e9;
+    color: var(--success-color);
+}
+
+.status-failed {
+    background: #ffebee;
+    color: var(--danger-color);
+}
+
+.status-cancelled {
+    background: #f5f5f5;
+    color: #666;
+}
+
+.no-records {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 1rem;
+}
+
+/* Additional Responsive Breakpoints */
+@media (min-width: 1024px) {
+    .payouts-container {
+        grid-template-columns: 1fr ;
+    }
+}
+
+@media (max-width: 480px) {
+    .withdrawal-section,
+    .history-section {
+        padding: 1rem;
+    }
+    
+    .form-group label {
+        font-size: 0.9rem;
+    }
+    
+    .status-badge {
+        padding: 0.2rem 0.5rem;
+    }
+}

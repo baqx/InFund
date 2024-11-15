@@ -80,6 +80,12 @@ $myid = $_SESSION['user_id'];
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="./payouts" class="nav-link <?= isset($page) && $page == 'Payouts' ? 'active' : ''; ?>">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Payouts</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="./logout" class="nav-link ">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>Logout</span>
