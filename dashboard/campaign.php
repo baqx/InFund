@@ -1,12 +1,11 @@
 <?php
 session_start();
 require_once '../config/config.php';
-
 // Function to get campaign details
 function getCampaignDetails($campaign_id)
 {
     global $conn;
-    $query = "SELECT c.*, u.fullname, u.department, u.faculty 
+    $query = "SELECT c.*, u.fullname, u.department, u.faculty
               FROM campaigns c 
               JOIN users u ON c.uid = u.id 
               WHERE c.id = ?";
@@ -58,6 +57,8 @@ $page_title = "Campaign Information";
 $page = "Campaigns";
 $css1 = "campaign";
 include '../includes/user/nav.php';
+$uniquecode = generateUniqueCode();
+$reference_id = "CAMPAIGN-$uniquecode";
 ?>
 
 <main class="main-content">
@@ -183,11 +184,15 @@ include '../includes/user/nav.php';
         <div style="margin: 1.5rem 0;">
             <h3>Amount: <span id="modalAmount">₦0</span></h3>
         </div>
-        <form id="donationForm" method="POST" action="../includes/user/process_donation">
+        <form id="donationForm" method="POST" action="">
             <input type="hidden" name="campaign_id" value="<?php echo $campaign_id; ?>">
             <input type="hidden" name="amount" id="hiddenAmount">
             <input type="text" name="donor_name" class="donation-input" placeholder="Your Name (Optional)">
-            <input type="email" name="email" class="donation-input" placeholder="Email Address" required>
+            <input type="email" name="email" class="donation-input" value="<?php if (isset($_SESSION['user_id'])) {
+                                                                                echo $my_details["email"];
+                                                                            } ?>" placeholder="Email Address" required <?php if (isset($_SESSION['user_id'])) {
+                                                                                                                            echo "disabled";
+                                                                                                                        } ?>>
             <button type="submit" class="donate-button">Proceed to Payment</button>
         </form>
     </div>
@@ -210,7 +215,110 @@ function timeAgo($timestamp)
 }
 ?>
 
-<?php
-$js1 = "campaign";
-include '../includes/user/footer.php';
-?>
+<script>
+    // Format name into first and last name
+    function formatName(fullName) {
+        const names = fullName.trim().split(' ');
+        return {
+            firstName: names[0] || '',
+            lastName: names.slice(1).join(' ') || names[0] // Use first name as last name if no last name provided
+        };
+    }
+
+    // Initialize the donation modal
+    function openDonateModal() {
+        const amount = document.querySelector('.donation-input').value;
+        if (!amount || amount < 100) {
+            alert('Please enter a valid amount (minimum ₦100)');
+            return;
+        }
+
+        document.getElementById('modalAmount').textContent = '₦' + Number(amount).toLocaleString();
+        document.getElementById('hiddenAmount').value = amount;
+        document.getElementById('donateModal').style.display = 'flex';
+    }
+
+    // Close the donation modal
+    function closeDonateModal() {
+        document.getElementById('donateModal').style.display = 'none';
+    }
+
+    // Handle form submission
+    document.getElementById('donationForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const amount = document.getElementById('hiddenAmount').value;
+        const donorName = document.querySelector('input[name="donor_name"]').value || 'Anonymous';
+        const email = document.querySelector('input[name="email"]').value;
+        const campaignId = document.querySelector('input[name="campaign_id"]').value;
+
+        const names = formatName(donorName);
+
+        // Construct the additional details object
+        const additionalDetails = JSON.stringify({
+            campaign_id: campaignId,
+            donor_name: donorName
+        });
+
+        // Construct the payment URL
+        const paymentUrl = new URL('https://business.payaza.africa/payment-page/');
+        const params = new URLSearchParams({
+            merchant_key: '<?php echo $PAYAZA_API_KEY; ?>',
+            connection_mode: 'Test',
+            checkout_amount: amount,
+            currency_code: 'NGN',
+            email_address: email,
+            first_name: names.firstName,
+            last_name: names.lastName,
+            phone_number: '', // Optional, can be left empty
+            transaction_reference: '<?php echo $reference_id; ?>',
+            additional_details: additionalDetails,
+            redirect_url: `${window.location.origin}/infund/includes/user/process_donation.php?ref=<?php echo $reference_id; ?>&name=${encodeURIComponent(names.firstName + ' ' + names.lastName)}&email=${encodeURIComponent(email)}&id=${encodeURIComponent(campaignId)}`
+        });
+
+        // Redirect to payment page
+        window.location.href = `${paymentUrl}?${params.toString()}`;
+    });
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        const modal = document.getElementById('donateModal');
+        if (event.target === modal) {
+            closeDonateModal();
+        }
+    }
+
+    // Share functionality
+    const shareButtons = document.querySelectorAll(".share-button");
+    shareButtons.forEach((button) => {
+        button.addEventListener("click", async () => {
+            const campaignTitle = document.querySelector(".campaign-title").textContent;
+            const campaignUrl = window.location.href;
+            const shareText = `Support ${campaignTitle} on INFund: ${campaignUrl}`;
+
+            if (button.querySelector(".fa-whatsapp")) {
+                window.open(
+                    `https://wa.me/?text=${encodeURIComponent(shareText)}`,
+                    "_blank"
+                );
+            } else if (button.querySelector(".fa-twitter")) {
+                window.open(
+                    `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+          shareText
+        )}`,
+                    "_blank"
+                );
+            } else {
+                try {
+                    await navigator.share({
+                        title: campaignTitle,
+                        text: "Support my education campaign on INFund",
+                        url: campaignUrl,
+                    });
+                } catch (err) {
+                    prompt("Copy this link to share:", campaignUrl);
+                }
+            }
+        });
+    });
+</script>

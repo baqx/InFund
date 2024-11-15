@@ -1,172 +1,385 @@
-
-.transactions-header {
+/* Root variables */
+:root {
+    --mobile-padding: 0.1rem;
+    --tablet-padding: 1.5rem;
+  }
+  
+  /* Original Header Styles */
+  .transactions-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
     flex-wrap: wrap;
     gap: 1rem;
-}
-
-.filters {
+    padding: 0 var(--mobile-padding);
+  }
+  
+  .filters {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
-}
-
-.filter-dropdown {
+  }
+  
+  .filter-dropdown {
     padding: 0.5rem 1rem;
     border: 1px solid #ddd;
     border-radius: var(--border-radius);
     background: white;
     cursor: pointer;
-}
-
-.search-box {
+    min-width: 120px;
+  }
+  
+  .search-box {
     padding: 0.5rem 1rem;
     border: 1px solid #ddd;
     border-radius: var(--border-radius);
     width: 250px;
-}
-
-.transactions-list {
+  }
+  
+  /* Transaction List Styles */
+  .transactions-list {
     background: var(--card-background);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     overflow: hidden;
-}
-
-.transaction-item {
+    margin: 0 var(--mobile-padding);
+  }
+  
+  .transaction-item {
     display: flex;
     align-items: center;
     padding: 1.5rem;
     border-bottom: 1px solid #eee;
     transition: var(--transition);
-}
-
-.transaction-item:hover {
+    gap: 1rem;
+  }
+  
+  .transaction-item:hover {
     background-color: #f8f9fa;
-}
-
-.transaction-icon {
+  }
+  
+  /* Transaction Icon Styles */
+  .transaction-icon {
     width: 40px;
     height: 40px;
+    min-width: 40px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-right: 1rem;
-    color: white;
-}
-
-.transaction-icon.payment {
+    color: var(--accent-color);
+  }
+  
+  .transaction-icon.payment {
     background-color: var(--payment-color);
-}
-
-.transaction-icon.crowdfunding {
+  }
+  
+  .transaction-icon.crowdfunding {
     background-color: var(--crowdfunding-color);
-}
-
-.transaction-icon.deposit {
+  }
+  
+  .transaction-icon.deposit {
     background-color: var(--deposit-color);
-}
-
-.transaction-details {
+  }
+  
+  /* Transaction Details Styles */
+  .transaction-details {
     flex: 1;
-}
-
-.transaction-title {
+    min-width: 200px;
+  }
+  
+  .transaction-title {
     font-weight: 500;
     margin-bottom: 0.25rem;
-}
-
-.transaction-meta {
+    word-break: break-word;
+  }
+  
+  .transaction-meta {
     display: flex;
     gap: 1rem;
     color: #666;
     font-size: 0.9rem;
-}
-
-.transaction-amount {
+    flex-wrap: wrap;
+  }
+  
+  .transaction-amount {
     font-weight: 600;
     text-align: right;
-}
-
-.amount-positive {
-    color: var(--payment-color);
-}
-
-.amount-negative {
+    min-width: 100px;
+  }
+  
+  .amount-positive,
+  .credit {
+    color: var(--accent-color);
+  }
+  
+  .amount-negative,
+  .debit {
     color: #f44336;
-}
-
-.transaction-status {
+  }
+  
+  /* Transaction Status Styles */
+  .transaction-status {
     padding: 0.25rem 0.75rem;
     border-radius: 1rem;
     font-size: 0.85rem;
     margin-left: 1rem;
     white-space: nowrap;
-}
-
-.status-success {
-    background-color: #E8F5E9;
-    color: var(--payment-color);
-}
-
-.status-pending {
-    background-color: #FFF3E0;
+  }
+  
+  .status-success {
+    background-color: #e8f5e9;
+    color: green;
+  }
+  
+  .status-pending {
+    background-color: #fff3e0;
     color: var(--deposit-color);
-}
-
-.status-failed {
-    background-color: #FFEBEE;
+  }
+  
+  .status-failed {
+    background-color: #ffebee;
     color: #f44336;
-}
-
-.pagination {
+  }
+  
+  /* Pagination Styles */
+  .pagination {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
-    margin-top: 2rem;
-}
-
-.page-button {
+    margin: 2rem var(--mobile-padding);
+    flex-wrap: wrap;
+  }
+  
+  .page-button {
     padding: 0.5rem 1rem;
     border: 1px solid #ddd;
     border-radius: var(--border-radius);
     background: white;
     cursor: pointer;
     transition: var(--transition);
-}
-
-.page-button:hover {
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .page-button:hover {
     background-color: var(--accent-color);
     color: white;
     border-color: var(--accent-color);
-}
-
-.page-button.active {
+  }
+  
+  .page-button.active {
     background-color: var(--accent-color);
     color: white;
     border-color: var(--accent-color);
-}
-
-@media (max-width: 768px) {
+  }
+  
+  /* Loader Styles */
+  .loader {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+  }
+  
+  .loader-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 5px solid var(--accent-color);
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Link Styles */
+  .transaction-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .transaction-link:hover {
+    text-decoration: none;
+  }
+  
+  /* Mobile styles (up to 480px) */
+  @media (max-width: 480px) {
     .transactions-header {
-        flex-direction: column;
-        align-items: stretch;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
     }
-
+  
     .filters {
-        flex-direction: column;
+      flex-direction: column;
+      width: 100%;
     }
-
+  
+    .filter-dropdown,
     .search-box {
-        width: 100%;
+      width: 100%;
     }
-
+  
+    .transaction-item {
+      padding: 1rem;
+      flex-wrap: wrap;
+    }
+  
     .transaction-meta {
-        flex-direction: column;
-        gap: 0.25rem;
+      flex-direction: column;
+      gap: 0.25rem;
     }
-}
+  
+    .transaction-status {
+      margin-left: 0;
+      margin-top: 0.5rem;
+      display: inline-block;
+    }
+  
+    .transaction-amount {
+      width: 100%;
+      text-align: left;
+      margin-top: 0.5rem;
+    }
+  }
+  
+  /* Tablet styles (481px to 768px) */
+  @media (min-width: 481px) and (max-width: 768px) {
+    .transactions-header {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .filters {
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+  
+    .filter-dropdown {
+      flex: 1;
+      min-width: 150px;
+    }
+  
+    .search-box {
+      width: 100%;
+    }
+  
+    .transaction-meta {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+  }
+  
+  /* Laptop styles (769px to 1024px) */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .filters {
+      flex-wrap: wrap;
+    }
+  
+    .transaction-meta {
+      flex-wrap: wrap;
+    }
+  }
+  
+  /* Large Desktop styles (1025px and above) */
+  @media (min-width: 1025px) {
+    :root {
+      --mobile-padding: 2rem;
+    }
+  
+    .transactions-list {
+      margin: 0 auto;
+      max-width: 1200px;
+    }
+  
+    .transactions-header {
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+  
+  /* High DPI screens */
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .transaction-icon {
+      border-width: 0.5px;
+    }
+  }
+  
+  /* Print styles */
+  @media print {
+    .filters,
+    .pagination,
+    .loader {
+      display: none;
+    }
+  
+    .transaction-item {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+  
+    .transaction-status {
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+  }
+  
+  /* Reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .transaction-item,
+    .page-button {
+      transition: none;
+    }
+  
+    .loader-spinner {
+      animation: none;
+    }
+  }
+  
+  /* Dark mode support */
+  @media (prefers-color-scheme: dark) {
+    .transaction-item:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+  
+    .filter-dropdown,
+    .search-box,
+    .page-button {
+      background: var(--card-background, #1a1a1a);
+      border-color: rgba(255, 255, 255, 0.1);
+      color: inherit;
+    }
+  
+    .status-success {
+      background-color: rgba(232, 245, 233, 0.1);
+    }
+  
+    .status-pending {
+      background-color: rgba(255, 243, 224, 0.1);
+    }
+  
+    .status-failed {
+      background-color: rgba(255, 235, 238, 0.1);
+    }
+  
+    .loader-spinner {
+      border-color: rgba(255, 255, 255, 0.1);
+      border-top-color: var(--accent-color);
+    }
+  }

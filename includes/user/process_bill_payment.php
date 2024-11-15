@@ -63,7 +63,6 @@ curl_setopt_array($curl, array(
 
 $response = curl_exec($curl);
 curl_close($curl);
-
 // Decode the JSON data into a PHP associative array
 $data = json_decode($response, true);
 
@@ -88,24 +87,30 @@ if ($data && $data['success']) {
 
 if ($transactionStatus === "Completed") {
     // Update Invoice Status to Paid
-    $sql1 = mysqli_query($conn, "UPDATE bill_invoice SET status='Paid' WHERE reference_id='$reference_id'");
+    $sql1 = mysqli_query($conn, "UPDATE bill_invoice SET status='Paid' , gateway_reference='$gatewaytransactionReference' WHERE reference_id='$reference_id'");
 
     // Determine payment status
     $pay_status = ($amountReceived >= $price) ? "Paid" : "Partially Paid";
 
     // Insert into payments
-    $sql2 = mysqli_query($conn, "INSERT INTO payments (uid, reference_id, bill_id, student_id, total_amount, amount_paid, status) 
-                                  VALUES ($user_id, '$reference_id', '$bill_id', $user_id, '$price', '$amountReceived', '$pay_status')");
+    $sql2 = mysqli_query($conn, "INSERT INTO payments (uid, reference_id, bill_id, student_id, total_amount, amount_paid, status, gateway_reference) 
+                                  VALUES ($user_id, '$reference_id', '$bill_id', $user_id, '$price', '$amountReceived', '$pay_status','$gatewaytransactionReference')");
 
     // Insert into transactions
-    $sql3 = mysqli_query($conn, "INSERT INTO transactions (uid, reference_id, type_id, name, amount, transaction_type, type, status) 
-                                  VALUES ($user_id, '$reference_id', '$bill_id', 'Paid - $billName', '$amountReceived', 'debit', 'bill-payment', 'success')");
+    $sql3 = mysqli_query($conn, "INSERT INTO transactions (uid, reference_id, type_id, name, amount, transaction_type, type, status, gateway_reference) 
+                                  VALUES ($user_id, '$reference_id', '$bill_id', 'Paid - $billName', '$amountReceived', 'debit', 'bill-payment', 'success','$gatewaytransactionReference')");
 
     if ($sql1 && $sql2 && $sql3) {
         header("Location: ../../dashboard/invoice.php?id=$invoice_id");
         exit();
     } else {
         echo "Failed to record transaction details.";
+    }
+} elseif ($transactionStatus === "Initialized") {
+    $del = mysqli_query($conn, "DELETE FROM bill_invoice WHERE reference_id='$reference_id'");
+    if ($del) {
+        header("Location: ../../dashboard/bill.php?id=$bill_id");
+        exit();
     }
 } elseif ($transactionStatus === "Failed") {
     $del = mysqli_query($conn, "DELETE FROM bill_invoice WHERE reference_id='$reference_id'");

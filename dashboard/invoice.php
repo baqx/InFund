@@ -16,7 +16,7 @@ if (!$invoice_details || $invoice_details['uid'] != $_SESSION['user_id']) {
 }
 
 $page_title = "Invoice";
-$page = "Invoice";
+$page = "Bills";
 $css1 = "invoice";
 include '../includes/user/nav.php';
 ?>

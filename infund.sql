@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 13, 2024 at 01:25 PM
+-- Generation Time: Nov 15, 2024 at 02:29 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -277,6 +277,7 @@ CREATE TABLE `bill_invoice` (
   `bill_id` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
   `reference_id` varchar(1000) NOT NULL,
+  `gateway_reference` varchar(200) DEFAULT NULL,
   `due_date` date DEFAULT NULL,
   `total_amount` decimal(10,2) NOT NULL,
   `status` enum('Pending','Paid','Cancelled') DEFAULT 'Pending',
@@ -289,10 +290,10 @@ CREATE TABLE `bill_invoice` (
 -- Dumping data for table `bill_invoice`
 --
 
-INSERT INTO `bill_invoice` (`id`, `name`, `bill_id`, `uid`, `reference_id`, `due_date`, `total_amount`, `status`, `got_funded`, `created_at`, `updated_at`) VALUES
-(1, NULL, 5, 3, 'INV-2024-0008', '2024-12-31', 500.00, 'Pending', 'False', '2024-11-13 05:42:42', '2024-11-13 11:16:25'),
-(2, 'Software Engineering Project Guide', 4, 3, 'FUNAAB-AD0-2B9-E3A-D', '2024-12-01', 20000.00, 'Pending', 'False', '2024-11-13 12:23:23', '2024-11-13 12:23:23'),
-(3, 'Database Systems Guide', 3, 3, 'FUNAAB-21B-359-B4D-7', '2024-12-15', 18000.00, 'Pending', 'False', '2024-11-13 12:24:20', '2024-11-13 12:24:20');
+INSERT INTO `bill_invoice` (`id`, `name`, `bill_id`, `uid`, `reference_id`, `gateway_reference`, `due_date`, `total_amount`, `status`, `got_funded`, `created_at`, `updated_at`) VALUES
+(2, 'Software Engineering Project Guide', 4, 3, 'FUNAAB-0CD-08D-BC1-8', 'P-C-20241114-FMWH1JCTB4', '2024-12-01', 20000.00, 'Paid', 'False', '2024-11-14 22:57:15', '2024-11-14 22:57:39'),
+(3, 'Programming Fundamentals Handbook', 1, 3, 'FUNAAB-9C6-E8F-BC9-2', 'P-C-20241115-NFRG7A9DTQ', '2024-11-30', 15000.00, 'Paid', 'False', '2024-11-14 23:03:32', '2024-11-15 00:32:35'),
+(4, 'Data Structures Manual', 2, 4, 'FUNAAB-23D-416-3CA-B', 'P-C-20241115-RB5UDSJG3L', '2024-11-25', 12000.00, 'Paid', 'False', '2024-11-15 01:19:31', '2024-11-15 01:19:54');
 
 -- --------------------------------------------------------
 
@@ -326,7 +327,7 @@ CREATE TABLE `campaigns` (
 
 INSERT INTO `campaigns` (`id`, `title`, `description`, `impact`, `importance`, `uid`, `goal_amount`, `amount_raised`, `start_date`, `end_date`, `status`, `created_at`, `updated_at`, `image1`, `image2`, `image3`, `image4`) VALUES
 (1, 'Lorel Ipsum', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, leo nec pellentesque finibus, ex tortor hendrerit sem, sit amet pulvinar nibh nunc quis nunc. Curabitur lectus orci, feugiat at ipsum ut, interdum feugiat leo. Quisque et semper augue, eget ullamcorper nisl. Quisque magna diam, congue ac enim et, finibus elementum diam. Phasellus nibh nunc, interdum ut dignissim eget, aliquet sit amet nisl. Sed tincidunt faucibus erat, feugiat sollicitudin lectus tincidunt in. Vivamus ac elit sit amet ante fringilla blandit. Vivamus pretium, massa tincidunt volutpat rhoncus, nunc lectus faucibus sem, eget congue justo neque eu enim. Aenean rutrum egestas suscipit. Duis id congue sapien.\r\n', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, leo nec pellentesque finibus, ex tortor hendrerit sem, sit amet pulvinar nibh nunc quis nunc. Curabitur lectus orci, feugiat at ipsum ut, interdum feugiat leo. Quisque et semper augue, eget ullamcorper nisl. Quisque magna diam, congue ac enim et, finibus elementum diam. Phasellus nibh nunc, interdum ut dignissim eget, aliquet sit amet nisl. Sed tincidunt faucibus erat, feugiat sollicitudin lectus tincidunt in. Vivamus ac elit sit amet ante fringilla blandit. Vivamus pretium, massa tincidunt volutpat rhoncus, nunc lectus faucibus sem, eget congue justo neque eu enim. Aenean rutrum egestas suscipit. Duis id congue sapien.\r\n\r\nPellentesque iaculis rhoncus lacinia. Aenean dignissim nisi leo, et vehicula tellus euismod vitae. Aliquam ac volutpat justo. Morbi a mollis lacus, nec pulvinar dolor. In auctor mi id velit maximus placerat. Integer ultricies quis leo iaculis vestibulum. Curabitur viverra porttitor eros et efficitur. Aenean lectus velit, consequat ut enim quis, bibendum luctus nunc. Maecenas dictum, est nec accumsan lobortis, risus nulla porta quam, quis feugiat lacus nibh a sem. Vivamus ut rutrum erat. Nam accumsan pulvinar turpis id faucibus. Ut in mi in lacus dictum fringilla sed eget arcu. Aliquam lobortis in eros eu efficitur. Quisque vel egestas mauris. Duis neque augue, dignissim at tempus vel, ultricies euismod metus. Praesent luctus elit nec metus ornare tristique.', '\r\nPellentesque iaculis rhoncus lacinia. Aenean dignissim nisi leo, et vehicula tellus euismod vitae. Aliquam ac volutpat justo. Morbi a mollis lacus, nec pulvinar dolor. In auctor mi id velit maximus placerat. Integer ultricies quis leo iaculis vestibulum. Curabitur viverra porttitor eros et efficitur. Aenean lectus velit, consequat ut enim quis, bibendum luctus nunc. Maecenas dictum, est nec accumsan lobortis, risus nulla porta quam, quis feugiat lacus nibh a sem. Vivamus ut rutrum erat. Nam accumsan pulvinar turpis id faucibus. Ut in mi in lacus dictum fringilla sed eget arcu. Aliquam lobortis in eros eu efficitur. Quisque vel egestas mauris. Duis neque augue, dignissim at tempus vel, ultricies euismod metus. Praesent luctus elit nec metus ornare tristique.', 3, 4000.00, 6000.00, '2024-11-10', '2024-11-19', 'completed', '2024-11-10 08:23:35', '2024-11-10 12:26:50', 'campaign_1731227015_67306d87e42b8.png', NULL, NULL, NULL),
-(2, 'Help me go to Rema\'s concert', 'Your support extends beyond attending a concert; it fuels fandom, community, and cultural appreciation. By contributing, you\'ll: 1. Enable a devoted fan to experience pure joy 2. Promote African music and cultural exchange 3. Encourage enthusiasm and dedication 4. Create lifelong memories Every donation counts! Thank you for helping make my Rema concert dream a reality!', 'Rema\'s music resonates deeply with me, providing motivation, comfort, and happiness. His artistry inspires me to pursue my passions, embrace individuality, and celebrate African culture. Attending the concert will be an unforgettable experience, allowing me to connect with fellow fans and witness his electrifying performance live. Your contribution will bring me closer to realizing this dream, fostering unforgettable memories.', 'Rema\'s music resonates deeply with me, providing motivation, comfort, and happiness. His artistry inspires me to pursue my passions, embrace individuality, and celebrate African culture. Attending the concert will be an unforgettable experience, allowing me to connect with fellow fans and witness his electrifying performance live. Your contribution will bring me closer to realizing this dream, fostering unforgettable memories.', 3, 50000.00, 15200.00, '2024-11-11', '2024-12-15', 'active', '2024-11-11 03:35:46', '2024-11-11 17:05:39', 'campaign_1731296146_67317b9222ddc.png', NULL, NULL, NULL);
+(2, 'Help me go to Rema\'s concert', 'Your support extends beyond attending a concert; it fuels fandom, community, and cultural appreciation. By contributing, you\'ll: 1. Enable a devoted fan to experience pure joy 2. Promote African music and cultural exchange 3. Encourage enthusiasm and dedication 4. Create lifelong memories Every donation counts! Thank you for helping make my Rema concert dream a reality!', 'Rema\'s music resonates deeply with me, providing motivation, comfort, and happiness. His artistry inspires me to pursue my passions, embrace individuality, and celebrate African culture. Attending the concert will be an unforgettable experience, allowing me to connect with fellow fans and witness his electrifying performance live. Your contribution will bring me closer to realizing this dream, fostering unforgettable memories.', 'Rema\'s music resonates deeply with me, providing motivation, comfort, and happiness. His artistry inspires me to pursue my passions, embrace individuality, and celebrate African culture. Attending the concert will be an unforgettable experience, allowing me to connect with fellow fans and witness his electrifying performance live. Your contribution will bring me closer to realizing this dream, fostering unforgettable memories.', 3, 50000.00, 26507.00, '2024-11-11', '2024-12-15', 'active', '2024-11-11 03:35:46', '2024-11-15 01:15:59', 'campaign_1731296146_67317b9222ddc.png', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -378,7 +379,14 @@ INSERT INTO `donations` (`id`, `campaign_id`, `donor_name`, `amount`, `email`, `
 (3, 2, '', 100.00, 'bgoldbaqee@yahoo.com', '2024-11-11 03:37:51'),
 (4, 2, 'Maddy', 10000.00, 'baqee20072007@gmail.com', '2024-11-11 04:47:44'),
 (5, 2, 'Corsair', 5000.00, 'baqee20072007@gmail.com', '2024-11-11 08:36:48'),
-(6, 2, '', 100.00, 'baqee20072007@gmail.com', '2024-11-11 17:05:39');
+(6, 2, '', 100.00, 'baqee20072007@gmail.com', '2024-11-11 17:05:39'),
+(7, 2, 'Baqee', 400.00, 'baqee20072007@gmail.com', '2024-11-14 23:10:29'),
+(8, 2, '', 500.00, NULL, '2024-11-14 23:19:55'),
+(9, 2, '', 107.00, NULL, '2024-11-14 23:24:32'),
+(12, 2, 'Anonymous Anonymous', 100.00, 'baqee20072007@gmail.com', '2024-11-15 00:25:44'),
+(13, 2, 'Anonymous Anonymous', 100.00, 'baqee20072007@gmail.com', '2024-11-15 00:31:43'),
+(14, 2, 'Anonymous Anonymous', 100.00, 'baqee20072007@gmail.com', '2024-11-15 00:49:55'),
+(15, 2, 'Baqx Baqx', 10000.00, 'baqeecodes@gmail.com', '2024-11-15 01:15:59');
 
 -- --------------------------------------------------------
 
@@ -390,12 +398,13 @@ CREATE TABLE `payments` (
   `id` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
   `reference_id` varchar(1000) DEFAULT NULL,
+  `gateway_reference` varchar(200) DEFAULT NULL,
   `bill_id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
   `total_amount` decimal(10,2) NOT NULL,
   `amount_paid` decimal(10,2) DEFAULT 0.00,
   `status` enum('Unpaid','Partially Paid','Paid') NOT NULL DEFAULT 'Unpaid',
-  `last_payment_date` date DEFAULT NULL,
+  `last_payment_date` timestamp NULL DEFAULT current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -404,10 +413,10 @@ CREATE TABLE `payments` (
 -- Dumping data for table `payments`
 --
 
-INSERT INTO `payments` (`id`, `uid`, `reference_id`, `bill_id`, `student_id`, `total_amount`, `amount_paid`, `status`, `last_payment_date`, `created_at`, `updated_at`) VALUES
-(1, 3, 'ABC123', 1, 3, 15000.00, 15000.00, 'Paid', '2024-02-15', '2024-02-15 09:00:00', '2024-11-10 14:55:36'),
-(2, 3, 'DEF456', 2, 3, 12000.00, 5000.00, 'Partially Paid', '2024-02-20', '2024-02-20 09:00:00', '2024-11-10 14:55:36'),
-(3, 3, 'GHI789', 3, 3, 18000.00, 0.00, 'Unpaid', '2024-02-01', '2024-02-01 09:00:00', '2024-11-10 14:55:36');
+INSERT INTO `payments` (`id`, `uid`, `reference_id`, `gateway_reference`, `bill_id`, `student_id`, `total_amount`, `amount_paid`, `status`, `last_payment_date`, `created_at`, `updated_at`) VALUES
+(1, 3, 'FUNAAB-0CD-08D-BC1-8', 'P-C-20241114-FMWH1JCTB4', 4, 3, 20000.00, 20000.00, 'Paid', '2024-11-14 22:59:54', '2024-11-14 22:59:54', '2024-11-14 22:59:54'),
+(2, 3, 'FUNAAB-9C6-E8F-BC9-2', 'P-C-20241115-NFRG7A9DTQ', 1, 3, 15000.00, 15000.00, 'Paid', '2024-11-15 00:32:35', '2024-11-15 00:32:35', '2024-11-15 00:32:35'),
+(3, 4, 'FUNAAB-23D-416-3CA-B', 'P-C-20241115-RB5UDSJG3L', 2, 4, 12000.00, 12000.00, 'Paid', '2024-11-15 01:19:54', '2024-11-15 01:19:54', '2024-11-15 01:19:54');
 
 -- --------------------------------------------------------
 
@@ -418,10 +427,11 @@ INSERT INTO `payments` (`id`, `uid`, `reference_id`, `bill_id`, `student_id`, `t
 CREATE TABLE `transactions` (
   `id` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
-  `reference_id` int(11) DEFAULT NULL,
+  `reference_id` varchar(2000) DEFAULT NULL,
+  `gateway_reference` varchar(200) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `amount` decimal(15,2) NOT NULL,
-  `transaction_type` enum('credit','debit') NOT NULL,
+  `transaction_type` enum('credit','debit','donate') NOT NULL,
   `details` text DEFAULT NULL,
   `type` enum('donate','bill-payment','received-donation','bill-funded') NOT NULL,
   `type_id` int(11) NOT NULL,
@@ -433,13 +443,29 @@ CREATE TABLE `transactions` (
 -- Dumping data for table `transactions`
 --
 
-INSERT INTO `transactions` (`id`, `uid`, `reference_id`, `name`, `amount`, `transaction_type`, `details`, `type`, `type_id`, `status`, `timestamp`) VALUES
-(1, 3, NULL, 'Donation to Scholarship Fund', 150.00, 'debit', 'Contribution to university scholarship fund', 'donate', 102, 'success', '2024-11-11 17:49:54'),
-(2, 3, NULL, 'Payment for Library Bill', 30.00, 'debit', 'Payment for overdue library fees', 'bill-payment', 202, 'success', '2024-11-11 17:49:54'),
-(3, 3, NULL, 'Received Donation from Alumni Fund', 200.00, 'credit', 'Scholarship fund donation received from alumni association', 'received-donation', 102, 'success', '2024-11-11 17:49:54'),
-(4, 3, NULL, 'Failed Donation Attempt', 50.00, 'debit', 'Attempt to donate to environmental club campaign', 'donate', 103, 'failed', '2024-11-11 17:49:54'),
-(5, 3, NULL, 'Partially Funded University Bill', 300.00, 'debit', 'Partial payment toward university fee bill', 'bill-funded', 203, 'pending', '2024-11-11 17:49:54'),
-(6, 3, 5, 'Reversal of Failed Donation', 50.00, 'credit', 'Refund for previously failed donation attempt', 'donate', 103, 'reversed', '2024-11-11 17:49:54');
+INSERT INTO `transactions` (`id`, `uid`, `reference_id`, `gateway_reference`, `name`, `amount`, `transaction_type`, `details`, `type`, `type_id`, `status`, `timestamp`) VALUES
+(1, 3, NULL, NULL, 'Donation to Scholarship Fund', 150.00, 'debit', 'Contribution to university scholarship fund', 'donate', 102, 'success', '2024-11-11 17:49:54'),
+(2, 3, NULL, NULL, 'Payment for Library Bill', 30.00, 'debit', 'Payment for overdue library fees', 'bill-payment', 202, 'success', '2024-11-11 17:49:54'),
+(3, 3, NULL, NULL, 'Received Donation from Alumni Fund', 200.00, 'credit', 'Scholarship fund donation received from alumni association', 'received-donation', 102, 'success', '2024-11-11 17:49:54'),
+(4, 3, NULL, NULL, 'Failed Donation Attempt', 50.00, 'debit', 'Attempt to donate to environmental club campaign', 'donate', 103, 'failed', '2024-11-11 17:49:54'),
+(5, 3, NULL, NULL, 'Partially Funded University Bill', 300.00, 'debit', 'Partial payment toward university fee bill', 'bill-funded', 203, 'pending', '2024-11-11 17:49:54'),
+(6, 3, '5', NULL, 'Reversal of Failed Donation', 50.00, 'credit', 'Refund for previously failed donation attempt', 'donate', 103, 'reversed', '2024-11-11 17:49:54'),
+(7, 3, '1', NULL, 'Paid - ', 16500.00, 'debit', NULL, 'bill-payment', 0, 'success', '2024-11-13 21:35:18'),
+(8, 3, '1', NULL, 'Paid - ', 16500.00, 'debit', NULL, 'bill-payment', 0, 'success', '2024-11-13 21:36:30'),
+(9, 3, '1', NULL, 'Paid - ', 16500.00, 'debit', NULL, 'bill-payment', 0, 'success', '2024-11-13 21:38:56'),
+(10, 3, '1', NULL, 'Paid - ', 16500.00, 'debit', NULL, 'bill-payment', 0, 'success', '2024-11-13 21:39:31'),
+(11, 3, '0', NULL, 'Paid - Computer Networks Manual', 16500.00, 'debit', NULL, 'bill-payment', 5, 'success', '2024-11-13 21:41:14'),
+(12, 3, 'FUNAAB-78A-D77-5D7-8', NULL, 'Paid - Software Engineering Project Guide', 20000.00, 'debit', NULL, 'bill-payment', 4, 'success', '2024-11-13 21:50:31'),
+(13, 3, 'FUNAAB-5D6-3E0-422-2', NULL, 'Paid - Database Systems Guide', 18000.00, 'debit', NULL, 'bill-payment', 3, 'success', '2024-11-13 22:01:07'),
+(14, 4, 'FUNAAB-D5B-ED4-C39-A', NULL, 'Paid - Data Structures Manual', 12000.00, 'debit', NULL, 'bill-payment', 2, 'success', '2024-11-14 22:48:47'),
+(15, 3, 'FUNAAB-0CD-08D-BC1-8', NULL, 'Paid - Software Engineering Project Guide', 20000.00, 'debit', NULL, 'bill-payment', 4, 'success', '2024-11-14 22:57:39'),
+(16, 3, 'FUNAAB-0CD-08D-BC1-8', 'P-C-20241114-FMWH1JCTB4', 'Paid - Software Engineering Project Guide', 20000.00, 'debit', NULL, 'bill-payment', 4, 'success', '2024-11-14 22:59:54'),
+(17, 3, 'FUNAAB-9C6-E8F-BC9-2', 'P-C-20241115-NFRG7A9DTQ', 'Paid - Programming Fundamentals Handbook', 15000.00, 'debit', NULL, 'bill-payment', 1, 'success', '2024-11-15 00:32:35'),
+(18, 3, 'CAMPAIGN-A35-B54-E21-3', 'P-C-20241115-MLPSCGVU1Z', 'Received fund from campaign - ', 100.00, 'debit', NULL, 'received-donation', 2, 'success', '2024-11-15 00:49:55'),
+(19, 3, 'CAMPAIGN-A35-B54-E21-3', 'P-C-20241115-MLPSCGVU1Z', 'Donated funds via gateway to campaign - ', 100.00, 'donate', NULL, 'donate', 2, 'success', '2024-11-15 00:49:55'),
+(20, 3, 'CAMPAIGN-439-988-FEC-7', 'P-C-20241115-N2A69UZSMG', 'Received fund from campaign - ', 10000.00, 'credit', NULL, 'received-donation', 2, 'success', '2024-11-15 01:15:59'),
+(21, 4, 'CAMPAIGN-439-988-FEC-7', 'P-C-20241115-N2A69UZSMG', 'Donated funds via gateway to campaign - ', 10000.00, 'donate', NULL, 'donate', 2, 'success', '2024-11-15 01:15:59'),
+(22, 4, 'FUNAAB-23D-416-3CA-B', 'P-C-20241115-RB5UDSJG3L', 'Paid - Data Structures Manual', 12000.00, 'debit', NULL, 'bill-payment', 2, 'success', '2024-11-15 01:19:54');
 
 -- --------------------------------------------------------
 
@@ -586,8 +612,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fullname`, `email`, `balance`, `username`, `phone`, `dob`, `country`, `state`, `university`, `faculty`, `department`, `matric_no`, `password`, `level`, `bank_id`, `bank_account_name`, `account_number`, `created_at`, `last_login`, `gender`) VALUES
-(3, 'Adegbola AbdulBaqee', 'baqee20072007@gmail.com', 0.00, 'baqx', '09019659410', '2007-07-08', 'Nigeria', 'Ogun', 'FUNAAB', 'Engineering', 'Mathematics', 'baqx', '$2y$10$ZezJMEaMs5VWm7iIZ5VlbOV3YENFQY7w7p7AxTqIan1OCUEIP/1nq', '100', NULL, NULL, NULL, '2024-11-10 07:28:45', '2024-11-13 11:46:11', 'male'),
-(4, 'Code Corsair ', 'baqeecodes@gmail.com', 0.00, 'iambaqx', '09019659420', '2007-11-10', 'Nigeria', 'Ogun', 'BabcockU', 'Engineering', 'Computer Science', '20243900', '$2y$10$9dGg1v6.UVAwtH2Ixm1ajOCCQlgf9Mzi4WsRWVCeaAtZBuH5lyB1G', '100', NULL, NULL, NULL, '2024-11-10 13:25:38', '2024-11-13 12:26:25', 'male'),
+(3, 'Adegbola AbdulBaqee', 'baqee20072007@gmail.com', 10200.00, 'baqx', '09019659410', '2007-07-08', 'Nigeria', 'Ogun', 'FUNAAB', 'Engineering', 'Mathematics', 'baqx', '$2y$10$ZezJMEaMs5VWm7iIZ5VlbOV3YENFQY7w7p7AxTqIan1OCUEIP/1nq', '100', NULL, NULL, NULL, '2024-11-10 07:28:45', '2024-11-13 22:55:57', 'male'),
+(4, 'Code Corsair ', 'baqeecodes@gmail.com', 0.00, 'iambaqx', '09019659420', '2007-11-10', 'Nigeria', 'Ogun', 'BabcockU', 'Engineering', 'Computer Science', '20243900', '$2y$10$9dGg1v6.UVAwtH2Ixm1ajOCCQlgf9Mzi4WsRWVCeaAtZBuH5lyB1G', '100', NULL, NULL, NULL, '2024-11-10 13:25:38', '2024-11-15 02:14:40', 'male'),
 (5, 'Adeknle Gold', 'bgoldbaqee@yahoo.com', 0.00, 'baqxes', '09119659410', '2007-07-08', 'Nigeria', 'Ogun', 'FUNAAB', 'Engineering', 'Computer Science', '20143905', '$2y$10$5lcYZVBH5yrggt7H70HB5e3b689YL30FZhN97Ts39NihiT799RSQ6', '100', NULL, NULL, NULL, '2024-11-11 06:04:05', '2024-11-11 08:58:53', 'male');
 
 --
@@ -667,7 +693,7 @@ ALTER TABLE `bills`
 -- AUTO_INCREMENT for table `bill_invoice`
 --
 ALTER TABLE `bill_invoice`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `campaigns`
@@ -685,7 +711,7 @@ ALTER TABLE `creators`
 -- AUTO_INCREMENT for table `donations`
 --
 ALTER TABLE `donations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `payments`
@@ -697,7 +723,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `universities`
