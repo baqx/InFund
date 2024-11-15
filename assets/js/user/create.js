@@ -126,7 +126,7 @@ form.addEventListener("submit", function (e) {
         if (response.success) {
           toastr.success(response.message);
           setTimeout(function () {
-            window.location.href = "view_campaign?id=" + response.campaign_id;
+            window.location.href = "./campaign?id=" + response.campaign_id;
           }, 1500);
         } else {
           toastr.error(response.message);
