@@ -70,7 +70,7 @@ InFund comes with support for major institutions across the country and their va
 
 ## Contributors  
 
-- [John Ojure](https://github.com/johnojure)  
-- [Baqx](https://github.com/baqx)  
+- [Kunle-Ajayi Oluwasetemi](https://github.com/johnojure)  
+- [Adegbola Abdulbaqee](https://github.com/baqx)  
 
 ---
