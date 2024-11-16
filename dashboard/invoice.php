@@ -143,10 +143,12 @@ include '../includes/user/nav.php';
                     Pay Now
                 </button>
             <?php endif; ?>
-            <button class="btn btn-secondary" id="downloadButton">
+           <!-- TODO: 
+             <button class="btn btn-secondary" id="downloadButton">
                 <i class="fas fa-download"></i>
                 Download Invoice
             </button>
+            -->
             <button class="btn btn-secondary" id="printButton">
                 <i class="fas fa-print"></i>
                 Print
