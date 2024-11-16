@@ -487,7 +487,9 @@ unset($_SESSION['form_data']);
 
         <?php if (isset($_SESSION['error_message'])) : ?>
             toastr.error("<?php echo $_SESSION['error_message']; ?>");
+           alert("Error");
             <?php unset($_SESSION['error_message']); ?>
+
         <?php endif; ?>
     </script>
     <script src="./assets/js/auth_pages/signup.js"></script>

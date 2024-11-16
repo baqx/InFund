@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['university_id'] = $row['id'];
         $_SESSION['university_abbreviation'] = $row['abbreviation'];
         // Redirect to dashboard or another page
-        header("Location: dashboard.php");
+        header("Location: ../../uni/dashboard.php");
         exit;
     } else {
         header("Location: ../../uni/login.php?error=" . urlencode($error_message));

@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $_SESSION['form_errors'] = $errors;
         $_SESSION['form_data'] = $_POST; // Save form data for repopulating
-        header("Location: ../signup.php");
+        header("Location: ../signup.php?error=err");
         exit();
     }
 }
