@@ -1,11 +1,10 @@
 <?php
 session_start();
 include './config/config.php';
-include './includes/get_universities.php'; // Function that fetches list of universities from the database
-// Handle university selection
+include './includes/get_universities.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['university'])) {
     $university = filter_var($_POST['university'], FILTER_SANITIZE_STRING);
-    setcookie('university', $university, time() + (86400 * 365), "/"); // 1 year
+    setcookie('university', $university, time() + (86400 * 365), "/");
     header('Location: ' . $_SERVER['PHP_SELF']);
     exit;
 }
@@ -25,7 +24,7 @@ $universities = get_universities();
     <link rel="stylesheet" href="./assets/css/landing/nav_only.css">
     <link rel="stylesheet" href="./assets/css/animate.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -55,7 +54,11 @@ $universities = get_universities();
                 <img src='./assets/images/static/logo_text.png' alt="InFund" />
             </div>
             <button class="menu-button" aria-label="Toggle menu">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
             </button>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
@@ -66,88 +69,237 @@ $universities = get_universities();
         </div>
     </nav>
     <div class="overlay"></div>
-    
     <!-- Hero Section -->
-    <section id="home" class="hero wow animate__animated animate__fadeIn">
-        <div class="hero-content">
-            <h1>Your next door crowdfunding solutions for universities and students</h1>
-            <p>Let's make your university projects come to life with the power of community funding</p>
-            <div class="cta-buttons">
-                <a href="./signup" class="btn-primary">Get Started</a>
-                <a href="./campaigns" class="btn-secondary">View Campaigns</a>
+    <div class="hero-wrapper">
+        <div class="hero-shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#b36264" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+            </svg>
+        </div>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <span class="hero-badge wow fadeIn">Trusted by 50+ Universities</span>
+                <h1 class="wow fadeInUp">
+                    Transform Your
+                    <span class="gradient-text">Academic Dreams</span>
+                    into Reality
+                </h1>
+                <p class="wow fadeInUp" data-wow-delay="0.2s">
+                    Empowering students and institutions through innovative crowdfunding solutions.
+                    Join the future of educational financing.
+                </p>
+                <div class="cta-buttons wow fadeInUp" data-wow-delay="0.4s">
+                    <a href="./signup" class="btn-primary">Launch Your Campaign <i class="fas fa-arrow-right"></i></a>
+                    <a href="./dashboard/discover" class="btn-secondary">Explore Projects</a>
+                </div>
+                <div class="hero-stats wow fadeInUp" data-wow-delay="0.6s">
+                    <div class="stat-item">
+                        <span class="stat-number">₦50M+</span>
+                        <span class="stat-label">Funds Raised</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">1000+</span>
+                        <span class="stat-label">Projects Funded</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">98%</span>
+                        <span class="stat-label">Success Rate</span>
+                    </div>
+                </div>
             </div>
+            <div class="hero-image wow fadeInRight">
+                <div class="image-wrapper">
+                    <img src="./assets/images/static/hero.png" alt="Crowdfunding Illustration">
+                    <div class="floating-card card-1">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Project Growth</span>
+                    </div>
+                    <div class="floating-card card-2">
+                        <i class="fas fa-users"></i>
+                        <span>Community Support</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Partners Section -->
+    <section class="partners">
+        <div class="section-header wow fadeInUp">
+            <h4>Trusted Partners</h4>
+            <p>Working with leading institutions to make education accessible</p>
         </div>
-        <div class="hero-image">
-            <img src="./assets/images/static/hero.png" alt="Crowdfunding Illustration">
+        <div class="partners-grid wow fadeInUp">
+            <div class="partner-card">
+                <img src="./assets/images/partners/payaza.gif" height="150px" width="150px" alt="Payaza">
+            </div>
+          
         </div>
     </section>
 
-    <!-- Trust Badge Section -->
-    <section class="trust-badges">
-        <p>Our Partners</p>
-        <div class="badge-container">
-            <img src="./assets/images/partners/payaza.gif" height="70px" width="100px" alt="University Badge">
-
+    <!-- Campaign Section -->
+    <section id="campaigns" class="campaigns">
+        <div class="section-header wow fadeInUp">
+            <h2>Featured Campaigns</h2>
+            <p>Discover innovative projects that are shaping the future of education</p>
         </div>
-    </section>
-
-    <!-- Active Campaigns Section -->
-    <section id="campaigns" class="campaigns wow fadeIn">
-        <h2>Active Campaigns</h2>
         <div class="campaign-grid">
             <!-- Campaign Card 1 -->
-            <div class="campaign-card wow animate__animated animate__fadeInUp">
-                <img src="./assets/images/campaigns/fund.jpg" alt="Research Lab Equipment">
+            <div class="campaign-card wow fadeInUp">
+                <div class="campaign-banner">
+                    <img src="./assets/images/campaigns/fund.jpg" alt="Research Lab Equipment">
+                    <div class="campaign-category">Research</div>
+                </div>
                 <div class="campaign-content">
                     <h3>Research Lab Equipment</h3>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 75%"></div>
+                    <div class="campaign-meta">
+                        <span><i class="fas fa-calendar"></i> 30 days left</span>
+                        <span><i class="fas fa-users"></i> 245 backers</span>
                     </div>
-                    <div class="campaign-stats">
-                        <span>$15,000 raised of $20,000</span>
-                        <span>75%</span>
+                    <div class="progress-wrapper">
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 75%"></div>
+                        </div>
+                        <div class="progress-stats">
+                            <span class="amount">₦15,000,000</span>
+                            <span class="percentage">75%</span>
+                        </div>
                     </div>
                     <p>Help us equip our new research laboratory with cutting-edge equipment</p>
-                    <a href="#" class="btn-secondary">Support Project</a>
+                    <a href="#" class="btn-primary">Support Project</a>
                 </div>
             </div>
 
-            <!-- Campaign Card 2 -->
-            <div class="campaign-card wow animate__animated animate__fadeInUp" data-wow-delay="0.2s">
-                <img src="./assets/images/campaigns/fund.jpg" alt="Student Innovation Hub">
+            <div class="campaign-card wow fadeInUp">
+                <div class="campaign-banner">
+                    <img src="./assets/images/campaigns/fund.jpg" alt="Research Lab Equipment">
+                    <div class="campaign-category">Research</div>
+                </div>
                 <div class="campaign-content">
-                    <h3>Student Innovation Hub</h3>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 45%"></div>
+                    <h3>Research Lab Equipment</h3>
+                    <div class="campaign-meta">
+                        <span><i class="fas fa-calendar"></i> 30 days left</span>
+                        <span><i class="fas fa-users"></i> 245 backers</span>
                     </div>
-                    <div class="campaign-stats">
-                        <span>$9,000 raised of $20,000</span>
-                        <span>45%</span>
+                    <div class="progress-wrapper">
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 75%"></div>
+                        </div>
+                        <div class="progress-stats">
+                            <span class="amount">₦15,000,000</span>
+                            <span class="percentage">75%</span>
+                        </div>
                     </div>
-                    <p>Creating a collaborative space for student entrepreneurs</p>
-                    <a href="#" class="btn-secondary">Support Project</a>
+                    <p>Help us equip our new research laboratory with cutting-edge equipment</p>
+                    <a href="#" class="btn-primary">Support Project</a>
+                </div>
+            </div>
+            <div class="campaign-card wow fadeInUp">
+                <div class="campaign-banner">
+                    <img src="./assets/images/campaigns/fund.jpg" alt="Research Lab Equipment">
+                    <div class="campaign-category">Research</div>
+                </div>
+                <div class="campaign-content">
+                    <h3>Research Lab Equipment</h3>
+                    <div class="campaign-meta">
+                        <span><i class="fas fa-calendar"></i> 30 days left</span>
+                        <span><i class="fas fa-users"></i> 245 backers</span>
+                    </div>
+                    <div class="progress-wrapper">
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 75%"></div>
+                        </div>
+                        <div class="progress-stats">
+                            <span class="amount">₦15,000,000</span>
+                            <span class="percentage">75%</span>
+                        </div>
+                    </div>
+                    <p>Help us equip our new research laboratory with cutting-edge equipment</p>
+                    <a href="#" class="btn-primary">Support Project</a>
+                </div>
+            </div>
+            <div class="campaign-card wow fadeInUp">
+                <div class="campaign-banner">
+                    <img src="./assets/images/campaigns/fund.jpg" alt="Research Lab Equipment">
+                    <div class="campaign-category">Research</div>
+                </div>
+                <div class="campaign-content">
+                    <h3>Research Lab Equipment</h3>
+                    <div class="campaign-meta">
+                        <span><i class="fas fa-calendar"></i> 30 days left</span>
+                        <span><i class="fas fa-users"></i> 245 backers</span>
+                    </div>
+                    <div class="progress-wrapper">
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 75%"></div>
+                        </div>
+                        <div class="progress-stats">
+                            <span class="amount">₦15,000,000</span>
+                            <span class="percentage">75%</span>
+                        </div>
+                    </div>
+                    <p>Help us equip our new research laboratory with cutting-edge equipment</p>
+                    <a href="#" class="btn-primary">Support Project</a>
+                </div>
+            </div>
+            <div class="campaign-card wow fadeInUp">
+                <div class="campaign-banner">
+                    <img src="./assets/images/campaigns/fund.jpg" alt="Research Lab Equipment">
+                    <div class="campaign-category">Research</div>
+                </div>
+                <div class="campaign-content">
+                    <h3>Research Lab Equipment</h3>
+                    <div class="campaign-meta">
+                        <span><i class="fas fa-calendar"></i> 30 days left</span>
+                        <span><i class="fas fa-users"></i> 245 backers</span>
+                    </div>
+                    <div class="progress-wrapper">
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 75%"></div>
+                        </div>
+                        <div class="progress-stats">
+                            <span class="amount">₦15,000,000</span>
+                            <span class="percentage">75%</span>
+                        </div>
+                    </div>
+                    <p>Help us equip our new research laboratory with cutting-edge equipment</p>
+                    <a href="#" class="btn-primary">Support Project</a>
                 </div>
             </div>
 
-            <!-- Campaign Card 3 -->
-            <div class="campaign-card wow animate__animated animate__fadeInUp" data-wow-delay="0.4s">
-                <img src="./assets/images/campaigns/fund.jpg" alt="Green Campus Initiative">
-                <div class="campaign-content">
-                    <h3>Green Campus Initiative</h3>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 90%"></div>
-                    </div>
-                    <div class="campaign-stats">
-                        <span>$18,000 raised of $20,000</span>
-                        <span>90%</span>
-                    </div>
-                    <p>Supporting sustainability projects across campus</p>
-                    <a href="#" class="btn-secondary">Support Project</a>
-                </div>
-            </div>
         </div>
-        <div class="text-center">
-            <button class="btn-secondary view-more">View More Campaigns</button>
+    </section>
+
+    <!-- New Impact Section -->
+    <section class="impact">
+        <div class="impact-content">
+            <div class="section-header wow fadeInUp">
+                <h2>Making Real Impact</h2>
+                <p>See how we're transforming education through community support</p>
+            </div>
+            <div class="impact-grid">
+                <div class="impact-card wow fadeInUp">
+                    <div class="impact-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>5,000+</h3>
+                    <p>Students Supported</p>
+                </div>
+                <div class="impact-card wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="impact-icon">
+                        <i class="fas fa-school"></i>
+                    </div>
+                    <h3>50+</h3>
+                    <p>Partner Universities</p>
+                </div>
+                <div class="impact-card wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="impact-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>98%</h3>
+                    <p>Project Success Rate</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -200,7 +352,7 @@ $universities = get_universities();
     </section>
 
     <!-- Benefits Section -->
-    <!-- Benefits Section -->
+
     <section id="benefits" class="benefits wow animate__animated animate__fadeIn">
         <h2>Mobilize Resources for</h2>
         <div class="benefits-grid">
@@ -226,7 +378,27 @@ $universities = get_universities();
             </div>
         </div>
     </section>
-
+    <!-- New Testimonials Section 
+    <section class="testimonials">
+        <div class="section-header wow fadeInUp">
+            <h2>What Our Users Say</h2>
+            <p>Real stories from students and institutions</p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card wow fadeInUp">
+                <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
+                <p>"Infund made it possible for our department to acquire new lab equipment. The process was seamless!"</p>
+                <div class="testimonial-author">
+                    <img src="/api/placeholder/40/40" alt="John Doe">
+                    <div>
+                        <h4>John Doe</h4>
+                        <p>Department Head, Engineering</p>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+    </section>-->
 
     <!-- Footer -->
     <footer>
@@ -267,7 +439,11 @@ $universities = get_universities();
             <p>&copy; <?php echo date('Y'); ?> Infund. All rights reserved.</p>
         </div>
     </footer>
+
     <script src="./assets/js/wow.min.js"></script>
+    <script>
+        new WOW().init();
+    </script>
     <script src="./assets/js/landing/nav.js"></script>
 </body>
 
