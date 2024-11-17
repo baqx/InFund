@@ -8,6 +8,13 @@ if (!isset($_SESSION['user_id'])) {
     die(json_encode(['success' => false, 'message' => 'User not authenticated']));
 }
 
+// API Configuration
+$url = "https://openrouter.ai/api/v1/chat/completions";
+$keyIndex = 0;
+$OPENROUTER_API_KEY_1 = "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";
+$OPENROUTER_API_KEY_2 = "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";
+$OPENROUTER_API_KEY = $OPENROUTER_API_KEY_2;
+
 // Validate form data
 $errors = [];
 
@@ -88,14 +95,148 @@ if (!empty($errors)) {
     die(json_encode(['success' => false, 'message' => implode("<br>", $errors)]));
 }
 
-// Prepare and execute SQL
+// Spam Check Functions
+function makePostRequest($url, $data, $headers = []) {
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($ch);
+
+    if(curl_errno($ch)){
+        curl_close($ch);
+        return null;
+    }
+    curl_close($ch);
+
+    return json_decode($response, true);
+}
+
+function switchApiKey(&$currentKeyIndex) {
+    global $OPENROUTER_API_KEY_1, $OPENROUTER_API_KEY_2, $OPENROUTER_API_KEY;
+    $currentKeyIndex = ($currentKeyIndex + 1) % 2;
+    $OPENROUTER_API_KEY = ($currentKeyIndex == 0) ? $OPENROUTER_API_KEY_1 : $OPENROUTER_API_KEY_2;
+}
+
+function checkSpamLevel($description, $impact, $importance) {
+    global $url, $OPENROUTER_API_KEY, $keyIndex;
+
+    $promptContent = "PROMPT: " . $description . "\n" . $impact . "\n" . $importance;
+    
+    $criteria = "A campaign is a means for crowdfunding for ONLY university educational purposes. 
+
+    Evaluate using these key indicators:
+
+    Likely_Genuine Indicators:
+    - Clear, detailed description of educational purpose(classify as likely_spam if vague, unclear or missing)
+    - Said purpose must actually be educational in nature
+    - Specific breakdown of how funds will be used for said educational purpose(classify as likely_spam if vague, unclear or missing)
+
+    Likely_Spam Indicators:
+    - Has no clear educational purpose
+    - Vague or generic educational purpose
+    - Overly emotional or manipulative language
+    - Lack of specific fund allocation details(this is of extreme importance)
+    - Threatening message or tone
+
+    Likely_Unsure Indicators:
+    - Partially incomplete information
+    - Some details present but lacking full clarity
+    - Moderate inconsistencies in the description
+    - Requires additional verification
+
+    If your classification is 'likely_genuine' then let your only response strictly be likely_genuine.
+    If your classification is 'likely_spam' then let your only response strictly be likely_spam.
+    If your classification is 'likely_unsure' then let your only response strictly be likely_unsure.";
+
+    $headers = [
+        "Authorization: Bearer " . $OPENROUTER_API_KEY,
+        "Content-Type: application/json"
+    ];
+
+    $data = [
+        "model" => "nousresearch/hermes-3-llama-3.1-405b:free",
+        "messages" => [
+            [
+                "role" => "user",
+                "content" => $promptContent . $criteria
+            ]
+        ]
+    ];
+
+    $spamCount = 0;
+    $genuineCount = 0;
+    $unsureCount = 0;
+    
+    // Test API connection
+    $standardData = [
+        "model" => "nousresearch/hermes-3-llama-3.1-405b:free",
+        "messages" => [
+            [
+                "role" => "user",
+                "content" => "Hello"
+            ]
+        ]
+    ];
+
+    $isWorking = false;
+    for($retries = 0; $retries < 4; $retries++) {
+        $standardResponseData = makePostRequest($url, $standardData, $headers);
+        if (isset($standardResponseData['choices'])) {
+            $isWorking = true;
+            break;
+        }
+        switchApiKey($keyIndex);
+    }
+
+    if (!$isWorking) {
+        return null;
+    }
+
+    // Perform spam check
+    for ($i = 0; $i < 5; $i++) {
+        $responseData = makePostRequest($url, $data, $headers);
+        if (!isset($responseData['choices'][0]['message']['content'])) {
+            continue;
+        }
+
+        $assistantResponse = $responseData['choices'][0]['message']['content'];
+        switch ($assistantResponse) {
+            case 'likely_spam':
+                $spamCount++;
+                break;
+            case 'likely_genuine':
+                $genuineCount++;
+                break;
+            case 'likely_unsure':
+                $unsureCount++;
+                break;
+        }
+        sleep(2);
+    }
+
+    $totalCount = $genuineCount + $spamCount + $unsureCount;
+    if ($totalCount == 0) {
+        return null;
+    }
+
+    $percentSpam = ($spamCount / $totalCount) * 100;
+    return round($percentSpam, 2);
+}
+
+// Check spam level
+$spam_level = checkSpamLevel($_POST['description'], $_POST['impact'], $_POST['importance']);
+
+// Prepare and execute SQL with spam_level
 $sql = "INSERT INTO campaigns (title, description, impact, importance, uid, goal_amount, 
-        start_date, end_date, image1, image2, image3, image4) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        start_date, end_date, image1, image2, image3, image4, spam_level) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param(
-    "ssssidssssss",
+    "ssssidssssssd",
     $_POST['title'],
     $_POST['description'],
     $_POST['impact'],
@@ -107,7 +248,8 @@ $stmt->bind_param(
     $image1,
     $image2,
     $image3,
-    $image4
+    $image4,
+    $spam_level
 );
 
 if ($stmt->execute()) {

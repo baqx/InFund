@@ -1,0 +1,222 @@
+/* create-bill.css */
+
+/* Main Layout */
+.main-content {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Form Card */
+.form-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Form Header */
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.form-title {
+    font-size: 1.75rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.form-subtitle {
+    color: #666;
+    font-size: 1rem;
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #444;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus {
+    border-color: #8d4b4c;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    outline: none;
+}
+
+select.form-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
+}
+
+select.form-input:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+    border-color: #ddd;
+    color: #999;
+}
+
+/* Input Addon (for price input) */
+.input-addon {
+    display: flex;
+    align-items: center;
+}
+
+.input-addon-text {
+    background: #f5f5f5;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ddd;
+    border-right: none;
+    border-radius: 6px 0 0 6px;
+    color: #666;
+    font-weight: 500;
+}
+
+.input-addon .form-input {
+    border-radius: 0 6px 6px 0;
+}
+
+/* Form Hints and Error Messages */
+.form-hint {
+    font-size: 0.875rem;
+    color: #666;
+    margin-top: 0.25rem;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: none;
+}
+
+.form-input.error {
+    border-color: #dc3545;
+}
+
+.form-input.error + .error-message {
+    display: block;
+}
+
+/* Buttons */
+.form-buttons {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.form-button {
+    padding: 0.75rem 2rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+}
+
+.button-primary {
+    background-color: #8d4b4c;
+    color: white;
+}
+
+.button-primary:hover {
+    background-color: #8d4b4c;
+}
+
+.button-primary:active {
+    transform: translateY(1px);
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border: 0.25rem solid #fff;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 1rem;
+    }
+
+    .form-card {
+        padding: 1.5rem;
+    }
+
+    .form-button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Validation States */
+.form-input:valid {
+    border-color: #28a745;
+}
+
+.form-input:invalid:not(:placeholder-shown) {
+    border-color: #dc3545;
+}
+
+/* Focus States with Better Accessibility */
+.form-input:focus-visible {
+    border-color: #8d4b4c;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+    outline: none;
+}
+
+/* Print Styles */
+@media print {
+    .form-card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+
+    .form-button {
+        display: none;
+    }
+}

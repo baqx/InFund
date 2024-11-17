@@ -31,7 +31,7 @@ include '../includes/user/nav.php'; ?>
 
             <div class="form-group">
                 <label class="form-label" for="description">Campaign Description*</label>
-                <textarea id="description" name="description" class="form-input" required placeholder="Describe your campaign in detail"></textarea>
+                <input id="description" maxlength="100" name="description" class="form-input" required placeholder="Describe your campaign in detail">
                 <div class="form-hint">Include specific details about your campaign</div>
                 <div class="error-message">Description is required</div>
             </div>

@@ -69,7 +69,7 @@ $featured_campaigns = getHomepageCampaigns();
                 <li><a href="#campaigns">Campaigns</a></li>
                 <li><a href="#features">Features</a></li>
                 <li><a href="./uni/login">Universities</a></li>
-                <li><a href="./admins/login">Administrators</a></li>
+                <li><a href="./admin/login">Administrators</a></li>
                 <li><a href="./login"><button class="btn-primary">Login</button></a></li>
             </ul>
         </div>

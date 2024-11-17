@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 16, 2024 at 04:21 PM
+-- Generation Time: Nov 17, 2024 at 02:31 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -594,7 +594,8 @@ CREATE TABLE `bill_invoice` (
 INSERT INTO `bill_invoice` (`id`, `name`, `bill_id`, `uid`, `reference_id`, `gateway_reference`, `due_date`, `total_amount`, `status`, `got_funded`, `created_at`, `updated_at`) VALUES
 (1, 'Computer Networks Manual', 5, 3, 'FUNAAB-1AE-904-09D-5', 'P-C-20241115-IUARWKY34B', '2024-11-20', 16500.00, 'Paid', 'False', '2024-11-15 09:48:07', '2024-11-15 09:50:42'),
 (2, 'Programming Fundamentals Handbook', 1, 3, 'FUNAAB-EE2-F5E-315-B', 'P-C-20241115-W5EF6MPDVC', '2024-11-30', 15000.00, 'Paid', 'False', '2024-11-15 10:58:10', '2024-11-15 10:59:15'),
-(3, 'Software Engineering Project Guide', 4, 3, 'FUNAAB-3A3-AD7-F25-D', 'P-C-20241115-QB93YXSHIL', '2024-12-01', 20000.00, 'Paid', 'False', '2024-11-15 18:12:08', '2024-11-15 18:12:40');
+(3, 'Software Engineering Project Guide', 4, 3, 'FUNAAB-3A3-AD7-F25-D', 'P-C-20241115-QB93YXSHIL', '2024-12-01', 20000.00, 'Paid', 'False', '2024-11-15 18:12:08', '2024-11-15 18:12:40'),
+(4, 'Database Systems Guide', 3, 3, 'FUNAAB-9B4-1C0-CB1-7', 'P-C-20241117-YD2AZNCJMU', '2024-12-15', 18000.00, 'Paid', 'False', '2024-11-17 07:12:21', '2024-11-17 07:12:56');
 
 -- --------------------------------------------------------
 
@@ -610,6 +611,7 @@ CREATE TABLE `campaigns` (
   `importance` text DEFAULT NULL,
   `uid` int(11) NOT NULL,
   `goal_amount` decimal(15,2) NOT NULL,
+  `university` varchar(200) DEFAULT NULL,
   `amount_raised` decimal(15,2) DEFAULT 0.00,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
@@ -626,10 +628,11 @@ CREATE TABLE `campaigns` (
 -- Dumping data for table `campaigns`
 --
 
-INSERT INTO `campaigns` (`id`, `title`, `description`, `impact`, `importance`, `uid`, `goal_amount`, `amount_raised`, `start_date`, `end_date`, `status`, `created_at`, `updated_at`, `image1`, `image2`, `image3`, `image4`) VALUES
-(1, 'Lorel Ipsum', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, leo nec pellentesque finibus, ex tortor hendrerit sem, sit amet pulvinar nibh nunc quis nunc. Curabitur lectus orci, feugiat at ipsum ut, interdum feugiat leo. Quisque et semper augue, eget ullamcorper nisl. Quisque magna diam, congue ac enim et, finibus elementum diam. Phasellus nibh nunc, interdum ut dignissim eget, aliquet sit amet nisl. Sed tincidunt faucibus erat, feugiat sollicitudin lectus tincidunt in. Vivamus ac elit sit amet ante fringilla blandit. Vivamus pretium, massa tincidunt volutpat rhoncus, nunc lectus faucibus sem, eget congue justo neque eu enim. Aenean rutrum egestas suscipit. Duis id congue sapien.\r\n', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, leo nec pellentesque finibus, ex tortor hendrerit sem, sit amet pulvinar nibh nunc quis nunc. Curabitur lectus orci, feugiat at ipsum ut, interdum feugiat leo. Quisque et semper augue, eget ullamcorper nisl. Quisque magna diam, congue ac enim et, finibus elementum diam. Phasellus nibh nunc, interdum ut dignissim eget, aliquet sit amet nisl. Sed tincidunt faucibus erat, feugiat sollicitudin lectus tincidunt in. Vivamus ac elit sit amet ante fringilla blandit. Vivamus pretium, massa tincidunt volutpat rhoncus, nunc lectus faucibus sem, eget congue justo neque eu enim. Aenean rutrum egestas suscipit. Duis id congue sapien.\r\n\r\nPellentesque iaculis rhoncus lacinia. Aenean dignissim nisi leo, et vehicula tellus euismod vitae. Aliquam ac volutpat justo. Morbi a mollis lacus, nec pulvinar dolor. In auctor mi id velit maximus placerat. Integer ultricies quis leo iaculis vestibulum. Curabitur viverra porttitor eros et efficitur. Aenean lectus velit, consequat ut enim quis, bibendum luctus nunc. Maecenas dictum, est nec accumsan lobortis, risus nulla porta quam, quis feugiat lacus nibh a sem. Vivamus ut rutrum erat. Nam accumsan pulvinar turpis id faucibus. Ut in mi in lacus dictum fringilla sed eget arcu. Aliquam lobortis in eros eu efficitur. Quisque vel egestas mauris. Duis neque augue, dignissim at tempus vel, ultricies euismod metus. Praesent luctus elit nec metus ornare tristique.', '\r\nPellentesque iaculis rhoncus lacinia. Aenean dignissim nisi leo, et vehicula tellus euismod vitae. Aliquam ac volutpat justo. Morbi a mollis lacus, nec pulvinar dolor. In auctor mi id velit maximus placerat. Integer ultricies quis leo iaculis vestibulum. Curabitur viverra porttitor eros et efficitur. Aenean lectus velit, consequat ut enim quis, bibendum luctus nunc. Maecenas dictum, est nec accumsan lobortis, risus nulla porta quam, quis feugiat lacus nibh a sem. Vivamus ut rutrum erat. Nam accumsan pulvinar turpis id faucibus. Ut in mi in lacus dictum fringilla sed eget arcu. Aliquam lobortis in eros eu efficitur. Quisque vel egestas mauris. Duis neque augue, dignissim at tempus vel, ultricies euismod metus. Praesent luctus elit nec metus ornare tristique.', 3, 4000.00, 6000.00, '2024-11-10', '2024-11-19', 'completed', '2024-11-10 08:23:35', '2024-11-10 12:26:50', 'campaign_1731227015_67306d87e42b8.png', NULL, NULL, NULL),
-(2, 'Help me go to Rema\'s concert', 'Your support extends beyond attending a concert; it fuels fandom, community, and cultural appreciation. By contributing, you\'ll: 1. Enable a devoted fan to experience pure joy 2. Promote African music and cultural exchange 3. Encourage enthusiasm and dedication 4. Create lifelong memories Every donation counts! Thank you for helping make my Rema concert dream a reality!', 'Rema\'s music resonates deeply with me, providing motivation, comfort, and happiness. His artistry inspires me to pursue my passions, embrace individuality, and celebrate African culture. Attending the concert will be an unforgettable experience, allowing me to connect with fellow fans and witness his electrifying performance live. Your contribution will bring me closer to realizing this dream, fostering unforgettable memories.', 'Rema\'s music resonates deeply with me, providing motivation, comfort, and happiness. His artistry inspires me to pursue my passions, embrace individuality, and celebrate African culture. Attending the concert will be an unforgettable experience, allowing me to connect with fellow fans and witness his electrifying performance live. Your contribution will bring me closer to realizing this dream, fostering unforgettable memories.', 3, 50000.00, 53507.00, '2024-11-11', '2024-12-15', 'completed', '2024-11-11 03:35:46', '2024-11-15 09:46:58', 'campaign_1731296146_67317b9222ddc.png', NULL, NULL, NULL),
-(3, 'Help me buy Garri', 'We all love garri,231150511233,231150511233', '\r\nCode Corsair\r\nLorel Ipsum\r\nAdegbola AbdulBaqee\r\nMathematics\r\n3 days left\r\n2 donors\r\n₦6,000.00 raised\r\n₦4,000.00 goal\r\n\r\nShare\r\n\r\nWhatsApp\r\n\r\nTwitter\r\nAbout This Campaign\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, leo nec pellentesque finibus, ex tortor hendrerit sem, sit amet pulvinar nibh nunc quis nunc. Curabitur lectus orci, feugiat at ipsum ut, interdum feugiat leo. Quisque et semper augue, eget ullamcorper nisl. Quisque magna diam, congue ac enim et, finibus elementum diam. Phasellus nibh nunc, interdum ut dignissim eget, aliquet sit amet nisl. Sed tincidunt faucibus erat, feugiat sollicitudin lectus tincidunt in. Vivamus ac elit sit amet ante fringilla blandit. Vivamus pretium, massa tincidunt volutpat rhoncus, nunc lectus faucibus sem, eget congue justo neque eu enim. Aenean rutrum egestas suscipit. Duis id congue sapien.', '\r\nCode Corsair\r\nLorel Ipsum\r\nAdegbola AbdulBaqee\r\nMathematics\r\n3 days left\r\n2 donors\r\n₦6,000.00 raised\r\n₦4,000.00 goal\r\n\r\nShare\r\n\r\nWhatsApp\r\n\r\nTwitter\r\nAbout This Campaign\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, leo nec pellentesque finibus, ex tortor hendrerit sem, sit amet pulvinar nibh nunc quis nunc. Curabitur lectus orci, feugiat at ipsum ut, interdum feugiat leo. Quisque et semper augue, eget ullamcorper nisl. Quisque magna diam, congue ac enim et, finibus elementum diam. Phasellus nibh nunc, interdum ut dignissim eget, aliquet sit amet nisl. Sed tincidunt faucibus erat, feugiat sollicitudin lectus tincidunt in. Vivamus ac elit sit amet ante fringilla blandit. Vivamus pretium, massa tincidunt volutpat rhoncus, nunc lectus faucibus sem, eget congue justo neque eu enim. Aenean rutrum egestas suscipit. Duis id congue sapien.', 4, 70000.00, 80000.00, '2024-11-15', '2024-11-21', 'completed', '2024-11-15 01:46:10', '2024-11-15 01:53:25', 'campaign_1731635170_6736a7e284b23.jpg', 'campaign_1731635170_6736a7e285774.jpg', 'campaign_1731635170_6736a7e28676f.jpg', NULL);
+INSERT INTO `campaigns` (`id`, `title`, `description`, `impact`, `importance`, `uid`, `goal_amount`, `university`, `amount_raised`, `start_date`, `end_date`, `status`, `created_at`, `updated_at`, `image1`, `image2`, `image3`, `image4`) VALUES
+(1, 'Lorel Ipsum', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, leo nec pellentesque finibus, ex tortor hendrerit sem, sit amet pulvinar nibh nunc quis nunc. Curabitur lectus orci, feugiat at ipsum ut, interdum feugiat leo. Quisque et semper augue, eget ullamcorper nisl. Quisque magna diam, congue ac enim et, finibus elementum diam. Phasellus nibh nunc, interdum ut dignissim eget, aliquet sit amet nisl. Sed tincidunt faucibus erat, feugiat sollicitudin lectus tincidunt in. Vivamus ac elit sit amet ante fringilla blandit. Vivamus pretium, massa tincidunt volutpat rhoncus, nunc lectus faucibus sem, eget congue justo neque eu enim. Aenean rutrum egestas suscipit. Duis id congue sapien.\r\n', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, leo nec pellentesque finibus, ex tortor hendrerit sem, sit amet pulvinar nibh nunc quis nunc. Curabitur lectus orci, feugiat at ipsum ut, interdum feugiat leo. Quisque et semper augue, eget ullamcorper nisl. Quisque magna diam, congue ac enim et, finibus elementum diam. Phasellus nibh nunc, interdum ut dignissim eget, aliquet sit amet nisl. Sed tincidunt faucibus erat, feugiat sollicitudin lectus tincidunt in. Vivamus ac elit sit amet ante fringilla blandit. Vivamus pretium, massa tincidunt volutpat rhoncus, nunc lectus faucibus sem, eget congue justo neque eu enim. Aenean rutrum egestas suscipit. Duis id congue sapien.\r\n\r\nPellentesque iaculis rhoncus lacinia. Aenean dignissim nisi leo, et vehicula tellus euismod vitae. Aliquam ac volutpat justo. Morbi a mollis lacus, nec pulvinar dolor. In auctor mi id velit maximus placerat. Integer ultricies quis leo iaculis vestibulum. Curabitur viverra porttitor eros et efficitur. Aenean lectus velit, consequat ut enim quis, bibendum luctus nunc. Maecenas dictum, est nec accumsan lobortis, risus nulla porta quam, quis feugiat lacus nibh a sem. Vivamus ut rutrum erat. Nam accumsan pulvinar turpis id faucibus. Ut in mi in lacus dictum fringilla sed eget arcu. Aliquam lobortis in eros eu efficitur. Quisque vel egestas mauris. Duis neque augue, dignissim at tempus vel, ultricies euismod metus. Praesent luctus elit nec metus ornare tristique.', '\r\nPellentesque iaculis rhoncus lacinia. Aenean dignissim nisi leo, et vehicula tellus euismod vitae. Aliquam ac volutpat justo. Morbi a mollis lacus, nec pulvinar dolor. In auctor mi id velit maximus placerat. Integer ultricies quis leo iaculis vestibulum. Curabitur viverra porttitor eros et efficitur. Aenean lectus velit, consequat ut enim quis, bibendum luctus nunc. Maecenas dictum, est nec accumsan lobortis, risus nulla porta quam, quis feugiat lacus nibh a sem. Vivamus ut rutrum erat. Nam accumsan pulvinar turpis id faucibus. Ut in mi in lacus dictum fringilla sed eget arcu. Aliquam lobortis in eros eu efficitur. Quisque vel egestas mauris. Duis neque augue, dignissim at tempus vel, ultricies euismod metus. Praesent luctus elit nec metus ornare tristique.', 3, 4000.00, NULL, 6100.00, '2024-11-10', '2024-11-19', 'active', '2024-11-10 08:23:35', '2024-11-17 09:20:58', 'campaign_1731227015_67306d87e42b8.png', NULL, NULL, NULL),
+(2, 'Help me go to Rema\'s concert', 'Your support extends beyond attending a concert; it fuels fandom, community, and cultural appreciation. By contributing, you\'ll: 1. Enable a devoted fan to experience pure joy 2. Promote African music and cultural exchange 3. Encourage enthusiasm and dedication 4. Create lifelong memories Every donation counts! Thank you for helping make my Rema concert dream a reality!', 'Rema\'s music resonates deeply with me, providing motivation, comfort, and happiness. His artistry inspires me to pursue my passions, embrace individuality, and celebrate African culture. Attending the concert will be an unforgettable experience, allowing me to connect with fellow fans and witness his electrifying performance live. Your contribution will bring me closer to realizing this dream, fostering unforgettable memories.', 'Rema\'s music resonates deeply with me, providing motivation, comfort, and happiness. His artistry inspires me to pursue my passions, embrace individuality, and celebrate African culture. Attending the concert will be an unforgettable experience, allowing me to connect with fellow fans and witness his electrifying performance live. Your contribution will bring me closer to realizing this dream, fostering unforgettable memories.', 3, 50000.00, NULL, 53507.00, '2024-11-11', '2024-12-15', 'active', '2024-11-11 03:35:46', '2024-11-17 09:22:21', 'campaign_1731296146_67317b9222ddc.png', NULL, NULL, NULL),
+(3, 'Help me buy Garri', 'We all love garri,231150511233,231150511233', '\r\nCode Corsair\r\nLorel Ipsum\r\nAdegbola AbdulBaqee\r\nMathematics\r\n3 days left\r\n2 donors\r\n₦6,000.00 raised\r\n₦4,000.00 goal\r\n\r\nShare\r\n\r\nWhatsApp\r\n\r\nTwitter\r\nAbout This Campaign\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, leo nec pellentesque finibus, ex tortor hendrerit sem, sit amet pulvinar nibh nunc quis nunc. Curabitur lectus orci, feugiat at ipsum ut, interdum feugiat leo. Quisque et semper augue, eget ullamcorper nisl. Quisque magna diam, congue ac enim et, finibus elementum diam. Phasellus nibh nunc, interdum ut dignissim eget, aliquet sit amet nisl. Sed tincidunt faucibus erat, feugiat sollicitudin lectus tincidunt in. Vivamus ac elit sit amet ante fringilla blandit. Vivamus pretium, massa tincidunt volutpat rhoncus, nunc lectus faucibus sem, eget congue justo neque eu enim. Aenean rutrum egestas suscipit. Duis id congue sapien.', '\r\nCode Corsair\r\nLorel Ipsum\r\nAdegbola AbdulBaqee\r\nMathematics\r\n3 days left\r\n2 donors\r\n₦6,000.00 raised\r\n₦4,000.00 goal\r\n\r\nShare\r\n\r\nWhatsApp\r\n\r\nTwitter\r\nAbout This Campaign\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, leo nec pellentesque finibus, ex tortor hendrerit sem, sit amet pulvinar nibh nunc quis nunc. Curabitur lectus orci, feugiat at ipsum ut, interdum feugiat leo. Quisque et semper augue, eget ullamcorper nisl. Quisque magna diam, congue ac enim et, finibus elementum diam. Phasellus nibh nunc, interdum ut dignissim eget, aliquet sit amet nisl. Sed tincidunt faucibus erat, feugiat sollicitudin lectus tincidunt in. Vivamus ac elit sit amet ante fringilla blandit. Vivamus pretium, massa tincidunt volutpat rhoncus, nunc lectus faucibus sem, eget congue justo neque eu enim. Aenean rutrum egestas suscipit. Duis id congue sapien.', 4, 70000.00, NULL, 80000.00, '2024-11-15', '2024-11-21', 'active', '2024-11-15 01:46:10', '2024-11-17 09:22:43', 'campaign_1731635170_6736a7e284b23.jpg', 'campaign_1731635170_6736a7e285774.jpg', 'campaign_1731635170_6736a7e28676f.jpg', NULL),
+(4, 'fbbds', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, leo nec pellentesque finibus, ex tortor hendrerit sem, sit amet pulvinar nibh nunc quis nunc. Curabitur lectus orci, feugiat at ipsum ut, interdum feugiat leo. Quisque et semper augue, eget ullamcorper nisl. Quisque magna diam, congue ac enim et, finibus elementum diam. Phasellus nibh nunc, interdum ut dignissim eget, aliquet sit amet nisl. Sed tincidunt faucibus erat, feugiat sollicitudin lectus tincidunt in. Vivamus ac elit sit amet ante fringilla blandit. Vivamus pretium, massa tincidunt volutpat rhoncus, nunc lectus faucibus sem, eget congue justo neque eu enim. Aenean rutrum egestas suscipit. Duis id congue sapien.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, ', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, ', 3, 100000.00, NULL, 8000.00, '2024-11-16', '2024-11-18', 'active', '2024-11-16 22:01:56', '2024-11-17 05:54:54', 'campaign_1731794516_67391654705d4.jpg', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -646,17 +649,23 @@ CREATE TABLE `creators` (
   `university` varchar(1000) NOT NULL,
   `university_id` int(11) NOT NULL,
   `password` varchar(1000) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `balance` decimal(10,2) DEFAULT 0.00,
+  `faculty` varchar(200) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `phone` varchar(200) DEFAULT NULL,
+  `faculty_id` int(11) DEFAULT NULL,
+  `department_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `creators`
 --
 
-INSERT INTO `creators` (`id`, `fullname`, `email`, `role`, `department`, `university`, `university_id`, `password`, `created_at`) VALUES
-(1, 'Dr. John Smith', 'john.smith@uni.edu', 'lecturer', 'Computer Science', 'UNI', 0, NULL, '2024-01-01 09:00:00'),
-(2, 'Prof. Sarah Johnson', 'sarah.j@uni.edu', 'admin', 'Computer Science', 'FUNAAB', 0, NULL, '2024-01-01 09:00:00'),
-(3, 'Mr. James Wilson', 'james.w@uni.edu', 'headofclass', 'Computer Science', 'UNI', 0, NULL, '2024-01-01 09:00:00');
+INSERT INTO `creators` (`id`, `fullname`, `email`, `role`, `department`, `university`, `university_id`, `password`, `balance`, `faculty`, `created_at`, `phone`, `faculty_id`, `department_id`) VALUES
+(1, 'Dr. John Smith', 'john.smith@uni.edu', 'lecturer', 'Computer Science', 'UNI', 5, NULL, 0.00, NULL, '2024-01-01 09:00:00', NULL, NULL, NULL),
+(2, 'Prof. Sarah Johnson', 'sarah.j@uni.edu', 'admin', 'Computer Science', 'FUNAAB', 0, NULL, 0.00, NULL, '2024-01-01 09:00:00', NULL, NULL, NULL),
+(3, 'Mr. James Wilson', 'james.w@uni.edu', 'headofclass', 'Computer Science', 'UNI', 0, NULL, 0.00, NULL, '2024-01-01 09:00:00', NULL, NULL, NULL),
+(5, 'Adegbola AbdulBaqee', 'baqee20072007@gmail.com', 'admin', '', '', 5, '$2y$10$s7lfEp275JSu4emtEsVuPeOnIXZEn9TaHCUVciAJJ48Qm125ZHx86', 0.00, NULL, '2024-11-17 12:52:41', '09019659410', 12, 6);
 
 -- --------------------------------------------------------
 
@@ -678,7 +687,10 @@ CREATE TABLE `donations` (
 --
 
 INSERT INTO `donations` (`id`, `campaign_id`, `donor_name`, `amount`, `email`, `created_at`) VALUES
-(1, 2, 'Adegbola Abdulbaqee', 2000.00, 'baqee20072007@gmail.com', '2024-11-15 09:46:58');
+(1, 2, 'Adegbola Abdulbaqee', 2000.00, 'baqee20072007@gmail.com', '2024-11-15 09:46:58'),
+(2, 1, 'Anonymous Anonymous', 100.00, 'baqee20072007@gmail.com', '2024-11-16 21:48:21'),
+(3, 4, 'Anonymous Anonymous', 5000.00, 'baqee20072007@gmail.com', '2024-11-16 22:09:04'),
+(4, 4, 'Adegbola Abdulbaqee', 3000.00, 'baqee20072007@gmail.com', '2024-11-17 05:54:54');
 
 -- --------------------------------------------------------
 
@@ -708,7 +720,8 @@ CREATE TABLE `payments` (
 INSERT INTO `payments` (`id`, `uid`, `reference_id`, `gateway_reference`, `bill_id`, `student_id`, `total_amount`, `amount_paid`, `status`, `last_payment_date`, `created_at`, `updated_at`) VALUES
 (1, 3, 'FUNAAB-1AE-904-09D-5', 'P-C-20241115-IUARWKY34B', 5, 3, 16500.00, 16500.00, 'Paid', '2024-11-15 09:50:42', '2024-11-15 09:50:42', '2024-11-15 09:50:42'),
 (2, 3, 'FUNAAB-EE2-F5E-315-B', 'P-C-20241115-W5EF6MPDVC', 1, 3, 15000.00, 15000.00, 'Paid', '2024-11-15 10:59:15', '2024-11-15 10:59:15', '2024-11-15 10:59:15'),
-(3, 3, 'FUNAAB-3A3-AD7-F25-D', 'P-C-20241115-QB93YXSHIL', 4, 3, 20000.00, 20000.00, 'Paid', '2024-11-15 18:12:40', '2024-11-15 18:12:40', '2024-11-15 18:12:40');
+(3, 3, 'FUNAAB-3A3-AD7-F25-D', 'P-C-20241115-QB93YXSHIL', 4, 3, 20000.00, 20000.00, 'Paid', '2024-11-15 18:12:40', '2024-11-15 18:12:40', '2024-11-15 18:12:40'),
+(4, 3, 'FUNAAB-9B4-1C0-CB1-7', 'P-C-20241117-YD2AZNCJMU', 3, 3, 18000.00, 18000.00, 'Paid', '2024-11-17 07:12:56', '2024-11-17 07:12:56', '2024-11-17 07:12:56');
 
 -- --------------------------------------------------------
 
@@ -766,7 +779,13 @@ INSERT INTO `transactions` (`id`, `uid`, `reference_id`, `gateway_reference`, `n
 (28, 3, 'CAMPAIGN-FAC-2EA-EBD-6', 'P-C-20241115-UVHLAZP07G', 'Donated funds via gateway to campaign - Help me go to Rema\'s concert', 2000.00, 'donate', NULL, 'donate', 2, 'success', '2024-11-15 09:46:58'),
 (29, 3, 'FUNAAB-1AE-904-09D-5', 'P-C-20241115-IUARWKY34B', 'Paid - Computer Networks Manual', 16500.00, 'debit', NULL, 'bill-payment', 5, 'success', '2024-11-15 09:50:42'),
 (30, 3, 'FUNAAB-EE2-F5E-315-B', 'P-C-20241115-W5EF6MPDVC', 'Paid - Programming Fundamentals Handbook', 15000.00, 'debit', NULL, 'bill-payment', 1, 'success', '2024-11-15 10:59:15'),
-(31, 3, 'FUNAAB-3A3-AD7-F25-D', 'P-C-20241115-QB93YXSHIL', 'Paid - Software Engineering Project Guide', 20000.00, 'debit', NULL, 'bill-payment', 4, 'success', '2024-11-15 18:12:40');
+(31, 3, 'FUNAAB-3A3-AD7-F25-D', 'P-C-20241115-QB93YXSHIL', 'Paid - Software Engineering Project Guide', 20000.00, 'debit', NULL, 'bill-payment', 4, 'success', '2024-11-15 18:12:40'),
+(32, 3, 'CAMPAIGN-7CB-3D5-3C7-3', 'P-C-20241116-SZA4EDOG9B', 'Received fund from campaign - Lorel Ipsum', 100.00, 'credit', NULL, 'received-donation', 1, 'success', '2024-11-16 21:48:21'),
+(33, 3, 'CAMPAIGN-7CB-3D5-3C7-3', 'P-C-20241116-SZA4EDOG9B', 'Donated funds via gateway to campaign - Lorel Ipsum', 100.00, 'donate', NULL, 'donate', 1, 'success', '2024-11-16 21:48:21'),
+(34, 3, 'CAMPAIGN-20A-3D7-733-5', 'P-C-20241116-264YNF8UQ0', 'Received fund from campaign - fbbds', 5000.00, 'credit', NULL, 'received-donation', 4, 'success', '2024-11-16 22:09:04'),
+(35, 3, 'CAMPAIGN-20A-3D7-733-5', 'P-C-20241116-264YNF8UQ0', 'Donated funds via gateway to campaign - fbbds', 5000.00, 'donate', NULL, 'donate', 4, 'success', '2024-11-16 22:09:04'),
+(36, 3, 'CAMPAIGN-41E-664-6F5-4', 'P-C-20241117-4JBD86HRCV', 'Received fund from campaign - fbbds', 3000.00, 'credit', NULL, 'received-donation', 4, 'success', '2024-11-17 05:54:54'),
+(37, 3, 'FUNAAB-9B4-1C0-CB1-7', 'P-C-20241117-YD2AZNCJMU', 'Paid - Database Systems Guide', 18000.00, 'debit', NULL, 'bill-payment', 3, 'success', '2024-11-17 07:12:56');
 
 -- --------------------------------------------------------
 
@@ -903,7 +922,9 @@ CREATE TABLE `university_departments` (
 
 INSERT INTO `university_departments` (`id`, `university_id`, `university`, `faculty_id`, `name`, `timestamp`) VALUES
 (2, 5, NULL, 10, 'lol', '2024-11-16 08:33:45'),
-(4, 5, NULL, 8, 'Computer Science', '2024-11-16 12:02:55');
+(4, 5, NULL, 8, 'Computer Science', '2024-11-16 12:02:55'),
+(5, 5, NULL, 12, 'Science', '2024-11-17 10:49:52'),
+(6, 5, NULL, 12, 'Agriculture', '2024-11-17 10:50:09');
 
 -- --------------------------------------------------------
 
@@ -929,7 +950,8 @@ INSERT INTO `university_faculties` (`id`, `university_id`, `university`, `name`,
 (7, 5, 'Federal University of Agriculture, Abeokuta', 'COLPHYS', '2024-11-16 07:24:39'),
 (8, 5, 'Federal University of Agriculture, Abeokuta', 'College of Physics', '2024-11-16 07:38:13'),
 (9, 5, 'Federal University of Agriculture, Abeokuta', 'f3', '2024-11-16 07:41:33'),
-(10, 5, 'Federal University of Agriculture, Abeokuta', 'College of Physicss', '2024-11-16 08:33:32');
+(10, 5, 'Federal University of Agriculture, Abeokuta', 'College of Physicss', '2024-11-16 08:33:32'),
+(12, 5, 'FUNAAB', 'College of Jokes', '2024-11-17 10:46:28');
 
 -- --------------------------------------------------------
 
@@ -966,8 +988,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fullname`, `email`, `balance`, `username`, `phone`, `dob`, `country`, `state`, `university`, `faculty`, `department`, `matric_no`, `password`, `level`, `bank_id`, `bank_account_name`, `account_number`, `created_at`, `last_login`, `gender`) VALUES
-(3, 'Adegbola AbdulBaqee', 'baqee20072007@gmail.com', 37200.00, 'baqx', '09019659410', '2007-07-08', 'Nigeria', 'Ogun', 'FUNAAB', 'Engineering', 'Mathematics', 'baqx', '$2y$10$ZezJMEaMs5VWm7iIZ5VlbOV3YENFQY7w7p7AxTqIan1OCUEIP/1nq', '100', NULL, NULL, NULL, '2024-11-10 07:28:45', '2024-11-16 15:57:44', 'male'),
-(4, 'Code Corsair ', 'baqeecodes@gmail.com', 80000.00, 'iambaqx', '09019659420', '2007-11-10', 'Nigeria', 'Ogun', 'BabcockU', 'Engineering', 'Computer Science', '20243900', '$2y$10$9dGg1v6.UVAwtH2Ixm1ajOCCQlgf9Mzi4WsRWVCeaAtZBuH5lyB1G', '100', NULL, NULL, NULL, '2024-11-10 13:25:38', '2024-11-15 11:53:21', 'male'),
+(3, 'Adegbola AbdulBaqee', 'baqee20072007@gmail.com', 45300.00, 'baqx', '09019659410', '2007-07-08', 'Nigeria', 'Ogun', 'FUNAAB', 'Engineering', 'Mathematics', 'baqx', '$2y$10$ZezJMEaMs5VWm7iIZ5VlbOV3YENFQY7w7p7AxTqIan1OCUEIP/1nq', '100', NULL, NULL, NULL, '2024-11-10 07:28:45', '2024-11-17 13:30:38', 'male'),
+(4, 'Code Corsair ', 'baqeecodes@gmail.com', 80000.00, 'iambaqx', '09019659420', '2007-11-10', 'Nigeria', 'Ogun', 'BabcockU', 'Engineering', 'Computer Science', '20243900', '$2y$10$9dGg1v6.UVAwtH2Ixm1ajOCCQlgf9Mzi4WsRWVCeaAtZBuH5lyB1G', '100', NULL, NULL, NULL, '2024-11-10 13:25:38', '2024-11-17 08:39:05', 'male'),
 (5, 'Adeknle Gold', 'bgoldbaqee@yahoo.com', 0.00, 'baqxes', '09119659410', '2007-07-08', 'Nigeria', 'Ogun', 'FUNAAB', 'Engineering', 'Computer Science', '20143905', '$2y$10$5lcYZVBH5yrggt7H70HB5e3b689YL30FZhN97Ts39NihiT799RSQ6', '100', NULL, NULL, NULL, '2024-11-11 06:04:05', '2024-11-11 08:58:53', 'male');
 
 -- --------------------------------------------------------
@@ -1095,37 +1117,37 @@ ALTER TABLE `bills`
 -- AUTO_INCREMENT for table `bill_invoice`
 --
 ALTER TABLE `bill_invoice`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `campaigns`
 --
 ALTER TABLE `campaigns`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `creators`
 --
 ALTER TABLE `creators`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `donations`
 --
 ALTER TABLE `donations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `universities`
@@ -1137,13 +1159,13 @@ ALTER TABLE `universities`
 -- AUTO_INCREMENT for table `university_departments`
 --
 ALTER TABLE `university_departments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `university_faculties`
 --
 ALTER TABLE `university_faculties`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`
