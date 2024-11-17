@@ -22,6 +22,7 @@ $universities = get_universities();
     <title>Infund - University Crowdfunding Platform</title>
     <link rel="icon" href="./assets/icons/favicon.ico">
     <link rel="stylesheet" href="./assets/css/landing/styles.css">
+    <link rel="stylesheet" href="./assets/css/landing/nav_only.css">
     <link rel="stylesheet" href="./assets/css/animate.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -50,22 +51,22 @@ $universities = get_universities();
     <!-- Navigation -->
     <nav>
         <div class="nav-content">
-            <div class="logo"><img src='./assets/images/static/logo_text.png' alt="InFund" height="36px" /></div>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+            <div class="logo">
+                <img src='./assets/images/static/logo_text.png' alt="InFund" />
             </div>
+            <button class="menu-button" aria-label="Toggle menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#campaigns">Campaigns</a></li>
                 <li><a href="#features">Features</a></li>
-
                 <li><a href="./login"><button class="btn-primary">Login</button></a></li>
             </ul>
         </div>
     </nav>
-
+    <div class="overlay"></div>
+    
     <!-- Hero Section -->
     <section id="home" class="hero wow animate__animated animate__fadeIn">
         <div class="hero-content">
@@ -267,7 +268,7 @@ $universities = get_universities();
         </div>
     </footer>
     <script src="./assets/js/wow.min.js"></script>
-    <script src="./assets/js/landing/scripts.js"></script>
+    <script src="./assets/js/landing/nav.js"></script>
 </body>
 
 </html>

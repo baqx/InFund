@@ -53,14 +53,52 @@ $days_left = $today->diff($end_date)->days;
 // Calculate progress percentage
 $progress = ($campaign['amount_raised'] / $campaign['goal_amount']) * 100;
 
-$page_title = "Campaign Information";
+$page_title = $campaign['title'];
 $page = "Campaigns";
 $css1 = "campaign";
-include '../includes/user/nav.php';
+if (isset($_SESSION["user_id"])) {
+
+    include '../includes/user/nav.php';
+} else {
+    include '../config/config.php';
+    include '../config/secrets.php';
+    include '../includes/user/functions.php';
+}
+
 $uniquecode = generateUniqueCode();
 $reference_id = "CAMPAIGN-$uniquecode";
 ?>
+<?php if (!isset($_SESSION['user_id'])) { ?>
 
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title><?php echo htmlspecialchars($campaign['title']); ?> - INfund</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <link rel="stylesheet" href="../assets/css/colors.css">
+        <link rel="stylesheet" href="../assets/css/user/campaign.css">
+        <link rel="stylesheet" href="../assets/css/landing/nav_only.css">
+    </head>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <div class="logo">
+                <img src='../assets/images/static/logo_text.png' alt="InFund" />
+            </div>
+            <button class="menu-button" aria-label="Toggle menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+            <ul class="nav-links">
+                <li><a href="../#home">Home</a></li>
+                <li><a href="../#campaigns">Campaigns</a></li>
+                <li><a href="../#features">Features</a></li>
+                <li><a href="../login"><button class="btn-primary">Login</button></a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="overlay"></div>
+
+<?php } ?>
 <main class="main-content">
     <div class="campaign-detail-header">
         <h1 class="campaign-title"><?php echo htmlspecialchars($campaign['title']); ?></h1>
@@ -214,7 +252,7 @@ function timeAgo($timestamp)
     return 'just now';
 }
 ?>
-
+<script src="../assets/js/landing/nav.js"></script>
 <script>
     // Format name into first and last name
     function formatName(fullName) {

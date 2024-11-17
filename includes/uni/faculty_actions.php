@@ -172,7 +172,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $verify_stmt = $conn->prepare("SELECT id FROM university_departments WHERE id = ? AND university_id = ?");
         $verify_stmt->bind_param("ii", $department_id, $university_id);
         $verify_stmt->execute();
-
         if ($verify_stmt->get_result()->num_rows === 0) {
             die(json_encode(['success' => false, 'message' => 'Invalid department']));
         }
