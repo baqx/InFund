@@ -1,7 +1,9 @@
 <?php
 session_start();
 include './config/config.php';
+include './includes/index_functions.php';
 include './includes/get_universities.php';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['university'])) {
     $university = filter_var($_POST['university'], FILTER_SANITIZE_STRING);
     setcookie('university', $university, time() + (86400 * 365), "/");
@@ -11,6 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['university'])) {
 
 $showModal = !isset($_COOKIE['university']);
 $universities = get_universities();
+
+$featured_campaigns = getHomepageCampaigns();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,6 +68,8 @@ $universities = get_universities();
                 <li><a href="#home">Home</a></li>
                 <li><a href="#campaigns">Campaigns</a></li>
                 <li><a href="#features">Features</a></li>
+                <li><a href="./uni/login">Universities</a></li>
+                <li><a href="./admins/login">Administrators</a></li>
                 <li><a href="./login"><button class="btn-primary">Login</button></a></li>
             </ul>
         </div>
@@ -78,7 +84,7 @@ $universities = get_universities();
         </div>
         <section id="home" class="hero">
             <div class="hero-content">
-                <span class="hero-badge wow fadeIn">Trusted by 50+ Universities</span>
+                <span class="hero-badge wow fadeIn">For Universities, Lecturers and Students</span>
                 <h1 class="wow fadeInUp">
                     Transform Your
                     <span class="gradient-text">Academic Dreams</span>
@@ -111,12 +117,12 @@ $universities = get_universities();
                 <div class="image-wrapper">
                     <img src="./assets/images/static/hero.png" alt="Crowdfunding Illustration">
                     <div class="floating-card card-1">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Project Growth</span>
+                        <i class="fas fa-hand-holding-heart"></i>
+                        <span>Create Crowdfunding Campaigns</span>
                     </div>
                     <div class="floating-card card-2">
-                        <i class="fas fa-users"></i>
-                        <span>Community Support</span>
+                        <i class="fas fa-money-bill"></i>
+                        <span>Pay School Bills</span>
                     </div>
                 </div>
             </div>
@@ -131,142 +137,54 @@ $universities = get_universities();
         </div>
         <div class="partners-grid wow fadeInUp">
             <div class="partner-card">
-                <img src="./assets/images/partners/payaza.gif" height="150px" width="150px" alt="Payaza">
+                <img src="./assets/images/partners/payaza.gif" height="150px" alt="Payaza">
             </div>
-          
+
         </div>
     </section>
 
-    <!-- Campaign Section -->
+
+    <!-- Campaigns Section HTML -->
     <section id="campaigns" class="campaigns">
         <div class="section-header wow fadeInUp">
             <h2>Featured Campaigns</h2>
             <p>Discover innovative projects that are shaping the future of education</p>
         </div>
         <div class="campaign-grid">
-            <!-- Campaign Card 1 -->
-            <div class="campaign-card wow fadeInUp">
-                <div class="campaign-banner">
-                    <img src="./assets/images/campaigns/fund.jpg" alt="Research Lab Equipment">
-                    <div class="campaign-category">Research</div>
-                </div>
-                <div class="campaign-content">
-                    <h3>Research Lab Equipment</h3>
-                    <div class="campaign-meta">
-                        <span><i class="fas fa-calendar"></i> 30 days left</span>
-                        <span><i class="fas fa-users"></i> 245 backers</span>
+            <?php foreach ($featured_campaigns as $campaign) : ?>
+                <?php
+                $progress = calculateProgress($campaign['amount_raised'], $campaign['goal_amount']);
+                $days_left = max(0, $campaign['days_left']);
+                ?>
+                <div class="campaign-card wow fadeInUp">
+                    <div class="campaign-banner">
+                        <img src="./assets/images/campaigns/<?php echo htmlspecialchars($campaign['image1']); ?>" alt="<?php echo htmlspecialchars($campaign['title']); ?>">
+                        <div class="campaign-category"><?php echo htmlspecialchars($campaign['university']); ?></div>
                     </div>
-                    <div class="progress-wrapper">
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 75%"></div>
+                    <div class="campaign-content">
+                        <h3><?php echo htmlspecialchars($campaign['title']); ?></h3>
+                        <div class="campaign-meta">
+                            <span><i class="fas fa-calendar"></i> <?php echo $days_left; ?> days left</span>
+                            <span><i class="fas fa-users"></i> <?php echo $campaign['donors_count']; ?> donors</span>
                         </div>
-                        <div class="progress-stats">
-                            <span class="amount">₦15,000,000</span>
-                            <span class="percentage">75%</span>
+                        <div class="progress-wrapper">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: <?php echo $progress; ?>%"></div>
+                            </div>
+                            <div class="progress-stats">
+                                <span class="amount"><?php echo formatNaira($campaign['amount_raised']); ?></span>
+                                <span class="percentage"><?php echo $progress; ?>%</span>
+                            </div>
                         </div>
+                        <p><?php echo htmlspecialchars($campaign['description']); ?></p>
+                        <a href="./dashboard/campaign.php?id=<?php echo $campaign['id']; ?>" class="btn-primary">Support Project</a>
                     </div>
-                    <p>Help us equip our new research laboratory with cutting-edge equipment</p>
-                    <a href="#" class="btn-primary">Support Project</a>
                 </div>
-            </div>
-
-            <div class="campaign-card wow fadeInUp">
-                <div class="campaign-banner">
-                    <img src="./assets/images/campaigns/fund.jpg" alt="Research Lab Equipment">
-                    <div class="campaign-category">Research</div>
-                </div>
-                <div class="campaign-content">
-                    <h3>Research Lab Equipment</h3>
-                    <div class="campaign-meta">
-                        <span><i class="fas fa-calendar"></i> 30 days left</span>
-                        <span><i class="fas fa-users"></i> 245 backers</span>
-                    </div>
-                    <div class="progress-wrapper">
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 75%"></div>
-                        </div>
-                        <div class="progress-stats">
-                            <span class="amount">₦15,000,000</span>
-                            <span class="percentage">75%</span>
-                        </div>
-                    </div>
-                    <p>Help us equip our new research laboratory with cutting-edge equipment</p>
-                    <a href="#" class="btn-primary">Support Project</a>
-                </div>
-            </div>
-            <div class="campaign-card wow fadeInUp">
-                <div class="campaign-banner">
-                    <img src="./assets/images/campaigns/fund.jpg" alt="Research Lab Equipment">
-                    <div class="campaign-category">Research</div>
-                </div>
-                <div class="campaign-content">
-                    <h3>Research Lab Equipment</h3>
-                    <div class="campaign-meta">
-                        <span><i class="fas fa-calendar"></i> 30 days left</span>
-                        <span><i class="fas fa-users"></i> 245 backers</span>
-                    </div>
-                    <div class="progress-wrapper">
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 75%"></div>
-                        </div>
-                        <div class="progress-stats">
-                            <span class="amount">₦15,000,000</span>
-                            <span class="percentage">75%</span>
-                        </div>
-                    </div>
-                    <p>Help us equip our new research laboratory with cutting-edge equipment</p>
-                    <a href="#" class="btn-primary">Support Project</a>
-                </div>
-            </div>
-            <div class="campaign-card wow fadeInUp">
-                <div class="campaign-banner">
-                    <img src="./assets/images/campaigns/fund.jpg" alt="Research Lab Equipment">
-                    <div class="campaign-category">Research</div>
-                </div>
-                <div class="campaign-content">
-                    <h3>Research Lab Equipment</h3>
-                    <div class="campaign-meta">
-                        <span><i class="fas fa-calendar"></i> 30 days left</span>
-                        <span><i class="fas fa-users"></i> 245 backers</span>
-                    </div>
-                    <div class="progress-wrapper">
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 75%"></div>
-                        </div>
-                        <div class="progress-stats">
-                            <span class="amount">₦15,000,000</span>
-                            <span class="percentage">75%</span>
-                        </div>
-                    </div>
-                    <p>Help us equip our new research laboratory with cutting-edge equipment</p>
-                    <a href="#" class="btn-primary">Support Project</a>
-                </div>
-            </div>
-            <div class="campaign-card wow fadeInUp">
-                <div class="campaign-banner">
-                    <img src="./assets/images/campaigns/fund.jpg" alt="Research Lab Equipment">
-                    <div class="campaign-category">Research</div>
-                </div>
-                <div class="campaign-content">
-                    <h3>Research Lab Equipment</h3>
-                    <div class="campaign-meta">
-                        <span><i class="fas fa-calendar"></i> 30 days left</span>
-                        <span><i class="fas fa-users"></i> 245 backers</span>
-                    </div>
-                    <div class="progress-wrapper">
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 75%"></div>
-                        </div>
-                        <div class="progress-stats">
-                            <span class="amount">₦15,000,000</span>
-                            <span class="percentage">75%</span>
-                        </div>
-                    </div>
-                    <p>Help us equip our new research laboratory with cutting-edge equipment</p>
-                    <a href="#" class="btn-primary">Support Project</a>
-                </div>
-            </div>
-
+            <?php endforeach; ?>
+        </div>
+        <div style="margin: 10px;
+        display:flex;justify-content:center;">
+            <a href="./dashboard/discover" class="btn-primary">View More Campaigns</a>
         </div>
     </section>
 
@@ -323,7 +241,7 @@ $universities = get_universities();
 
             <!-- Feature Card 3 -->
             <div class="feature-card wow animate__animated animate__fadeInUp" data-wow-delay="0.4s">
-                <i class="fas fa-file-spreadsheet"></i>
+                <i class="fas fa-list"></i>
                 <h3>Collect Info from Students</h3>
                 <p>Gather information from students who fund in a spreadsheet.</p>
             </div>

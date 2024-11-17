@@ -7,7 +7,7 @@ function get_universities()
     while ($row = $result->fetch_assoc()) {
         $universities[] = $row;
     }
-    $conn->close();
+ 
     return $universities;
 }
 
