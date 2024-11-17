@@ -7,7 +7,7 @@ include '../config/config.php';
 include '../config/secrets.php';
 include '../includes/admin/functions.php';
 $admin_id = $_SESSION['admin_id'];
-$admin_details = getAdminDetails($_SESSION["university_id"]);
+$admin_details = getAdminDetails($_SESSION["admin_id"]);
 
 ?>
 <!DOCTYPE html>

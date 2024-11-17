@@ -331,7 +331,7 @@ function getPaymentStatus($amount_paid, $total_amount)
         </div>
     </div>
     <div class="export-button-container" style="margin-bottom: 1rem;">
-        <form action="export_payments.php" method="POST">
+        <form action="./bill-sheet" method="POST">
             <input type="hidden" name="bill_id" value="<?php echo $bill_id; ?>">
             <button type="submit" class="export-button">Export as Excel</button>
         </form>
