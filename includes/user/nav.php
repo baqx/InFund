@@ -60,7 +60,12 @@ $myid = $_SESSION['user_id'];
                         <span>Dashboard</span>
                     </a>
                 </li>
-
+                <li class="nav-item">
+                    <a href="./discover" class="nav-link <?= isset($page) && $page == 'Discover' ? 'active' : ''; ?>">
+                        <i class="fas fa-compass"></i>
+                        <span>Discover</span>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a href="./bills" class="nav-link <?= isset($page) && $page == 'Bills' ? 'active' : ''; ?>">
                         <i class="fas fa-money-bill"></i>

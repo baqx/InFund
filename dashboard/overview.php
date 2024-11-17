@@ -5,6 +5,7 @@ error_reporting(E_ALL);
 session_start();
 $page_title = "Overview";
 $page = "Overview";
+$css1 = "discover-campaign-section";
 include '../config/config.php';
 include '../includes/get_universities.php';
 include '../includes/user/get_bills.php';
@@ -48,7 +49,24 @@ $campaign_stats = getCampaignStats($campaigns);
             <p>Total Raised</p>
         </div>
     </div>
+    <section class="discover-campaigns">
+        <div class="discover-header">
+            <div>
+                <h2 class="discover-title">Support Student Dreams</h2>
+                <p class="discover-subtitle">Help fellow students bring their projects to life</p>
+            </div>
+            <a href="./discover" class="view-all">View More</a>
+        </div>
+        <div class="campaign-scroll">
+            <div class="campaign-cards">
+                <?php
 
+                $discover_campaigns = getDiscoverCampaigns($_SESSION['user_id']);
+                echo displayDiscoverCampaigns($discover_campaigns);
+                ?>
+            </div>
+        </div>
+    </section>
     <div class="campaigns-grid">
         <section class="feed-section">
             <div class="section-header">
@@ -69,6 +87,7 @@ $campaign_stats = getCampaignStats($campaigns);
             ?>
         </section>
     </div>
+
 </main>
 
 

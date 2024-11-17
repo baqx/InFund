@@ -86,7 +86,11 @@ $reference_id = "CAMPAIGN-$uniquecode";
                 <img src='../assets/images/static/logo_text.png' alt="InFund" />
             </div>
             <button class="menu-button" aria-label="Toggle menu">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
             </button>
             <ul class="nav-links">
                 <li><a href="../#home">Home</a></li>
@@ -252,7 +256,9 @@ function timeAgo($timestamp)
     return 'just now';
 }
 ?>
-<script src="../assets/js/landing/nav.js"></script>
+<?php if (!isset($_SESSION['user_id'])) { ?>
+    <script src="../assets/js/landing/nav.js"></script>
+<?php } ?>
 <script>
     // Format name into first and last name
     function formatName(fullName) {

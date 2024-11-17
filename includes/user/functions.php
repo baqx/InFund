@@ -136,6 +136,57 @@ function generateUniqueCode()
     $code = strtoupper(substr($randomString, 0, 3) . '-' . substr($randomString, 3, 3) . '-' . substr($randomString, 6, 3) . '-' . substr($randomString, 9, 3));
     return $code;
 }
+function getDiscoverCampaigns($user_id, $limit = 6)
+{
+    global $conn;
+
+    $query = "SELECT c.*, u.department, u.university 
+              FROM campaigns c 
+              JOIN users u ON c.uid = u.id 
+              WHERE c.uid != ? 
+              AND c.status = 'active' 
+              AND c.end_date >= CURRENT_DATE 
+              ORDER BY c.created_at DESC 
+              LIMIT ?";
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ii", $user_id, $limit);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+function displayDiscoverCampaigns($campaigns)
+{
+    $output = '';
+
+    foreach ($campaigns as $campaign) {
+        $progress = ($campaign['amount_raised'] / $campaign['goal_amount']) * 100;
+        $progress = min(100, round($progress, 1));
+
+        $output .= '
+        <div class="discover-card" onclick="window.location.href=\'campaign?id='.$campaign['id'].'\'">
+            <img src="../assets/images/campaigns/' . htmlspecialchars($campaign['image1']) . '" alt="Campaign Image" class="campaign-image">
+            <div class="campaign-info">
+                <h3>' . htmlspecialchars($campaign['title']) . '</h3>
+                <p class="campaign-description">' . htmlspecialchars($campaign['description']) . '</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: ' . $progress . '%;"></div>
+                </div>
+                <div class="campaign-stats">
+                    <span>₦' . number_format($campaign['amount_raised'], 2) . ' raised</span>
+                    <span>' . $progress . '%</span>
+                </div>
+                <div class="campaign-meta">
+                    <span>' . htmlspecialchars($campaign['department']) . '</span>
+                </div>
+            </div>
+        </div>';
+    }
+
+    return $output;
+}
 
 
 ?>
