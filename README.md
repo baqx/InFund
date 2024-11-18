@@ -1,27 +1,27 @@
 
-# InFund  
+# INFund  
 
-InFund is a crowdfunding solution that takes the ease and intuitiveness of
+INFund is a crowdfunding solution that takes the ease and intuitiveness of
 raising funds to a whole new level. 
 
-We(the creators of InFund) are university 
+We(the creators of INFund) are university 
 students and we have seen firsthand how gruesome and tiring putting money 
-together for various payments can be. The 'stress' associated with this process makes the higher institution experience one to be endured rather than enjoyed. Infund was created to facilitate funding 
+together for various payments can be. The 'stress' associated with this process makes the higher institution experience one to be endured rather than enjoyed. INFund was created to facilitate funding 
 and billing in higher institutions of learning and alleviate this 'stress'.
 
-InFund allows students to set up campaigns for various educational
-purposes. Campaigns are used by students for fundraising. InFund also provides a way
+INFund allows students to set up campaigns for various educational
+purposes. Campaigns are used by students for fundraising. INFund also provides a way
 for lecturers to set up bills for students. Some examples of campaigns are fundraisers to purchase student handouts, textbooks, or even a much-needed utility like a projector or PA system. Bills could be fees set by the institution or by a lecturer for specific faculties, departments, colleges, or levels.
 
-InFund provides a means for users to share their campaigns on various social media and messaging platforms to spread their awareness.
+INFund provides a means for users to share their campaigns on various social media and messaging platforms to spread their awareness.
 
-InFund also provides user and administrative dashboards for students and institution officials. User dashboards allow students to create, view, and donate to campaigns. The institution officials' dashboard allows lecturers and other administrative staff to put up new bills for students and vet any new campaigns. 
+INFund also provides user and administrative dashboards for students and institution officials. User dashboards allow students to create, view, and donate to campaigns. The institution officials' dashboard allows lecturers and other administrative staff to put up new bills for students and vet any new campaigns. 
 
 The Payaza API was integrated into our 
 solution to facilitate transfers for crowdfunding and billing. Our solution also makes use of powerful LLMs for campaign classification and general
 user-friendliness. 
 
-InFund comes with support for major institutions across the country and their 
+INFund comes with support for major institutions across the country and their 
 various faculties, departments, or colleges. New institutions can easily join and add
 their faculties to the institution list.  
 
