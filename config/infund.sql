@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2024 at 11:10 PM
+-- Generation Time: Nov 17, 2024 at 02:31 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -20,27 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `infund`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `admin_transactions`
---
-
-CREATE TABLE `admin_transactions` (
-  `id` int(11) NOT NULL,
-  `uid` int(11) NOT NULL,
-  `reference_id` varchar(2000) DEFAULT NULL,
-  `gateway_reference` varchar(200) DEFAULT NULL,
-  `name` varchar(2000) NOT NULL,
-  `amount` decimal(15,2) NOT NULL,
-  `transaction_type` enum('credit','debit','donate') NOT NULL,
-  `details` text DEFAULT NULL,
-  `type` enum('donate','bill-payment','received-donation','bill-funded') NOT NULL,
-  `type_id` int(11) NOT NULL,
-  `status` enum('success','pending','failed','reversed','abandoned') NOT NULL DEFAULT 'pending',
-  `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -581,7 +560,11 @@ CREATE TABLE `bills` (
 --
 
 INSERT INTO `bills` (`id`, `creator_id`, `name`, `university`, `faculty`, `department`, `level`, `matric_no`, `price`, `start_date`, `end_date`, `created_at`) VALUES
-(1, 1, 'MTS 101 Manuals', 'FUNAAB', 'College of Physical Sciences', 'Mathematics', '100', '', 5000.00, '2024-11-18', '2024-11-23', '2024-11-17 21:17:45');
+(1, 1, 'Programming Fundamentals Handbook', 'FUNAAB', 'Engineering', 'Mathematics', '100', 'ALL', 15000.00, '2024-01-01', '2024-11-30', '2024-01-01 09:00:00'),
+(2, 2, 'Data Structures Manual', 'FUNAAB', 'Engineering', 'Computer Science', '100', 'ALL', 12000.00, '2024-01-01', '2024-11-25', '2024-01-01 09:00:00'),
+(3, 1, 'Database Systems Guide', 'FUNAAB', 'Engineering', 'Mathematics', '100', 'ALL', 18000.00, '2024-01-01', '2024-12-15', '2024-01-01 09:00:00'),
+(4, 3, 'Software Engineering Project Guide', 'FUNAAB', 'Engineering', 'Mathematics', '100', 'ALL', 20000.00, '2024-01-01', '2024-12-01', '2024-01-01 09:00:00'),
+(5, 2, 'Computer Networks Manual', 'FUNAAB', 'Engineering', 'Mathematics', '100', 'ALL', 16500.00, '2024-01-01', '2024-11-20', '2024-01-01 09:00:00');
 
 -- --------------------------------------------------------
 
@@ -609,7 +592,10 @@ CREATE TABLE `bill_invoice` (
 --
 
 INSERT INTO `bill_invoice` (`id`, `name`, `bill_id`, `uid`, `reference_id`, `gateway_reference`, `due_date`, `total_amount`, `status`, `got_funded`, `created_at`, `updated_at`) VALUES
-(1, 'MTS 101 Manuals', 1, 1, 'FUNAAB-83F-642-690-4', NULL, '2024-11-23', 5000.00, 'Pending', 'False', '2024-11-17 22:02:23', '2024-11-17 22:02:23');
+(1, 'Computer Networks Manual', 5, 3, 'FUNAAB-1AE-904-09D-5', 'P-C-20241115-IUARWKY34B', '2024-11-20', 16500.00, 'Paid', 'False', '2024-11-15 09:48:07', '2024-11-15 09:50:42'),
+(2, 'Programming Fundamentals Handbook', 1, 3, 'FUNAAB-EE2-F5E-315-B', 'P-C-20241115-W5EF6MPDVC', '2024-11-30', 15000.00, 'Paid', 'False', '2024-11-15 10:58:10', '2024-11-15 10:59:15'),
+(3, 'Software Engineering Project Guide', 4, 3, 'FUNAAB-3A3-AD7-F25-D', 'P-C-20241115-QB93YXSHIL', '2024-12-01', 20000.00, 'Paid', 'False', '2024-11-15 18:12:08', '2024-11-15 18:12:40'),
+(4, 'Database Systems Guide', 3, 3, 'FUNAAB-9B4-1C0-CB1-7', 'P-C-20241117-YD2AZNCJMU', '2024-12-15', 18000.00, 'Paid', 'False', '2024-11-17 07:12:21', '2024-11-17 07:12:56');
 
 -- --------------------------------------------------------
 
@@ -635,17 +621,18 @@ CREATE TABLE `campaigns` (
   `image1` varchar(1000) NOT NULL,
   `image2` varchar(1000) DEFAULT NULL,
   `image3` varchar(1000) DEFAULT NULL,
-  `image4` varchar(1000) DEFAULT NULL,
-  `spam_level` decimal(5,2) DEFAULT NULL
+  `image4` varchar(1000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `campaigns`
 --
 
-INSERT INTO `campaigns` (`id`, `title`, `description`, `impact`, `importance`, `uid`, `goal_amount`, `university`, `amount_raised`, `start_date`, `end_date`, `status`, `created_at`, `updated_at`, `image1`, `image2`, `image3`, `image4`, `spam_level`) VALUES
-(1, 'Help me buy a new CHM 101 textbook', 'Hello! I\'m Adekunle John, a 100-level student. I\'m struggling to afford a comprehensive CHM Textbook', 'By supporting my campaign, you\'ll have a direct impact on my educational journey. A new CHM textbook will:\r\n\r\n- Improve my understanding of complex chemistry concepts\r\n- Enhance my academic performance and grades\r\n- Increase my confidence in tackling challenging problems\r\n- Prepare me for future exams and assessments\r\n- Equip me with up-to-date knowledge and skills\r\n- Foster a deeper love for learning and STEM subjects\r\n- Open doors to new opportunities and career paths\r\n- Empower me to make a positive impact in my community\r\n\r\nYour contribution will:\r\n\r\n- Bridge the resource gap hindering my education\r\n- Provide access to quality educational materials\r\n- Support the development of a future leader and change-maker\r\n- Inspire others to pursue their educational goals\r\n\r\nLong-term Impact\r\n\r\nYour support today will have a lasting impact on my future:\r\n\r\n- Better career prospects and opportunities\r\n- Increased earning potential\r\n- Improved quality of life\r\n- Enhanced contributions to society\r\n- A ripple effect of positive change in my community\r\n', 'Why is this important?\r\nA new textbook will:\r\n\r\n1. Enhance my learning experience\r\n2. Improve my academic performance\r\n3. Prepare me for future exams and opportunities\r\n\r\nHow will you help?\r\nYour contribution will directly support my education, providing me with:\r\n\r\n1. Accurate and up-to-date information\r\n2. Better comprehension of complex concepts\r\n3. Increased confidence in my studies\r\n', 1, 5000.00, 'FUNAAB', 2000.00, '2024-11-17', '2024-11-18', 'active', '2024-11-17 21:28:56', '2024-11-17 21:39:22', 'campaign_1731878917_673a60052680a.jpg', NULL, NULL, NULL, 0.00),
-(2, 'Fuel My Future: Adekunle John\'s 100L Laptop Fund', 'Help me buy a laptop for education', 'Goal: ₦250,000 to cover educational expenses, including:\r\n\r\n- Laptop: ₦150,000\r\n- Textbooks and materials: ₦50,000\r\n- Online courses and tutorials: ₦20,000\r\n- Research and project funding: ₦30,000\r\n\r\nGoal: ₦250,000 to cover educational expenses, including:\r\n\r\n- Laptop: ₦150,000\r\n- Textbooks and materials: ₦50,000\r\n- Online courses and tutorials: ₦20,000\r\n- Research and project funding: ₦30,000\r\n\r\n', 'Why is this important?\r\n\r\nAdequate educational resources will:\r\n\r\n- Enhance my understanding of complex concepts\r\n- Increase my productivity and efficiency\r\n- Provide equal access to educational opportunities\r\n- Prepare me for a competitive future\r\n- Foster a love for lifelong learning\r\n\r\n', 2, 120000.00, NULL, 2000.00, '2024-11-17', '2024-11-18', 'active', '2024-11-17 21:58:19', '2024-11-17 22:01:07', 'campaign_1731880678_673a66e67c442.jpeg', NULL, NULL, NULL, 0.00);
+INSERT INTO `campaigns` (`id`, `title`, `description`, `impact`, `importance`, `uid`, `goal_amount`, `university`, `amount_raised`, `start_date`, `end_date`, `status`, `created_at`, `updated_at`, `image1`, `image2`, `image3`, `image4`) VALUES
+(1, 'Lorel Ipsum', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, leo nec pellentesque finibus, ex tortor hendrerit sem, sit amet pulvinar nibh nunc quis nunc. Curabitur lectus orci, feugiat at ipsum ut, interdum feugiat leo. Quisque et semper augue, eget ullamcorper nisl. Quisque magna diam, congue ac enim et, finibus elementum diam. Phasellus nibh nunc, interdum ut dignissim eget, aliquet sit amet nisl. Sed tincidunt faucibus erat, feugiat sollicitudin lectus tincidunt in. Vivamus ac elit sit amet ante fringilla blandit. Vivamus pretium, massa tincidunt volutpat rhoncus, nunc lectus faucibus sem, eget congue justo neque eu enim. Aenean rutrum egestas suscipit. Duis id congue sapien.\r\n', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, leo nec pellentesque finibus, ex tortor hendrerit sem, sit amet pulvinar nibh nunc quis nunc. Curabitur lectus orci, feugiat at ipsum ut, interdum feugiat leo. Quisque et semper augue, eget ullamcorper nisl. Quisque magna diam, congue ac enim et, finibus elementum diam. Phasellus nibh nunc, interdum ut dignissim eget, aliquet sit amet nisl. Sed tincidunt faucibus erat, feugiat sollicitudin lectus tincidunt in. Vivamus ac elit sit amet ante fringilla blandit. Vivamus pretium, massa tincidunt volutpat rhoncus, nunc lectus faucibus sem, eget congue justo neque eu enim. Aenean rutrum egestas suscipit. Duis id congue sapien.\r\n\r\nPellentesque iaculis rhoncus lacinia. Aenean dignissim nisi leo, et vehicula tellus euismod vitae. Aliquam ac volutpat justo. Morbi a mollis lacus, nec pulvinar dolor. In auctor mi id velit maximus placerat. Integer ultricies quis leo iaculis vestibulum. Curabitur viverra porttitor eros et efficitur. Aenean lectus velit, consequat ut enim quis, bibendum luctus nunc. Maecenas dictum, est nec accumsan lobortis, risus nulla porta quam, quis feugiat lacus nibh a sem. Vivamus ut rutrum erat. Nam accumsan pulvinar turpis id faucibus. Ut in mi in lacus dictum fringilla sed eget arcu. Aliquam lobortis in eros eu efficitur. Quisque vel egestas mauris. Duis neque augue, dignissim at tempus vel, ultricies euismod metus. Praesent luctus elit nec metus ornare tristique.', '\r\nPellentesque iaculis rhoncus lacinia. Aenean dignissim nisi leo, et vehicula tellus euismod vitae. Aliquam ac volutpat justo. Morbi a mollis lacus, nec pulvinar dolor. In auctor mi id velit maximus placerat. Integer ultricies quis leo iaculis vestibulum. Curabitur viverra porttitor eros et efficitur. Aenean lectus velit, consequat ut enim quis, bibendum luctus nunc. Maecenas dictum, est nec accumsan lobortis, risus nulla porta quam, quis feugiat lacus nibh a sem. Vivamus ut rutrum erat. Nam accumsan pulvinar turpis id faucibus. Ut in mi in lacus dictum fringilla sed eget arcu. Aliquam lobortis in eros eu efficitur. Quisque vel egestas mauris. Duis neque augue, dignissim at tempus vel, ultricies euismod metus. Praesent luctus elit nec metus ornare tristique.', 3, 4000.00, NULL, 6100.00, '2024-11-10', '2024-11-19', 'active', '2024-11-10 08:23:35', '2024-11-17 09:20:58', 'campaign_1731227015_67306d87e42b8.png', NULL, NULL, NULL),
+(2, 'Help me go to Rema\'s concert', 'Your support extends beyond attending a concert; it fuels fandom, community, and cultural appreciation. By contributing, you\'ll: 1. Enable a devoted fan to experience pure joy 2. Promote African music and cultural exchange 3. Encourage enthusiasm and dedication 4. Create lifelong memories Every donation counts! Thank you for helping make my Rema concert dream a reality!', 'Rema\'s music resonates deeply with me, providing motivation, comfort, and happiness. His artistry inspires me to pursue my passions, embrace individuality, and celebrate African culture. Attending the concert will be an unforgettable experience, allowing me to connect with fellow fans and witness his electrifying performance live. Your contribution will bring me closer to realizing this dream, fostering unforgettable memories.', 'Rema\'s music resonates deeply with me, providing motivation, comfort, and happiness. His artistry inspires me to pursue my passions, embrace individuality, and celebrate African culture. Attending the concert will be an unforgettable experience, allowing me to connect with fellow fans and witness his electrifying performance live. Your contribution will bring me closer to realizing this dream, fostering unforgettable memories.', 3, 50000.00, NULL, 53507.00, '2024-11-11', '2024-12-15', 'active', '2024-11-11 03:35:46', '2024-11-17 09:22:21', 'campaign_1731296146_67317b9222ddc.png', NULL, NULL, NULL),
+(3, 'Help me buy Garri', 'We all love garri,231150511233,231150511233', '\r\nCode Corsair\r\nLorel Ipsum\r\nAdegbola AbdulBaqee\r\nMathematics\r\n3 days left\r\n2 donors\r\n₦6,000.00 raised\r\n₦4,000.00 goal\r\n\r\nShare\r\n\r\nWhatsApp\r\n\r\nTwitter\r\nAbout This Campaign\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, leo nec pellentesque finibus, ex tortor hendrerit sem, sit amet pulvinar nibh nunc quis nunc. Curabitur lectus orci, feugiat at ipsum ut, interdum feugiat leo. Quisque et semper augue, eget ullamcorper nisl. Quisque magna diam, congue ac enim et, finibus elementum diam. Phasellus nibh nunc, interdum ut dignissim eget, aliquet sit amet nisl. Sed tincidunt faucibus erat, feugiat sollicitudin lectus tincidunt in. Vivamus ac elit sit amet ante fringilla blandit. Vivamus pretium, massa tincidunt volutpat rhoncus, nunc lectus faucibus sem, eget congue justo neque eu enim. Aenean rutrum egestas suscipit. Duis id congue sapien.', '\r\nCode Corsair\r\nLorel Ipsum\r\nAdegbola AbdulBaqee\r\nMathematics\r\n3 days left\r\n2 donors\r\n₦6,000.00 raised\r\n₦4,000.00 goal\r\n\r\nShare\r\n\r\nWhatsApp\r\n\r\nTwitter\r\nAbout This Campaign\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, leo nec pellentesque finibus, ex tortor hendrerit sem, sit amet pulvinar nibh nunc quis nunc. Curabitur lectus orci, feugiat at ipsum ut, interdum feugiat leo. Quisque et semper augue, eget ullamcorper nisl. Quisque magna diam, congue ac enim et, finibus elementum diam. Phasellus nibh nunc, interdum ut dignissim eget, aliquet sit amet nisl. Sed tincidunt faucibus erat, feugiat sollicitudin lectus tincidunt in. Vivamus ac elit sit amet ante fringilla blandit. Vivamus pretium, massa tincidunt volutpat rhoncus, nunc lectus faucibus sem, eget congue justo neque eu enim. Aenean rutrum egestas suscipit. Duis id congue sapien.', 4, 70000.00, NULL, 80000.00, '2024-11-15', '2024-11-21', 'active', '2024-11-15 01:46:10', '2024-11-17 09:22:43', 'campaign_1731635170_6736a7e284b23.jpg', 'campaign_1731635170_6736a7e285774.jpg', 'campaign_1731635170_6736a7e28676f.jpg', NULL),
+(4, 'fbbds', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, leo nec pellentesque finibus, ex tortor hendrerit sem, sit amet pulvinar nibh nunc quis nunc. Curabitur lectus orci, feugiat at ipsum ut, interdum feugiat leo. Quisque et semper augue, eget ullamcorper nisl. Quisque magna diam, congue ac enim et, finibus elementum diam. Phasellus nibh nunc, interdum ut dignissim eget, aliquet sit amet nisl. Sed tincidunt faucibus erat, feugiat sollicitudin lectus tincidunt in. Vivamus ac elit sit amet ante fringilla blandit. Vivamus pretium, massa tincidunt volutpat rhoncus, nunc lectus faucibus sem, eget congue justo neque eu enim. Aenean rutrum egestas suscipit. Duis id congue sapien.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, ', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien est, interdum sed aliquam non, tempus sit amet elit. Aenean non tristique felis. Aliquam efficitur euismod arcu, eget finibus turpis aliquam at. In hac habitasse platea dictumst. Integer semper hendrerit diam, quis dictum erat scelerisque eget. Morbi malesuada sapien at urna dictum, ut varius ligula porta. Proin sodales, ', 3, 100000.00, NULL, 8000.00, '2024-11-16', '2024-11-18', 'active', '2024-11-16 22:01:56', '2024-11-17 05:54:54', 'campaign_1731794516_67391654705d4.jpg', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -675,7 +662,10 @@ CREATE TABLE `creators` (
 --
 
 INSERT INTO `creators` (`id`, `fullname`, `email`, `role`, `department`, `university`, `university_id`, `password`, `balance`, `faculty`, `created_at`, `phone`, `faculty_id`, `department_id`) VALUES
-(1, 'Prof. Jacob Mathews', 'jacob@funaab.com', 'admin', '', '', 5, '$2y$10$EHjel0uXryhaV5NNigb2aOhJNa/2Ck7v.omS86KiP7BBmRsRtgFT.', 0.00, NULL, '2024-11-17 21:13:42', '09022994499', 1, 4);
+(1, 'Dr. John Smith', 'john.smith@uni.edu', 'lecturer', 'Computer Science', 'UNI', 5, NULL, 0.00, NULL, '2024-01-01 09:00:00', NULL, NULL, NULL),
+(2, 'Prof. Sarah Johnson', 'sarah.j@uni.edu', 'admin', 'Computer Science', 'FUNAAB', 0, NULL, 0.00, NULL, '2024-01-01 09:00:00', NULL, NULL, NULL),
+(3, 'Mr. James Wilson', 'james.w@uni.edu', 'headofclass', 'Computer Science', 'UNI', 0, NULL, 0.00, NULL, '2024-01-01 09:00:00', NULL, NULL, NULL),
+(5, 'Adegbola AbdulBaqee', 'baqee20072007@gmail.com', 'admin', '', '', 5, '$2y$10$s7lfEp275JSu4emtEsVuPeOnIXZEn9TaHCUVciAJJ48Qm125ZHx86', 0.00, NULL, '2024-11-17 12:52:41', '09019659410', 12, 6);
 
 -- --------------------------------------------------------
 
@@ -697,8 +687,10 @@ CREATE TABLE `donations` (
 --
 
 INSERT INTO `donations` (`id`, `campaign_id`, `donor_name`, `amount`, `email`, `created_at`) VALUES
-(1, 1, 'Adegbola Abdulbaqee', 2000.00, 'baqee20072007@gmail.com', '2024-11-17 21:39:22'),
-(2, 2, 'Adegbola Abdulbaqee', 2000.00, 'baqee20072007@gmail.com', '2024-11-17 22:01:07');
+(1, 2, 'Adegbola Abdulbaqee', 2000.00, 'baqee20072007@gmail.com', '2024-11-15 09:46:58'),
+(2, 1, 'Anonymous Anonymous', 100.00, 'baqee20072007@gmail.com', '2024-11-16 21:48:21'),
+(3, 4, 'Anonymous Anonymous', 5000.00, 'baqee20072007@gmail.com', '2024-11-16 22:09:04'),
+(4, 4, 'Adegbola Abdulbaqee', 3000.00, 'baqee20072007@gmail.com', '2024-11-17 05:54:54');
 
 -- --------------------------------------------------------
 
@@ -720,6 +712,16 @@ CREATE TABLE `payments` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `payments`
+--
+
+INSERT INTO `payments` (`id`, `uid`, `reference_id`, `gateway_reference`, `bill_id`, `student_id`, `total_amount`, `amount_paid`, `status`, `last_payment_date`, `created_at`, `updated_at`) VALUES
+(1, 3, 'FUNAAB-1AE-904-09D-5', 'P-C-20241115-IUARWKY34B', 5, 3, 16500.00, 16500.00, 'Paid', '2024-11-15 09:50:42', '2024-11-15 09:50:42', '2024-11-15 09:50:42'),
+(2, 3, 'FUNAAB-EE2-F5E-315-B', 'P-C-20241115-W5EF6MPDVC', 1, 3, 15000.00, 15000.00, 'Paid', '2024-11-15 10:59:15', '2024-11-15 10:59:15', '2024-11-15 10:59:15'),
+(3, 3, 'FUNAAB-3A3-AD7-F25-D', 'P-C-20241115-QB93YXSHIL', 4, 3, 20000.00, 20000.00, 'Paid', '2024-11-15 18:12:40', '2024-11-15 18:12:40', '2024-11-15 18:12:40'),
+(4, 3, 'FUNAAB-9B4-1C0-CB1-7', 'P-C-20241117-YD2AZNCJMU', 3, 3, 18000.00, 18000.00, 'Paid', '2024-11-17 07:12:56', '2024-11-17 07:12:56', '2024-11-17 07:12:56');
 
 -- --------------------------------------------------------
 
@@ -747,9 +749,43 @@ CREATE TABLE `transactions` (
 --
 
 INSERT INTO `transactions` (`id`, `uid`, `reference_id`, `gateway_reference`, `name`, `amount`, `transaction_type`, `details`, `type`, `type_id`, `status`, `timestamp`) VALUES
-(1, 1, 'CAMPAIGN-720-F3F-339-3', 'P-C-20241117-MBXDW23G7K', 'Received fund from campaign - Help me buy a new CHM 101 textbook', 2000.00, 'credit', NULL, 'received-donation', 1, 'success', '2024-11-17 21:39:22'),
-(2, 2, 'CAMPAIGN-720-F3F-339-3', 'P-C-20241117-MBXDW23G7K', 'Donated funds via gateway to campaign - Help me buy a new CHM 101 textbook', 2000.00, 'donate', NULL, 'donate', 1, 'success', '2024-11-17 21:39:22'),
-(3, 2, 'CAMPAIGN-CBC-1BB-208-E', 'P-C-20241117-6OXVEMFI9H', 'Received fund from campaign - Fuel My Future: Adekunle John\'s 100L Laptop Fund', 2000.00, 'credit', NULL, 'received-donation', 2, 'success', '2024-11-17 22:01:07');
+(1, 3, NULL, NULL, 'Donation to Scholarship Fund', 150.00, 'debit', 'Contribution to university scholarship fund', 'donate', 102, 'success', '2024-11-11 17:49:54'),
+(2, 3, NULL, NULL, 'Payment for Library Bill', 30.00, 'debit', 'Payment for overdue library fees', 'bill-payment', 202, 'success', '2024-11-11 17:49:54'),
+(3, 3, NULL, NULL, 'Received Donation from Alumni Fund', 200.00, 'credit', 'Scholarship fund donation received from alumni association', 'received-donation', 102, 'success', '2024-11-11 17:49:54'),
+(4, 3, NULL, NULL, 'Failed Donation Attempt', 50.00, 'debit', 'Attempt to donate to environmental club campaign', 'donate', 103, 'failed', '2024-11-11 17:49:54'),
+(5, 3, NULL, NULL, 'Partially Funded University Bill', 300.00, 'debit', 'Partial payment toward university fee bill', 'bill-funded', 203, 'pending', '2024-11-11 17:49:54'),
+(6, 3, '5', NULL, 'Reversal of Failed Donation', 50.00, 'credit', 'Refund for previously failed donation attempt', 'donate', 103, 'reversed', '2024-11-11 17:49:54'),
+(7, 3, '1', NULL, 'Paid - ', 16500.00, 'debit', NULL, 'bill-payment', 0, 'success', '2024-11-13 21:35:18'),
+(8, 3, '1', NULL, 'Paid - ', 16500.00, 'debit', NULL, 'bill-payment', 0, 'success', '2024-11-13 21:36:30'),
+(9, 3, '1', NULL, 'Paid - ', 16500.00, 'debit', NULL, 'bill-payment', 0, 'success', '2024-11-13 21:38:56'),
+(10, 3, '1', NULL, 'Paid - ', 16500.00, 'debit', NULL, 'bill-payment', 0, 'success', '2024-11-13 21:39:31'),
+(11, 3, '0', NULL, 'Paid - Computer Networks Manual', 16500.00, 'debit', NULL, 'bill-payment', 5, 'success', '2024-11-13 21:41:14'),
+(12, 3, 'FUNAAB-78A-D77-5D7-8', NULL, 'Paid - Software Engineering Project Guide', 20000.00, 'debit', NULL, 'bill-payment', 4, 'success', '2024-11-13 21:50:31'),
+(13, 3, 'FUNAAB-5D6-3E0-422-2', NULL, 'Paid - Database Systems Guide', 18000.00, 'debit', NULL, 'bill-payment', 3, 'success', '2024-11-13 22:01:07'),
+(14, 4, 'FUNAAB-D5B-ED4-C39-A', NULL, 'Paid - Data Structures Manual', 12000.00, 'debit', NULL, 'bill-payment', 2, 'success', '2024-11-14 22:48:47'),
+(15, 3, 'FUNAAB-0CD-08D-BC1-8', NULL, 'Paid - Software Engineering Project Guide', 20000.00, 'debit', NULL, 'bill-payment', 4, 'success', '2024-11-14 22:57:39'),
+(16, 3, 'FUNAAB-0CD-08D-BC1-8', 'P-C-20241114-FMWH1JCTB4', 'Paid - Software Engineering Project Guide', 20000.00, 'debit', NULL, 'bill-payment', 4, 'success', '2024-11-14 22:59:54'),
+(17, 3, 'FUNAAB-9C6-E8F-BC9-2', 'P-C-20241115-NFRG7A9DTQ', 'Paid - Programming Fundamentals Handbook', 15000.00, 'debit', NULL, 'bill-payment', 1, 'success', '2024-11-15 00:32:35'),
+(18, 3, 'CAMPAIGN-A35-B54-E21-3', 'P-C-20241115-MLPSCGVU1Z', 'Received fund from campaign - ', 100.00, 'debit', NULL, 'received-donation', 2, 'success', '2024-11-15 00:49:55'),
+(19, 3, 'CAMPAIGN-A35-B54-E21-3', 'P-C-20241115-MLPSCGVU1Z', 'Donated funds via gateway to campaign - ', 100.00, 'donate', NULL, 'donate', 2, 'success', '2024-11-15 00:49:55'),
+(20, 3, 'CAMPAIGN-439-988-FEC-7', 'P-C-20241115-N2A69UZSMG', 'Received fund from campaign - ', 10000.00, 'credit', NULL, 'received-donation', 2, 'success', '2024-11-15 01:15:59'),
+(21, 4, 'CAMPAIGN-439-988-FEC-7', 'P-C-20241115-N2A69UZSMG', 'Donated funds via gateway to campaign - ', 10000.00, 'donate', NULL, 'donate', 2, 'success', '2024-11-15 01:15:59'),
+(22, 4, 'FUNAAB-23D-416-3CA-B', 'P-C-20241115-RB5UDSJG3L', 'Paid - Data Structures Manual', 12000.00, 'debit', NULL, 'bill-payment', 2, 'success', '2024-11-15 01:19:54'),
+(23, 3, 'CAMPAIGN-BDC-471-A76-E', 'P-C-20241115-7SGDQVC534', 'Received fund from campaign - Help me go to Rema\'s concert', 5000.00, 'credit', NULL, 'received-donation', 2, 'success', '2024-11-15 01:37:00'),
+(24, 4, 'CAMPAIGN-BDC-471-A76-E', 'P-C-20241115-7SGDQVC534', 'Donated funds via gateway to campaign - Help me go to Rema\'s concert', 5000.00, 'donate', NULL, 'donate', 2, 'success', '2024-11-15 01:37:00'),
+(25, 4, 'CAMPAIGN-206-35C-FBF-B', 'P-C-20241115-6O1YFUVTBM', 'Received fund from campaign - Help me buy Garri', 80000.00, 'credit', NULL, 'received-donation', 3, 'success', '2024-11-15 01:53:25'),
+(26, 3, 'CAMPAIGN-206-35C-FBF-B', 'P-C-20241115-6O1YFUVTBM', 'Donated funds via gateway to campaign - Help me buy Garri', 80000.00, 'donate', NULL, 'donate', 3, 'success', '2024-11-15 01:53:25'),
+(27, 3, 'CAMPAIGN-FAC-2EA-EBD-6', 'P-C-20241115-UVHLAZP07G', 'Received fund from campaign - Help me go to Rema\'s concert', 2000.00, 'credit', NULL, 'received-donation', 2, 'success', '2024-11-15 09:46:58'),
+(28, 3, 'CAMPAIGN-FAC-2EA-EBD-6', 'P-C-20241115-UVHLAZP07G', 'Donated funds via gateway to campaign - Help me go to Rema\'s concert', 2000.00, 'donate', NULL, 'donate', 2, 'success', '2024-11-15 09:46:58'),
+(29, 3, 'FUNAAB-1AE-904-09D-5', 'P-C-20241115-IUARWKY34B', 'Paid - Computer Networks Manual', 16500.00, 'debit', NULL, 'bill-payment', 5, 'success', '2024-11-15 09:50:42'),
+(30, 3, 'FUNAAB-EE2-F5E-315-B', 'P-C-20241115-W5EF6MPDVC', 'Paid - Programming Fundamentals Handbook', 15000.00, 'debit', NULL, 'bill-payment', 1, 'success', '2024-11-15 10:59:15'),
+(31, 3, 'FUNAAB-3A3-AD7-F25-D', 'P-C-20241115-QB93YXSHIL', 'Paid - Software Engineering Project Guide', 20000.00, 'debit', NULL, 'bill-payment', 4, 'success', '2024-11-15 18:12:40'),
+(32, 3, 'CAMPAIGN-7CB-3D5-3C7-3', 'P-C-20241116-SZA4EDOG9B', 'Received fund from campaign - Lorel Ipsum', 100.00, 'credit', NULL, 'received-donation', 1, 'success', '2024-11-16 21:48:21'),
+(33, 3, 'CAMPAIGN-7CB-3D5-3C7-3', 'P-C-20241116-SZA4EDOG9B', 'Donated funds via gateway to campaign - Lorel Ipsum', 100.00, 'donate', NULL, 'donate', 1, 'success', '2024-11-16 21:48:21'),
+(34, 3, 'CAMPAIGN-20A-3D7-733-5', 'P-C-20241116-264YNF8UQ0', 'Received fund from campaign - fbbds', 5000.00, 'credit', NULL, 'received-donation', 4, 'success', '2024-11-16 22:09:04'),
+(35, 3, 'CAMPAIGN-20A-3D7-733-5', 'P-C-20241116-264YNF8UQ0', 'Donated funds via gateway to campaign - fbbds', 5000.00, 'donate', NULL, 'donate', 4, 'success', '2024-11-16 22:09:04'),
+(36, 3, 'CAMPAIGN-41E-664-6F5-4', 'P-C-20241117-4JBD86HRCV', 'Received fund from campaign - fbbds', 3000.00, 'credit', NULL, 'received-donation', 4, 'success', '2024-11-17 05:54:54'),
+(37, 3, 'FUNAAB-9B4-1C0-CB1-7', 'P-C-20241117-YD2AZNCJMU', 'Paid - Database Systems Guide', 18000.00, 'debit', NULL, 'bill-payment', 3, 'success', '2024-11-17 07:12:56');
 
 -- --------------------------------------------------------
 
@@ -774,8 +810,96 @@ CREATE TABLE `universities` (
 --
 
 INSERT INTO `universities` (`id`, `abbreviation`, `name`, `type`, `country`, `email`, `password`, `secret_code`, `logo`) VALUES
-(5, 'FUNAAB', 'Federal University of Agriculture, Abeokuta', 'Federal', 'Nigeria', 'funaab@funaab.com', 'test', 'test', 'default.png'),
-(31, 'UNILAG', 'University of Lagos', 'Federal', 'Nigeria', 'unilag@unilag.com', 'test', 'test', 'default.png');
+(1, 'ATBU', 'Abubakar Tafawa Balewa University, Bauchi', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(2, 'ABU', 'Ahmadu Bello University, Zaria', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(3, 'AE-FUNAI', 'Alex Ekwueme Federal University Ndufu Alike Ikwo', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(4, 'BUK', 'Bayero University, Kano', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(5, 'FUNAAB', 'Federal University of Agriculture, Abeokuta', 'Federal', 'Nigeria', 'funaab@gmail.com', 'test', 'test', 'default.png'),
+(6, 'FUBK', 'Federal University Birnin Kebbi', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(7, 'FUD', 'Federal University Dutse', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(8, 'FUDMA', 'Federal University Dutsin Ma', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(9, 'FUG', 'Federal University Gashua', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(10, 'FUGUS', 'Federal University Gusau', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(11, 'FUHSO', 'Federal University of Health Sciences, Otukpo', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(12, 'FUHSA', 'Federal University of Health Sciences, Azare', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(13, 'FUK', 'Federal University Kashere', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(14, 'FUL', 'Federal University Lafia', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(15, 'FULOKOJA', 'Federal University Lokoja', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(16, 'FUMA', 'Federal University of Agriculture, Makurdi', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(17, 'FUPRE', 'Federal University of Petroleum Resources, Effurun', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(18, 'FUTA', 'Federal University of Technology, Akure', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(19, 'FUTMINNA', 'Federal University of Technology, Minna', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(20, 'FUTY', 'Federal University of Technology, Yola', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(21, 'FUO', 'Federal University Otuoke', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(22, 'FUWUKARI', 'Federal University Wukari', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(23, 'IBBUL', 'Ibrahim Badamasi Babangida University, Lapai', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(24, 'JABU', 'Joseph Ayo Babalola University, Ikeji-Arakeji', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(25, 'KWASU', 'Kwara State University, Malete', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(26, 'MOUA', 'Michael Okpara University of Agriculture, Umudike', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(27, 'NAUB', 'Nigerian Army University Biu', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(28, 'NSUK', 'Nasarawa State University, Keffi', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(29, 'OAU', 'Obafemi Awolowo University, Ile-Ife', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(30, 'UNIJOS', 'University of Jos', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(31, 'UNILAG', 'University of Lagos', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(32, 'UNILORIN', 'University of Ilorin', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(33, 'UNIMAID', 'University of Maiduguri', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(34, 'UNIPORT', 'University of Port Harcourt', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(35, 'UNN', 'University of Nigeria, Nsukka', 'Federal', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(36, 'ABSU', 'Abia State University, Uturu', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(37, 'ADSU', 'Adamawa State University, Mubi', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(38, 'AAUA', 'Adekunle Ajasin University, Akungba-Akoko', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(39, 'AKSU', 'Akwa Ibom State University, Uyo', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(40, 'ADUSTECH', 'Aliko Dangote University of Science and Technology, Wudil', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(41, 'AAU', 'Ambrose Alli University, Ekpoma', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(42, 'ANSU', 'Anambra State University, Uli', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(43, 'BAUCHISTAT', 'Bauchi State University, Gadau', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(44, 'BSU', 'Benue State University, Makurdi', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(45, 'YUMSUK', 'Yusuf Maitama Sule University, Kano', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(46, 'COOU', 'Chukwuemeka Odumegwu Ojukwu University, Uli', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(47, 'CRUTECH', 'Cross River University of Technology, Calabar', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(48, 'DSU', 'Delta State University, Abraka', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(49, 'EBSU', 'Ebonyi State University, Abakaliki', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(50, 'EUI', 'Edo University, Iyamho', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(51, 'ESUT', 'Enugu State University of Science and Technology, Enugu', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(52, 'GOMSU', 'Gombe State University, Gombe', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(53, 'GSU', 'Gombe State University of Science and Technology', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(54, 'IAUE', 'Ignatius Ajuru University of Education, Port Harcourt', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(55, 'IKUN', 'Ibrahim Gbadamosi Babangida University, Lapai', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(56, 'IMSU', 'Imo State University, Owerri', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(57, 'KASU', 'Kaduna State University, Kaduna', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(58, 'KSUSTA', 'Kebbi State University of Science and Technology, Aliero', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(59, 'KSUST', 'Kogi State University, Anyigba', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(60, 'LAUTECH', 'Ladoke Akintola University of Technology, Ogbomoso', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(61, 'LASU', 'Lagos State University, Ojo', 'State', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(62, 'AFIT', 'Nigeria Airforce University, Kaduna', 'Uniformed', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(63, 'NMU', 'Nigeria Maritime University, Warri', 'Uniformed', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(64, 'POLAC', 'Nigeria Police Academy Wudil, Kano', 'Uniformed', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(65, 'NUAB', 'Nigerian Army University Biu, Borno', 'Uniformed', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(66, 'NDA', 'Nigerian Defence Academy, Kaduna', 'Uniformed', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(67, 'AC', 'Achievers University, Owo', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(68, 'AUE', 'Adeleke University, Ede', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(69, 'ABUAD', 'Afe Babalola University, Ado-Ekiti', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(70, 'AUST', 'African University of Science and Technology, Abuja', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(71, 'APU', 'Ahman Pategi University, Pategi', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(72, 'ACU', 'Ajayi Crowther University, Oyo', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(73, 'ALHIKMAH', 'Al-Hikmah University, Ilorin', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(74, 'AUN', 'American University of Nigeria, Yola', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(75, 'AB', 'Augustine University, Ilara', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(76, 'BabcockU', 'Babcock University, Ilishan Remo', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(77, 'BU', 'Baze University, Abuja', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(78, 'BCU', 'Bells University of Technology, Ota', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(79, 'BNU', 'Benson Idahosa University, Benin City', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(80, 'BUI', 'Bingham University, Karu', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(81, 'BUK', 'Bowen University, Iwo', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(82, 'CU', 'Covenant University, Ota', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(83, 'CBU', 'Chrisland University, Abeokuta', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(84, 'GOU', 'Godfrey Okoye University, Enugu', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(85, 'GU', 'Gregory University, Uturu', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(86, 'HEGT', 'Hallmark University, Ijebu-Itele', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(87, 'KCU', 'Kwararafa University, Wukari', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(88, 'LSU', 'Landmark University, Omu-Aran', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(89, 'LU', 'Lead City University, Ibadan', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png'),
+(90, 'MCU', 'McPherson University, Seriki Sotayo', 'Private', 'Nigeria', NULL, NULL, NULL, 'default.png');
 
 -- --------------------------------------------------------
 
@@ -797,10 +921,10 @@ CREATE TABLE `university_departments` (
 --
 
 INSERT INTO `university_departments` (`id`, `university_id`, `university`, `faculty_id`, `name`, `timestamp`) VALUES
-(1, 5, NULL, 1, 'Mathematics', '2024-11-17 21:12:10'),
-(2, 5, NULL, 1, 'Computer Science', '2024-11-17 21:12:20'),
-(3, 5, NULL, 1, 'Physics', '2024-11-17 21:12:36'),
-(4, 5, NULL, 1, 'Chemistry', '2024-11-17 21:12:46');
+(2, 5, NULL, 10, 'lol', '2024-11-16 08:33:45'),
+(4, 5, NULL, 8, 'Computer Science', '2024-11-16 12:02:55'),
+(5, 5, NULL, 12, 'Science', '2024-11-17 10:49:52'),
+(6, 5, NULL, 12, 'Agriculture', '2024-11-17 10:50:09');
 
 -- --------------------------------------------------------
 
@@ -821,7 +945,13 @@ CREATE TABLE `university_faculties` (
 --
 
 INSERT INTO `university_faculties` (`id`, `university_id`, `university`, `name`, `created_at`) VALUES
-(1, 5, 'Federal University of Agriculture, Abeokuta', 'College of Physical Sciences', '2024-11-17 21:12:03');
+(5, 5, 'Federal University of Agriculture, Abeokuta', 'COLAMRUD', '2024-11-16 07:24:30'),
+(6, 5, 'Federal University of Agriculture, Abeokuta', 'COLPHEC', '2024-11-16 07:24:35'),
+(7, 5, 'Federal University of Agriculture, Abeokuta', 'COLPHYS', '2024-11-16 07:24:39'),
+(8, 5, 'Federal University of Agriculture, Abeokuta', 'College of Physics', '2024-11-16 07:38:13'),
+(9, 5, 'Federal University of Agriculture, Abeokuta', 'f3', '2024-11-16 07:41:33'),
+(10, 5, 'Federal University of Agriculture, Abeokuta', 'College of Physicss', '2024-11-16 08:33:32'),
+(12, 5, 'FUNAAB', 'College of Jokes', '2024-11-17 10:46:28');
 
 -- --------------------------------------------------------
 
@@ -858,8 +988,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fullname`, `email`, `balance`, `username`, `phone`, `dob`, `country`, `state`, `university`, `faculty`, `department`, `matric_no`, `password`, `level`, `bank_id`, `bank_account_name`, `account_number`, `created_at`, `last_login`, `gender`) VALUES
-(1, 'Adekunle John', 'johnadekunle@gmail.com', 2000.00, 'john', '08000000000', '2007-07-08', 'Nigeria', 'Ogun', 'FUNAAB', 'College of Physical Sciences', 'Mathematics', '20243001', '$2y$10$NNgx4I5JnaAU1hgRayhc4uuXHntca1J3ERnDMx6xAHOY/0Q1MRvmi', '100', NULL, NULL, NULL, '2024-11-17 22:09:07', '2024-11-17 23:01:55', 'male'),
-(2, 'Adegbola AbdulBaqee', 'baqee20072007@gmail.com', 2000.00, 'baqx', '09019659410', '2007-07-08', 'Nigeria', 'Ogun', 'FUNAAB', 'Engineering', 'Mathematics', '20243905', '$2y$10$QbV8h5ZXPTx6HLUQJjaTzOlx6n8Wpw3xWuXzwvJ/NrSfBmM9TN2MC', '100', NULL, NULL, NULL, '2024-11-17 22:36:24', '2024-11-17 22:36:39', 'male');
+(3, 'Adegbola AbdulBaqee', 'baqee20072007@gmail.com', 45300.00, 'baqx', '09019659410', '2007-07-08', 'Nigeria', 'Ogun', 'FUNAAB', 'Engineering', 'Mathematics', 'baqx', '$2y$10$ZezJMEaMs5VWm7iIZ5VlbOV3YENFQY7w7p7AxTqIan1OCUEIP/1nq', '100', NULL, NULL, NULL, '2024-11-10 07:28:45', '2024-11-17 13:30:38', 'male'),
+(4, 'Code Corsair ', 'baqeecodes@gmail.com', 80000.00, 'iambaqx', '09019659420', '2007-11-10', 'Nigeria', 'Ogun', 'BabcockU', 'Engineering', 'Computer Science', '20243900', '$2y$10$9dGg1v6.UVAwtH2Ixm1ajOCCQlgf9Mzi4WsRWVCeaAtZBuH5lyB1G', '100', NULL, NULL, NULL, '2024-11-10 13:25:38', '2024-11-17 08:39:05', 'male'),
+(5, 'Adeknle Gold', 'bgoldbaqee@yahoo.com', 0.00, 'baqxes', '09119659410', '2007-07-08', 'Nigeria', 'Ogun', 'FUNAAB', 'Engineering', 'Computer Science', '20143905', '$2y$10$5lcYZVBH5yrggt7H70HB5e3b689YL30FZhN97Ts39NihiT799RSQ6', '100', NULL, NULL, NULL, '2024-11-11 06:04:05', '2024-11-11 08:58:53', 'male');
 
 -- --------------------------------------------------------
 
@@ -884,15 +1015,15 @@ CREATE TABLE `user_payouts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Indexes for dumped tables
+-- Dumping data for table `user_payouts`
 --
 
+INSERT INTO `user_payouts` (`id`, `uid`, `amount`, `payout_method`, `bank_account_name`, `bank_account_number`, `bank_name`, `merchant_reference`, `gateway_reference`, `status`, `remarks`, `requested_at`, `processed_at`) VALUES
+(1, 3, 2000.00, 'bank_transfer', 'Adegbola Abdulbaqee', '9019659410', 'ACCESS BANK', 'WD_1731668703_3', NULL, 'Pending', NULL, '2024-11-15 11:05:03', NULL);
+
 --
--- Indexes for table `admin_transactions`
+-- Indexes for dumped tables
 --
-ALTER TABLE `admin_transactions`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `uid` (`uid`);
 
 --
 -- Indexes for table `bills`
@@ -977,52 +1108,46 @@ ALTER TABLE `user_payouts`
 --
 
 --
--- AUTO_INCREMENT for table `admin_transactions`
---
-ALTER TABLE `admin_transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
-
---
 -- AUTO_INCREMENT for table `bills`
 --
 ALTER TABLE `bills`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `bill_invoice`
 --
 ALTER TABLE `bill_invoice`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `campaigns`
 --
 ALTER TABLE `campaigns`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `creators`
 --
 ALTER TABLE `creators`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `donations`
 --
 ALTER TABLE `donations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `universities`
@@ -1034,35 +1159,29 @@ ALTER TABLE `universities`
 -- AUTO_INCREMENT for table `university_departments`
 --
 ALTER TABLE `university_departments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `university_faculties`
 --
 ALTER TABLE `university_faculties`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user_payouts`
 --
 ALTER TABLE `user_payouts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `admin_transactions`
---
-ALTER TABLE `admin_transactions`
-  ADD CONSTRAINT `admin_transactions_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `creators` (`id`);
 
 --
 -- Constraints for table `bill_invoice`

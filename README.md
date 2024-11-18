@@ -64,7 +64,8 @@ their faculties to the institution list.
    - **Payaza API** for payment gateway.
    - **PhpSpreadsheet** for Excel processing.  
    - **FPDF** for PDF generation.  
-   - **PHPMailer** for email notifications.  
+   - **PHPMailer** for email notifications.
+   - **LLama** for campaign spam detection  
 
 5. **Assets Directory:**  
    - CSS files: `assets/css/`  
