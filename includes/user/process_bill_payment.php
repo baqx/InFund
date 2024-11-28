@@ -4,12 +4,15 @@ session_start();
 require_once '../../config/config.php';
 include './functions.php';
 require_once '../../config/secrets.php';
-
+include './bill_emails.php';
+include '../../vendor/autoload.php';
 if (!isset($_SESSION['user_id']) && !isset($_SESSION['username']) && !isset($_SESSION['email'])) {
     // Redirect to login page if user is not logged in
     header("Location: ../../dashboard/login");
     exit();
 }
+//Get user details
+$my_details = getUserDetails($_SESSION["user_id"]);
 
 // Get bill Merchant Reference ID from URL
 $reference_id = isset($_GET['ref']) ? $_GET['ref'] : 0;
@@ -39,6 +42,7 @@ $bill = mysqli_fetch_assoc($fetchbills);
 if ($bill) {
     $price = $bill['price'];
     $billName = $bill['name'];
+    $creator_id = $bill['creator_id'];
 } else {
     echo "Bill details not found.";
     exit();
@@ -99,8 +103,29 @@ if ($transactionStatus === "Completed") {
     // Insert into transactions
     $sql3 = mysqli_query($conn, "INSERT INTO transactions (uid, reference_id, type_id, name, amount, transaction_type, type, status, gateway_reference) 
                                   VALUES ($user_id, '$reference_id', '$bill_id', 'Paid - $billName', '$amountReceived', 'debit', 'bill-payment', 'success','$gatewaytransactionReference')");
+    //Add amount to the creator's account
+    $sql4 = mysqli_query($conn, "UPDATE creators SET balance=balance+$amountReceived WHERE id=$creator_id");
+    // Insert into creator's transactions
+    $sql3 = mysqli_query($conn, "INSERT INTO admin_transactions (uid, reference_id, type_id, name, amount, transaction_type, type, status, gateway_reference) 
+                                  VALUES ($creator_id, '$reference_id', '$bill_id', '" . $my_details['fullname'] . "(" . $my_details["matric_no"] . ") Paid - $billName', '$amountReceived', 'credit', 'bill-payment', 'success','$gatewaytransactionReference')");
 
     if ($sql1 && $sql2 && $sql3) {
+        //send receipt to the user's email
+        //constructing parameters
+        $billDetails = [
+            'id' => $bill_id,
+            'name' => $billName,
+            'price' => $price,
+        ];
+
+        $paymentDetails = [
+            'amount_paid' => $amountReceived,
+            'payment_status' => $pay_status,
+            'reference_id' => $reference_id,
+            'last_payment_date' => date('F j, Y')
+        ];
+        sendReceiptEmail($my_details["email"], $my_details['fullname'], $billDetails, $paymentDetails);
+
         header("Location: ../../dashboard/invoice.php?id=$invoice_id");
         exit();
     } else {

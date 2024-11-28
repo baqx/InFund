@@ -126,26 +126,7 @@ function checkSpamLevel($description, $impact, $importance) {
     $promptContent = "PROMPT: " . $description . "\n" . $impact . "\n" . $importance;
     
     $criteria = "A campaign is a means for crowdfunding for ONLY university educational purposes. 
-
-    Evaluate using these key indicators:
-
-    Likely_Genuine Indicators:
-    - Clear, detailed description of educational purpose(classify as likely_spam if vague, unclear or missing)
-    - Said purpose must actually be educational in nature
-    - Specific breakdown of how funds will be used for said educational purpose(classify as likely_spam if vague, unclear or missing)
-
-    Likely_Spam Indicators:
-    - Has no clear educational purpose
-    - Vague or generic educational purpose
-    - Overly emotional or manipulative language
-    - Lack of specific fund allocation details(this is of extreme importance)
-    - Threatening message or tone
-
-    Likely_Unsure Indicators:
-    - Partially incomplete information
-    - Some details present but lacking full clarity
-    - Moderate inconsistencies in the description
-    - Requires additional verification
+    Evaluate using these key indicators...
 
     If your classification is 'likely_genuine' then let your only response strictly be likely_genuine.
     If your classification is 'likely_spam' then let your only response strictly be likely_spam.
@@ -226,17 +207,39 @@ function checkSpamLevel($description, $impact, $importance) {
     return round($percentSpam, 2);
 }
 
+// Function to generate a unique code
+function generateUniqueCode() {
+    global $conn;
+    do {
+        // Generate an 8-character alphanumeric random code
+        $uniqueCode = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 8);
+
+        // Check if the code already exists in the database
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM campaigns WHERE link = ?");
+        $stmt->bind_param("s", $uniqueCode);
+        $stmt->execute();
+        $stmt->bind_result($count);
+        $stmt->fetch();
+        $stmt->close();
+    } while ($count > 0); // Repeat if the code exists
+    // Return the unique code
+    return $uniqueCode;
+}
+
 // Check spam level
 $spam_level = checkSpamLevel($_POST['description'], $_POST['impact'], $_POST['importance']);
 
-// Prepare and execute SQL with spam_level
+// Generate a unique link code
+$linkCode = generateUniqueCode();
+
+// Prepare and execute SQL with spam_level and link
 $sql = "INSERT INTO campaigns (title, description, impact, importance, uid, goal_amount, 
-        start_date, end_date, image1, image2, image3, image4, spam_level) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        start_date, end_date, image1, image2, image3, image4, spam_level, link) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param(
-    "ssssidssssssd",
+    "ssssidssssssds",
     $_POST['title'],
     $_POST['description'],
     $_POST['impact'],
@@ -249,22 +252,13 @@ $stmt->bind_param(
     $image2,
     $image3,
     $image4,
-    $spam_level
+    $spam_level,
+    $linkCode
 );
 
 if ($stmt->execute()) {
-    $campaign_id = $conn->insert_id;
-    echo json_encode([
-        'success' => true,
-        'message' => 'Campaign created successfully!',
-        'campaign_id' => $campaign_id
-    ]);
-} else {
-    echo json_encode([
-        'success' => false,
-        'message' => 'Error creating campaign: ' . $conn->error
-    ]);
+    $stmt->close();
+    die(json_encode(['success' => true, 'message' => 'Campaign created successfully']));
 }
 
-$stmt->close();
-$conn->close();
+die(json_encode(['success' => false, 'message' => $stmt->error]));

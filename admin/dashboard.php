@@ -46,20 +46,27 @@ $stmt->execute();
 $result = $stmt->get_result();
 $recent_campaigns = $result->fetch_all(MYSQLI_ASSOC);
 
-function getProgressPercentage($raised, $goal) {
+function getProgressPercentage($raised, $goal)
+{
     return min(($raised / $goal) * 100, 100);
 }
 
-function formatAmount($amount) {
+function formatAmount($amount)
+{
     return '₦' . number_format($amount, 2);
 }
 ?>
-
+<style>
+    a {
+        text-decoration: none !important;
+    }
+</style>
 <main class="main-content">
+    <!--
     <div class="server-details">
         <h3><i class="fas fa-university"></i> <?php echo htmlspecialchars($admin_details['university']); ?> - <?php echo htmlspecialchars($admin_details['department']); ?> dept.</h3>
     </div>
-    
+     -->
     <div class="cards-grid">
         <div class="card">
             <h2><?php echo formatAmount($admin_details['balance']); ?></h2>
@@ -85,23 +92,24 @@ function formatAmount($amount) {
                 <h2>Recent Bills</h2>
                 <a href="./create-bill.php" class="view-all">Create Bill</a>
             </div>
-            <?php if (empty($recent_bills)): ?>
+            <?php if (empty($recent_bills)) : ?>
                 <p>No bills created yet</p>
-            <?php else: ?>
-                <?php foreach ($recent_bills as $bill): ?>
-                    <div class="campaign-card">
-                        <div class="campaign-header">
-                            <div>
-                                <h3 class="campaign-title"><?php echo htmlspecialchars($bill['name']); ?></h3>
-                                <p class="campaign-meta">Student: <?php echo htmlspecialchars($bill['student_name']); ?></p>
-                                <p class="campaign-meta">Matric No: <?php echo htmlspecialchars($bill['matric_no']); ?></p>
+            <?php else : ?>
+                <?php foreach ($recent_bills as $bill) : ?>
+                    <a href="./bill-details?id=<?php echo $bill['id']; ?>">
+                        <div class="campaign-card">
+                            <div class="campaign-header">
+                                <div>
+                                    <h3 class="campaign-title"><?php echo htmlspecialchars($bill['name']); ?></h3>
+
+                                </div>
+                                <span class="badge badge-info"><?php echo formatAmount($bill['price']); ?></span>
                             </div>
-                            <span class="badge badge-info"><?php echo formatAmount($bill['price']); ?></span>
+                            <div class="campaign-meta">
+                                <span>Created: <?php echo date('M j, Y', strtotime($bill['created_at'])); ?></span>
+                            </div>
                         </div>
-                        <div class="campaign-meta">
-                            <span>Created: <?php echo date('M j, Y', strtotime($bill['created_at'])); ?></span>
-                        </div>
-                    </div>
+                    </a>
                 <?php endforeach; ?>
             <?php endif; ?>
         </section>
@@ -111,10 +119,10 @@ function formatAmount($amount) {
                 <h2>Student Campaigns</h2>
                 <a href="./campaigns.php" class="view-all">View All</a>
             </div>
-            <?php if (empty($recent_campaigns)): ?>
+            <?php if (empty($recent_campaigns)) : ?>
                 <p>No active campaigns</p>
-            <?php else: ?>
-                <?php foreach ($recent_campaigns as $campaign): ?>
+            <?php else : ?>
+                <?php foreach ($recent_campaigns as $campaign) : ?>
                     <div class="campaign-card">
                         <div class="campaign-header">
                             <div>
@@ -133,7 +141,7 @@ function formatAmount($amount) {
                             <span>Goal: <?php echo formatAmount($campaign['goal_amount']); ?></span>
                         </div>
                         <div class="campaign-meta">
-                            <span>Spam Level: <?php echo number_format($campaign['spam_level'], 2); ?>%</span>
+                            <b><span>Spam Level: <?php echo number_format($campaign['spam_level'], 2); ?>%</span></b>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -142,8 +150,8 @@ function formatAmount($amount) {
     </div>
 </main>
 
-<?php 
+<?php
 $stmt->close();
 $conn->close();
-include '../includes/admin/footer.php'; 
+include '../includes/admin/footer.php';
 ?>

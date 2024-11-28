@@ -69,9 +69,9 @@ while ($row = $result->fetch_assoc()) {
     // Determine the link URL based on transaction type
     $link_url = '';
     if ($row['type'] === 'bill-payment') {
-        $link_url = "bill.php?id=" . $row['type_id'];
+        $link_url = "bill-details.php?id=" . $row['type_id'];
     } elseif ($row['type'] === 'donate' || $row['type'] === 'received-donation') {
-        $link_url = "campaign.php?id=" . $row['type_id'];
+        $link_url = "campaign-details.php?id=" . $row['type_id'];
     }
 
     // Icon class based on transaction type

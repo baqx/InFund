@@ -52,8 +52,8 @@ $university_abbreviation = $uni_details['abbreviation'];
     <div class="container">
         <nav class="sidenav">
             <div class="logo">
-                <img src="../assets/images/static/logo.png" alt="Logo">
-                <span>INFund University Dashboard</span>
+            <a href="../">    <img src="../assets/images/static/logo.png" alt="Logo"></a> 
+            <span>INFund University Dashboard</span>
             </div>
             <ul class="nav-links">
                 <li class="nav-item">

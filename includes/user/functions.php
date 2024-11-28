@@ -59,7 +59,7 @@ function displayCampaignSection($campaigns)
 
             $output .= sprintf(
                 '
-                <div class="campaign-card" onclick="window.location.href=\'campaign?id=%d\'">
+                <div class="campaign-card" onclick="window.location.href=\'campaign-dash?id=%d\'">
                     <div class="campaign-header">
                         <div>
                             <div class="campaign-title">%s</div>

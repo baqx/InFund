@@ -79,9 +79,9 @@ class PDFReceipt extends FPDF
 
         $billFields = [
             'Bill Name' => $bill['name'],
-            'Total Amount' => '₦' . number_format($bill['price'], 2),
-            'Amount Paid' => '₦' . number_format($bill['amount_paid'], 2),
-            'Balance' => '₦' . number_format($bill['price'] - $bill['amount_paid'], 2),
+            'Total Amount' => 'N' . number_format($bill['price'], 2),
+            'Amount Paid' => 'N' . number_format($bill['amount_paid'], 2),
+            'Balance' => 'N' . number_format($bill['price'] - $bill['amount_paid'], 2),
             'Payment Status' => $bill['payment_status'],
             'Reference ID' => $bill['reference_id'] ?? 'N/A',
             'Payment Date' => $bill['last_payment_date'] ? date('F j, Y', strtotime($bill['last_payment_date'])) : 'N/A'

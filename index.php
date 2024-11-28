@@ -116,13 +116,14 @@ $featured_campaigns = getHomepageCampaigns();
             <div class="hero-image wow fadeInRight">
                 <div class="image-wrapper">
                     <img src="./assets/images/static/hero.png" alt="Crowdfunding Illustration">
+
                     <div class="floating-card card-1">
-                        <i class="fas fa-hand-holding-heart"></i>
-                        <span>Create Crowdfunding Campaigns</span>
-                    </div>
-                    <div class="floating-card card-2">
                         <i class="fas fa-money-bill"></i>
                         <span>Pay School Bills</span>
+                    </div>
+                    <div class="floating-card card-2">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        <span>Create Crowdfunding Campaigns</span>
                     </div>
                 </div>
             </div>
@@ -226,24 +227,23 @@ $featured_campaigns = getHomepageCampaigns();
         <h2>Platform Features</h2>
         <div class="feature-grid">
             <!-- Feature Card 1 -->
-            <div class="feature-card wow animate__animated animate__fadeInUp">
-                <i class="fas fa-pencil-alt"></i>
-                <h3>Create Campaigns</h3>
-                <p>Effortlessly create and manage your fundraising campaigns.</p>
+            <div class="feature-card wow animate__animated animate__fadeInUp" data-wow-delay="0.6s">
+                <i class="fas fa-money-check-alt"></i>
+                <h3>Streamlined Bill Payments</h3>
+                <p>Facilitating universities in collecting bill payments from students efficiently and securely.</p>
             </div>
-
             <!-- Feature Card 2 -->
-            <div class="feature-card wow animate__animated animate__fadeInUp" data-wow-delay="0.2s">
-                <i class="fas fa-naira-sign"></i>
-                <h3>Pay for Campaigns</h3>
-                <p>Make secure payments for your campaigns easily.</p>
-            </div>
-
-            <!-- Feature Card 3 -->
             <div class="feature-card wow animate__animated animate__fadeInUp" data-wow-delay="0.4s">
                 <i class="fas fa-list"></i>
                 <h3>Collect Info from Students</h3>
-                <p>Gather information from students who fund in a spreadsheet.</p>
+                <p>Gather information from students who pay for bills in a spreadsheet.</p>
+            </div>
+
+            <!-- Feature Card 3 -->
+            <div class="feature-card wow animate__animated animate__fadeInUp" data-wow-delay="0.2s">
+                <i class="fas fa-naira-sign"></i>
+                <h3> Create and fund Campaigns</h3>
+                <p>Make secure payments for your campaigns easily.</p>
             </div>
 
             <!-- Feature Card 4 -->
@@ -323,7 +323,7 @@ $featured_campaigns = getHomepageCampaigns();
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Infund</h3>
-                <p>Empowering university projects through community funding</p>
+                <p>Bill payments and crowdfunding made easier!</p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-facebook"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>
@@ -345,6 +345,7 @@ $featured_campaigns = getHomepageCampaigns();
                     <li><a href="#">Cookie Policy</a></li>
                 </ul>
             </div>
+            <!--
             <div class="footer-section">
                 <h4>Newsletter</h4>
                 <form class="newsletter-form">
@@ -352,12 +353,30 @@ $featured_campaigns = getHomepageCampaigns();
                     <button type="submit" class="btn-primary">Subscribe</button>
                 </form>
             </div>
+            -->
         </div>
         <div class="footer-bottom">
-            <p>&copy; <?php echo date('Y'); ?> Infund. All rights reserved.</p>
+            <p>&copy; <?php echo date('Y'); ?> INfund. All rights reserved.</p>
         </div>
     </footer>
-
+    <script>
+        (function(d, t) {
+            var BASE_URL = "http://chatwoot-rails-api-service:80";
+            var CDN_URL = "https://chat-widget.hiverhq.com/chat-widget";
+            var g = d.createElement(t),
+                s = d.getElementsByTagName(t)[0];
+            g.src = CDN_URL + "/js/sdk.js";
+            g.defer = true;
+            g.async = true;
+            s.parentNode.insertBefore(g, s);
+            g.onload = function() {
+                window.chatwootSDK.run({
+                    websiteToken: 'smVBqz96sDq1oBhe8WASXw3B',
+                    baseUrl: BASE_URL
+                })
+            }
+        })(document, "script");
+    </script>
     <script src="./assets/js/wow.min.js"></script>
     <script>
         new WOW().init();

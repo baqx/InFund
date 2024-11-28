@@ -401,7 +401,7 @@ body {
   }
   
   .main-content {
-    padding: 5rem 1rem 1rem;
+    padding: 5rem 0.3rem 1rem;
   }
   
   .card h2 {
@@ -424,7 +424,7 @@ body {
   }
 
   .card,
-  .feed-section,
+  .feed-section,  
   .campaign-card {
     break-inside: avoid;
   }

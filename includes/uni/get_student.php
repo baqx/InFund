@@ -2,14 +2,19 @@
 // api/get_student.php
 session_start();
 require_once '../../config/config.php';
+include './functions.php';
+header('Content-Type: application/json');
 
-if (!isset($_SESSION['university_id']) || !isset($_GET['id'])) {
+
+
+if (!isset($_SESSION['university_id'])) {
     http_response_code(401);
-    echo json_encode(['error' => 'Unauthorized or invalid request']);
+    echo json_encode(['error' => 'Unauthorized']);
     exit();
 }
 
-$university = $_SESSION['university_abbreviation'];
+$universitydets = getUniversityDetails($_SESSION['university_id']);
+$university = $universitydets["abbreviation"];
 $id = $_GET['id'];
 
 $query = "SELECT * FROM users WHERE id = ? AND university = ?";

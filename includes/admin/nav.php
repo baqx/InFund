@@ -44,14 +44,14 @@ $admin_details = getAdminDetails($_SESSION["admin_id"]);
     <?php if (isset($css5)) : ?>
         <link rel="stylesheet" href="../assets/css/admin/<?= $css5 ?>.css">
     <?php endif; ?>
-    <script src="../assets/js/admin/nav.js" defer></script>
+    <script src="../assets/js/user/nav.js" defer></script>
 </head>
 
 <body>
     <div class="container">
         <nav class="sidenav">
             <div class="logo">
-                <img src="../assets/images/static/logo.png" alt="Logo">
+            <a href="../">    <img src="../assets/images/static/logo.png" alt="Logo"></a> 
                 <span>INFund Administrator Dashboard</span>
             </div>
             <ul class="nav-links">

@@ -68,6 +68,7 @@ if (isset($_SESSION["user_id"])) {
 $uniquecode = generateUniqueCode();
 $reference_id = "CAMPAIGN-$uniquecode";
 ?>
+
 <?php if (!isset($_SESSION['user_id'])) { ?>
 
     <head>
@@ -78,6 +79,11 @@ $reference_id = "CAMPAIGN-$uniquecode";
         <link rel="stylesheet" href="../assets/css/colors.css">
         <link rel="stylesheet" href="../assets/css/user/campaign.css">
         <link rel="stylesheet" href="../assets/css/landing/nav_only.css">
+
+        <!-- Toastr CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+
     </head>
     <!-- Navigation -->
     <nav>
@@ -113,7 +119,7 @@ $reference_id = "CAMPAIGN-$uniquecode";
             </div>
             <div class="meta-item">
                 <i class="fas fa-university"></i>
-                <span><?php echo htmlspecialchars($campaign['department']); ?></span>
+                <span><?php echo htmlspecialchars($campaign['department']); ?> dept.</span>
             </div>
             <div class="meta-item">
                 <i class="fas fa-calendar"></i>
@@ -136,6 +142,14 @@ $reference_id = "CAMPAIGN-$uniquecode";
         </div>
 
         <div class="share-buttons">
+            <div class="short-link">
+                <div class="link-text">
+                    <i class="fas fa-link"></i>
+                    <span><?php $shortLink = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . "/p/" . htmlspecialchars($campaign['link']);
+                            echo $shortLink; ?></span>
+                </div>
+                <i class="fas fa-copy copy-icon" onclick="copyShortLink()" title="Copy link"></i>
+            </div>
             <button class="share-button">
                 <i class="fas fa-share"></i>
                 Share
@@ -148,7 +162,13 @@ $reference_id = "CAMPAIGN-$uniquecode";
                 <i class="fab fa-twitter"></i>
                 Twitter
             </button>
+            <button class="spam-button" onclick="checkForSpam()">
+                <i class="fa fa-exclamation-triangle"></i>
+                Check for Spam
+            </button>
         </div>
+
+        <div class="copied-tooltip" id="copiedTooltip">Link copied to clipboard!</div>
     </div>
 
     <div class="campaign-content">
@@ -256,10 +276,63 @@ function timeAgo($timestamp)
     return 'just now';
 }
 ?>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
 <?php if (!isset($_SESSION['user_id'])) { ?>
     <script src="../assets/js/landing/nav.js"></script>
 <?php } ?>
 <script>
+    function checkForSpam() {
+        // Generate a random spam percentage
+        var spamPercentage = "<?php echo $campaign['spam_level']; ?>";
+
+        // Show SweetAlert with the spam percentage
+        swal({
+                title: "Spam Check Result",
+                text: "Spam Percentage: " + spamPercentage + "%",
+                icon: spamPercentage < 50 ? "warning" : "info",
+                buttons: true,
+                dangerMode: spamPercentage > 50,
+            })
+            .then((willProceed) => {
+                if (willProceed) {
+                    // Action if the user decides to proceed (optional)
+                    console.log("User  decided to proceed.");
+                } else {
+                    // Action if the user cancels (optional)
+                    console.log("User  canceled the action.");
+                }
+            });
+    }
+
+    function copyShortLink() {
+
+        const shortLink = '<?php $shortLink = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . "/p/" . htmlspecialchars($campaign['link']);
+                            echo $shortLink; ?>';
+        navigator.clipboard.writeText(shortLink).then(() => {
+            const tooltip = document.getElementById('copiedTooltip');
+            tooltip.classList.add('show');
+            setTimeout(() => {
+                tooltip.classList.remove('show');
+            }, 2000);
+        }).catch(err => {
+            // Fallback for browsers that don't support clipboard API
+            const textArea = document.createElement('textarea');
+            textArea.value = shortLink;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+
+            const tooltip = document.getElementById('copiedTooltip');
+            tooltip.classList.add('show');
+            setTimeout(() => {
+                tooltip.classList.remove('show');
+            }, 2000);
+        });
+    }
+
     // Format name into first and last name
     function formatName(fullName) {
         const names = fullName.trim().split(' ');
@@ -337,7 +410,7 @@ function timeAgo($timestamp)
     shareButtons.forEach((button) => {
         button.addEventListener("click", async () => {
             const campaignTitle = document.querySelector(".campaign-title").textContent;
-            const campaignUrl = window.location.href;
+            const campaignUrl = "../p/<?php echo $campaign['link']; ?>";
             const shareText = `Support ${campaignTitle} on INFund: ${campaignUrl}`;
 
             if (button.querySelector(".fa-whatsapp")) {

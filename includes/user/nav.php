@@ -27,6 +27,8 @@ $myid = $_SESSION['user_id'];
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/user/nav.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+
     <!-- Adding dynamic css to the pages, the CSS file can be passed from the current page -->
     <?php if (isset($css1)) : ?>
         <link rel="stylesheet" href="../assets/css/user/<?= $css1 ?>.css">
@@ -44,14 +46,35 @@ $myid = $_SESSION['user_id'];
         <link rel="stylesheet" href="../assets/css/user/<?= $css5 ?>.css">
     <?php endif; ?>
     <script src="../assets/js/user/nav.js" defer></script>
+    <script defer>
+        (function(d, t) {
+            var BASE_URL = "http://chatwoot-rails-api-service:80";
+            var CDN_URL = "https://chat-widget.hiverhq.com/chat-widget";
+            var g = d.createElement(t),
+                s = d.getElementsByTagName(t)[0];
+            g.src = CDN_URL + "/js/sdk.js";
+            g.defer = true;
+            g.async = true;
+            s.parentNode.insertBefore(g, s);
+            g.onload = function() {
+                window.chatwootSDK.run({
+                    websiteToken: 'smVBqz96sDq1oBhe8WASXw3B',
+                    baseUrl: BASE_URL
+                })
+            }
+        })(document, "script");
+    </script>
 </head>
 
 <body>
     <div class="container">
         <nav class="sidenav">
             <div class="logo">
-                <img src="../assets/images/static/logo.png" alt="Logo">
-                <span>INFund</span>
+                <a href="../">
+                    <a href="../"> <img src="../assets/images/static/logo.png" alt="Logo"></a>
+                    <span>INFund University Dashboard</span>
+
+                </a>
             </div>
             <ul class="nav-links">
                 <li class="nav-item">

@@ -1,13 +1,8 @@
-
-
-
-
-
 <?php
 // api/get_faculties.php
 session_start();
 require_once '../../config/config.php';
-
+header('Content-Type: application/json');
 if (!isset($_SESSION['university_id'])) {
     http_response_code(401);
     echo json_encode(['error' => 'Unauthorized']);

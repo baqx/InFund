@@ -161,21 +161,75 @@
 
 .share-buttons {
   display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
-.share-button {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: var(--border-radius);
-  background: #eee;
-  color: var(--text-color);
-  cursor: pointer;
-  transition: var(--transition);
+.share-button,
+.spam-button {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  background: white;
+  color: #495057;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.share-button:hover {
+  background: #f8f9fa;
+}
+
+.short-link {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+.short-link .link-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.copy-icon {
+  cursor: pointer;
+  color: #6c757d;
+  transition: color 0.2s;
+}
+
+.copy-icon:hover {
+  color: var(--primary-color);
+}
+
+.copied-tooltip {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 1000;
+}
+
+.copied-tooltip.show {
+  opacity: 1;
 }
 
 .share-button:hover {

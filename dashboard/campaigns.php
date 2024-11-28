@@ -51,9 +51,11 @@ $campaigns = getCampaignsByUserId($_SESSION['user_id']);
                             </span>
                         </div>
                         <div class="campaign-actions">
-                            <a href="campaign.php?id=<?php echo $campaign['id']; ?>"  class="action-button"><i class="fas fa-edit"></i></a>
-                            <button class="action-button"><i class="fas fa-chart-bar"></i></button>
-                            <button class="action-button"><i class="fas fa-share"></i></button>
+                            <a href="campaign.php?id=<?php echo $campaign['id']; ?>" class="action-button"><i class="fas fa-eye"></i></a>
+                            <a href="campaign-dash.php?id=<?php echo $campaign['id']; ?>" class="action-button"><i class="fas fa-chart-bar"></i></a>
+                            <button class="action-button" onclick="copyLink('<?php echo (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . '/p/' . $campaign['id']; ?>')">
+                                <i class="fas fa-link"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="campaign-details">
@@ -94,11 +96,22 @@ $campaigns = getCampaignsByUserId($_SESSION['user_id']);
         </div>
     <?php endif; ?>
 </main>
-
 <?php
 $js1 = "campaigns";
 include '../includes/user/footer.php';
 ?>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script>
+    function copyLink(link) {
+        navigator.clipboard.writeText(link).then(function() {
+            swal("Success!", "Link copied to clipboard: " + link, "success");
+        }, function(err) {
+            console.error('Could not copy text: ', err);
+            swal("Error!", "Could not copy text: " + err, "error");
+        });
+    }
+</script>
+
 <?php
 function getBadgeClass($status)
 {

@@ -1,9 +1,13 @@
 RewriteEngine On
 
+# Custom rule for /p/alphanumeric to point to payment_shortcut.php
+RewriteRule ^p/([a-zA-Z0-9]+)$ payment_shortcut.php?link=$1 [NC,L]
+
 # Rule to hide .php extensions
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC,L]
 
+# Redirect from .php to clean URL
 RewriteCond %{THE_REQUEST} \s/([^.]+)\.php[\s?] [NC]
 RewriteRule ^ /%1 [R=301,L]
 
