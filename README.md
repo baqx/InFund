@@ -72,12 +72,6 @@ their faculties to the institution list.
    - JavaScript files: `assets/js/`  
    - Images: `assets/images/`  
 
----
-
-## Demo and Live Site  
-
-- **Video Demo:** [View Demo](https://youtu.be/lnqa2pvBSVY?si=0pysg6_-xXFkQITd)  
-- **Live Site:** [Visit InFund](https://infund.rf.gd)  
 
 ---
 
