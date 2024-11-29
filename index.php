@@ -66,7 +66,7 @@ $featured_campaigns = getHomepageCampaigns();
             </button>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#campaigns">Campaigns</a></li>
+                <li><a href="./dashboard/discover">Campaigns</a></li>
                 <li><a href="#features">Features</a></li>
                 <li><a href="./uni/login">Universities</a></li>
                 <li><a href="./admin/login">Administrators</a></li>

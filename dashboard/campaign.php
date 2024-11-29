@@ -80,6 +80,7 @@ if (isset($_SESSION['success'])) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?php echo htmlspecialchars($campaign['title']); ?> - INfund</title>
+        <link rel="icon" href="../assets/icons/favicon.ico">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <link rel="stylesheet" href="../assets/css/colors.css">
         <link rel="stylesheet" href="../assets/css/user/campaign.css">
@@ -109,9 +110,11 @@ if (isset($_SESSION['success'])) {
                 </svg>
             </button>
             <ul class="nav-links">
-                <li><a href="../#home">Home</a></li>
-                <li><a href="../#campaigns">Campaigns</a></li>
+                <li><a href="../">Home</a></li>
+                <li><a href="../campaigns">Campaigns</a></li>
                 <li><a href="../#features">Features</a></li>
+                <li><a href="../uni/login">Universities</a></li>
+                <li><a href="../admin/login">Administrators</a></li>
                 <li><a href="../login"><button class="btn-primary">Login</button></a></li>
             </ul>
         </div>
@@ -406,7 +409,7 @@ function timeAgo($timestamp)
             phone_number: '', // Optional, can be left empty
             transaction_reference: '<?php echo $reference_id; ?>',
             additional_details: additionalDetails,
-            redirect_url: `<?php echo $APP_URL;?>/includes/user/process_donation.php?ref=<?php echo $reference_id; ?>&name=${encodeURIComponent(names.firstName + ' ' + names.lastName)}&email=${encodeURIComponent(email)}&id=${encodeURIComponent(campaignId)}`
+            redirect_url: `<?php echo $APP_URL; ?>/includes/user/process_donation.php?ref=<?php echo $reference_id; ?>&name=${encodeURIComponent(names.firstName + ' ' + names.lastName)}&email=${encodeURIComponent(email)}&id=${encodeURIComponent(campaignId)}`
         });
 
         // Redirect to payment page
@@ -426,7 +429,7 @@ function timeAgo($timestamp)
     shareButtons.forEach((button) => {
         button.addEventListener("click", async () => {
             const campaignTitle = document.querySelector(".campaign-title").textContent;
-            const campaignUrl = "../p/<?php echo $campaign['link']; ?>";
+            const campaignUrl = "<?php echo $APP_URL; ?>/p/<?php echo $campaign['link']; ?>";
             const shareText = `Support ${campaignTitle} on INFund: ${campaignUrl}`;
 
             if (button.querySelector(".fa-whatsapp")) {
