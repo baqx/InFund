@@ -38,10 +38,14 @@ $recent_bills = $result->fetch_all(MYSQLI_ASSOC);
 $stmt = $conn->prepare("SELECT c.*, u.fullname as student_name 
                        FROM campaigns c 
                        JOIN users u ON u.id = c.uid 
-                       WHERE u.university = ? 
-                       AND u.department = ? 
+                       JOIN universities un ON u.university = un.abbreviation 
+                       JOIN university_departments d ON u.department = d.name 
+                       WHERE un.id = ? 
+                       AND d.id = ? 
                        ORDER BY c.created_at DESC LIMIT 5");
-$stmt->bind_param("ss", $admin_details['university'], $admin_details['department']);
+
+// Bind parameters for university_id and department_id
+$stmt->bind_param("ii", $admin_details['university_id'], $admin_details['department_id']);
 $stmt->execute();
 $result = $stmt->get_result();
 $recent_campaigns = $result->fetch_all(MYSQLI_ASSOC);

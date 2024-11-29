@@ -24,7 +24,7 @@ include '../includes/admin/nav.php';
             <select id="university" name="university" class="form-input" required>
                 <option value="">Select University</option>
                 <?php
-                $query = "SELECT id, abbreviation, name FROM universities ORDER BY name";
+                $query = "SELECT id, abbreviation, name FROM universities WHERE id='$university_id'";
                 $result = mysqli_query($conn, $query);
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo "<option value='{$row['id']}'>{$row['abbreviation']} - {$row['name']}</option>";

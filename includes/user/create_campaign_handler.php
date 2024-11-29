@@ -120,6 +120,56 @@ function switchApiKey(&$currentKeyIndex) {
     $OPENROUTER_API_KEY = ($currentKeyIndex == 0) ? $OPENROUTER_API_KEY_1 : $OPENROUTER_API_KEY_2;
 }
 
+// New function for campaign classification
+function generateCampaignTags($description, $impact, $importance) {
+    global $url, $OPENROUTER_API_KEY, $keyIndex;
+
+    $promptContent = $description . "\n" . $impact . "\n" . $importance;
+    
+    $criteria = "Generate exactly 10 descriptive tags that succinctly categorize this campaign. 
+    The tags should cover key themes, target areas, and the core purpose of the campaign. 
+    Separate the tags by comma. Do not use more than 3 words per tag. 
+    Aim for specificity and relevance.";
+
+    $headers = [
+        "Authorization: Bearer " . $OPENROUTER_API_KEY,
+        "Content-Type: application/json"
+    ];
+
+    $data = [
+        "model" => "nousresearch/hermes-3-llama-3.1-405b:free",
+        "messages" => [
+            [
+                "role" => "user",
+                "content" => $promptContent . "\n\n" . $criteria
+            ]
+        ]
+    ];
+    
+    // Retry mechanism with multiple API keys
+    for ($retries = 0; $retries < 4; $retries++) {
+        $responseData = makePostRequest($url, $data, $headers);
+        
+        if (isset($responseData['choices'][0]['message']['content'])) {
+            $tags = $responseData['choices'][0]['message']['content'];
+            
+            // Trim and validate tags
+            $tags = trim($tags);
+            
+            // Check if tags are valid (contain comma, not empty)
+            if (!empty($tags) && strpos($tags, ',') !== false) {
+                return $tags;
+            }
+        }
+        
+        // Switch API key if request fails
+        switchApiKey($keyIndex);
+    }
+    
+    // Fallback tags if generation fails
+    return "Education,Fundraising,Community Support,Personal Development,Innovation,Research,Social Impact,Education Technology,Student Empowerment,Knowledge Sharing";
+}
+
 function checkSpamLevel($description, $impact, $importance) {
     global $url, $OPENROUTER_API_KEY, $keyIndex;
 
@@ -229,17 +279,20 @@ function generateUniqueCode() {
 // Check spam level
 $spam_level = checkSpamLevel($_POST['description'], $_POST['impact'], $_POST['importance']);
 
+// Generate campaign tags
+$ai_classification = generateCampaignTags($_POST['description'], $_POST['impact'], $_POST['importance']);
+
 // Generate a unique link code
 $linkCode = generateUniqueCode();
 
-// Prepare and execute SQL with spam_level and link
+// Prepare and execute SQL with spam_level, ai_classification, and link
 $sql = "INSERT INTO campaigns (title, description, impact, importance, uid, goal_amount, 
-        start_date, end_date, image1, image2, image3, image4, spam_level, link) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        start_date, end_date, image1, image2, image3, image4, spam_level, ai_classification, link) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param(
-    "ssssidssssssds",
+    "ssssidssssssdss",
     $_POST['title'],
     $_POST['description'],
     $_POST['impact'],
@@ -253,6 +306,7 @@ $stmt->bind_param(
     $image3,
     $image4,
     $spam_level,
+    $ai_classification,
     $linkCode
 );
 

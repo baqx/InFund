@@ -24,10 +24,11 @@ function getAllDiscoverActiveCampaigns($user_id, $page = 1, $per_page = 12, $fil
     
     if (!empty($filters['search'])) {
         $search_term = "%" . $filters['search'] . "%";
-        $where_clauses[] = "(c.title LIKE ? OR c.description LIKE ?)";
+        $where_clauses[] = "(c.title LIKE ? OR c.description LIKE ? OR c.ai_classification LIKE ?)";
         $params[] = $search_term;
         $params[] = $search_term;
-        $types .= "ss";
+        $params[] = $search_term;
+        $types .= "sss";
     }
     
     $where_statement = implode(" AND ", $where_clauses);
@@ -73,10 +74,11 @@ function getTotalCampaignsCount($user_id, $filters = []) {
     
     if (!empty($filters['search'])) {
         $search_term = "%" . $filters['search'] . "%";
-        $where_clauses[] = "(c.title LIKE ? OR c.description LIKE ?)";
+        $where_clauses[] = "(c.title LIKE ? OR c.description LIKE ? OR c.ai_classification LIKE ?)";
         $params[] = $search_term;
         $params[] = $search_term;
-        $types .= "ss";
+        $params[] = $search_term;
+        $types .= "sss";
     }
     
     $where_statement = implode(" AND ", $where_clauses);

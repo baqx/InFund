@@ -46,14 +46,32 @@ $university_abbreviation = $uni_details['abbreviation'];
         <link rel="stylesheet" href="../assets/css/user/<?= $css5 ?>.css">
     <?php endif; ?>
     <script src="../assets/js/user/nav.js" defer></script>
+    <script defer>
+        (function(d, t) {
+            var BASE_URL = "http://chatwoot-rails-api-service:80";
+            var CDN_URL = "https://chat-widget.hiverhq.com/chat-widget";
+            var g = d.createElement(t),
+                s = d.getElementsByTagName(t)[0];
+            g.src = CDN_URL + "/js/sdk.js";
+            g.defer = true;
+            g.async = true;
+            s.parentNode.insertBefore(g, s);
+            g.onload = function() {
+                window.chatwootSDK.run({
+                    websiteToken: 'smVBqz96sDq1oBhe8WASXw3B',
+                    baseUrl: BASE_URL
+                })
+            }
+        })(document, "script");
+    </script>
 </head>
 
 <body>
     <div class="container">
         <nav class="sidenav">
             <div class="logo">
-            <a href="../">    <img src="../assets/images/static/logo.png" alt="Logo"></a> 
-            <span>INFund University Dashboard</span>
+                <a href="../"> <img src="../assets/images/static/logo.png" alt="Logo"></a>
+                <span>INFund University Dashboard</span>
             </div>
             <ul class="nav-links">
                 <li class="nav-item">

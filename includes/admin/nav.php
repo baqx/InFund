@@ -8,7 +8,7 @@ include '../config/secrets.php';
 include '../includes/admin/functions.php';
 $admin_id = $_SESSION['admin_id'];
 $admin_details = getAdminDetails($_SESSION["admin_id"]);
-
+$university_id = $admin_details["university_id"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,13 +45,31 @@ $admin_details = getAdminDetails($_SESSION["admin_id"]);
         <link rel="stylesheet" href="../assets/css/admin/<?= $css5 ?>.css">
     <?php endif; ?>
     <script src="../assets/js/user/nav.js" defer></script>
+    <script defer>
+        (function(d, t) {
+            var BASE_URL = "http://chatwoot-rails-api-service:80";
+            var CDN_URL = "https://chat-widget.hiverhq.com/chat-widget";
+            var g = d.createElement(t),
+                s = d.getElementsByTagName(t)[0];
+            g.src = CDN_URL + "/js/sdk.js";
+            g.defer = true;
+            g.async = true;
+            s.parentNode.insertBefore(g, s);
+            g.onload = function() {
+                window.chatwootSDK.run({
+                    websiteToken: 'smVBqz96sDq1oBhe8WASXw3B',
+                    baseUrl: BASE_URL
+                })
+            }
+        })(document, "script");
+    </script>
 </head>
 
 <body>
     <div class="container">
         <nav class="sidenav">
             <div class="logo">
-            <a href="../">    <img src="../assets/images/static/logo.png" alt="Logo"></a> 
+                <a href="../"> <img src="../assets/images/static/logo.png" alt="Logo"></a>
                 <span>INFund Administrator Dashboard</span>
             </div>
             <ul class="nav-links">
@@ -61,14 +79,14 @@ $admin_details = getAdminDetails($_SESSION["admin_id"]);
                         <span>Dashboard</span>
                     </a>
                 </li>
-                
+
                 <li class="nav-item">
                     <a href="./bills" class="nav-link <?= isset($page) && $page == 'Bills' ? 'active' : ''; ?>">
-                        <i class="fas fa-file-invoice-dollar"></i> 
+                        <i class="fas fa-file-invoice-dollar"></i>
                         <span>Bills</span>
                     </a>
                 </li>
-               <!-- <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="./campaigns" class="nav-link <?= isset($page) && $page == 'Campaigns' ? 'active' : ''; ?>">
                         <i class="fas fa-bullhorn"></i>
                         <span>Campaigns</span>
@@ -76,14 +94,14 @@ $admin_details = getAdminDetails($_SESSION["admin_id"]);
                 </li> -->
                 <li class="nav-item">
                     <a href="./transactions" class="nav-link <?= isset($page) && $page == 'Transactions' ? 'active' : ''; ?>">
-                        <i class="fas fa-exchange-alt"></i> 
+                        <i class="fas fa-exchange-alt"></i>
                         <span>Transactions</span>
                     </a>
-                </li> 
-               
-          
+                </li>
 
-              
+
+
+
                 <li class="nav-item">
                     <a href="./logout" class="nav-link ">
                         <i class="fas fa-sign-out-alt"></i>

@@ -48,7 +48,7 @@ $user_stats = getUserStats($_SESSION['user_id']);
             <p>Pending Bills</p>
         </div>
         <div class="card">
-            <h2>₦<?php echo number_format($campaign_stats['total_raised'], 2); ?></h2>
+            <h2>₦<?php echo number_format($user_stats['total_donations'], 2); ?></h2>
             <p>Total Raised</p>
         </div>
     </div>

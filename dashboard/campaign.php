@@ -67,6 +67,11 @@ if (isset($_SESSION["user_id"])) {
 
 $uniquecode = generateUniqueCode();
 $reference_id = "CAMPAIGN-$uniquecode";
+if (isset($_SESSION['success'])) {
+    $successMessage = $_SESSION['success'];
+    // Unset the session variable
+    unset($_SESSION['success']);
+}
 ?>
 
 <?php if (!isset($_SESSION['user_id'])) { ?>
@@ -82,6 +87,11 @@ $reference_id = "CAMPAIGN-$uniquecode";
 
         <!-- Toastr CSS -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script>
+            toastr.options.progressBar = true;
+        </script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 
     </head>
@@ -283,6 +293,12 @@ function timeAgo($timestamp)
     <script src="../assets/js/landing/nav.js"></script>
 <?php } ?>
 <script>
+    // Check if the PHP variable is set and display the Toastr alert
+    <?php if (isset($successMessage)) : ?>
+        toastr.success("<?php echo addslashes($successMessage); ?>");
+    <?php endif; ?>
+</script>
+<script>
     function checkForSpam() {
         // Generate a random spam percentage
         var spamPercentage = "<?php echo $campaign['spam_level']; ?>";
@@ -390,7 +406,7 @@ function timeAgo($timestamp)
             phone_number: '', // Optional, can be left empty
             transaction_reference: '<?php echo $reference_id; ?>',
             additional_details: additionalDetails,
-            redirect_url: `${window.location.origin}/infund/includes/user/process_donation.php?ref=<?php echo $reference_id; ?>&name=${encodeURIComponent(names.firstName + ' ' + names.lastName)}&email=${encodeURIComponent(email)}&id=${encodeURIComponent(campaignId)}`
+            redirect_url: `<?php echo $APP_URL;?>/includes/user/process_donation.php?ref=<?php echo $reference_id; ?>&name=${encodeURIComponent(names.firstName + ' ' + names.lastName)}&email=${encodeURIComponent(email)}&id=${encodeURIComponent(campaignId)}`
         });
 
         // Redirect to payment page

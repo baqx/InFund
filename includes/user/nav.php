@@ -72,7 +72,7 @@ $myid = $_SESSION['user_id'];
             <div class="logo">
                 <a href="../">
                     <a href="../"> <img src="../assets/images/static/logo.png" alt="Logo"></a>
-                    <span>INFund University Dashboard</span>
+                    <span>INFund</span>
 
                 </a>
             </div>
