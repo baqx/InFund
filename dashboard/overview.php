@@ -3,7 +3,7 @@ ini_set('display_errors', 1);          // Enable displaying errors
 ini_set('display_startup_errors', 1);  // Enable displaying startup errors
 error_reporting(E_ALL);
 session_start();
-$css1="chart";
+$css1 = "chart";
 $page_title = "Overview";
 $page = "Overview";
 $css2 = "discover-campaign-section";
@@ -36,30 +36,30 @@ $user_stats = getUserStats($_SESSION['user_id']);
     </div>
     <div class="cards-grid">
         <div class="card">
-            <h2>₦<?php echo  number_format($my_details['balance'],2); ?></h2>
-            <p>Balance </p>
+            <h2>₦<?php echo $my_details['balance'] !== null ? number_format($my_details['balance'], 2) : '0.00'; ?></h2>
+            <p>Balance</p>
         </div>
         <div class="card">
-            <h2><?php echo $user_stats['active_campaigns']; ?></h2>
+            <h2><?php echo $user_stats['active_campaigns'] !== null ? $user_stats['active_campaigns'] : '0'; ?></h2>
             <p>Active Campaigns</p>
         </div>
         <div class="card">
-            <h2><?php echo $user_stats['total_bills']; ?></h2>
+            <h2><?php echo $user_stats['total_bills'] !== null ? $user_stats['total_bills'] : '0'; ?></h2>
             <p>Pending Bills</p>
         </div>
         <div class="card">
-            <h2>₦<?php echo number_format($user_stats['total_donations'], 2); ?></h2>
+            <h2>₦<?php echo $user_stats['total_donations'] !== null ? number_format($user_stats['total_donations'], 2) : '0.00'; ?></h2>
             <p>Total Raised</p>
         </div>
     </div>
     <section class="chart-section">
-            <div class="chart-container">
-                <canvas id="fundraisingChart"></canvas>
-            </div>
-            <div class="chart-container">
-                <canvas id="billPaymentChart"></canvas>
-            </div>
-        </section>
+        <div class="chart-container">
+            <canvas id="fundraisingChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="billPaymentChart"></canvas>
+        </div>
+    </section>
     <section class="discover-campaigns">
         <div class="discover-header">
             <div>
@@ -102,90 +102,89 @@ $user_stats = getUserStats($_SESSION['user_id']);
 </main>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-   $(document).ready(function() {
-    $.ajax({
-        url: '../includes/user/fetch_charts_data.php',
-        method: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            // Fundraising Chart
-            const fundraisingCtx = document.getElementById('fundraisingChart').getContext('2d');
-            const fundraisingData = {
-                labels: data.fundraising.map(item => `Month ${item.month}`),
-                datasets: [{
-                    label: 'Total Fundraising Amount',
-                    data: data.fundraising.map(item => item.total_raised),
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            };
+    $(document).ready(function() {
+        $.ajax({
+            url: '../includes/user/fetch_charts_data.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                // Fundraising Chart
+                const fundraisingCtx = document.getElementById('fundraisingChart').getContext('2d');
+                const fundraisingData = {
+                    labels: data.fundraising.map(item => `Month ${item.month}`),
+                    datasets: [{
+                        label: 'Total Fundraising Amount',
+                        data: data.fundraising.map(item => item.total_raised),
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                };
 
-            new Chart(fundraisingCtx, {
-                type: 'bar',
-                data: fundraisingData,
-                options: {
-                    responsive: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Fundraising Performance'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
+                new Chart(fundraisingCtx, {
+                    type: 'bar',
+                    data: fundraisingData,
+                    options: {
+                        responsive: true,
+                        plugins: {
                             title: {
                                 display: true,
-                                text: 'Amount Raised'
+                                text: 'Fundraising Performance'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Amount Raised'
+                                }
                             }
                         }
                     }
-                }
-            });
+                });
 
-            // Bill Payment Chart
-            const billCtx = document.getElementById('billPaymentChart').getContext('2d');
-            const billData = {
-                labels: data.billPayments.map(item => `Month ${item.month}`),
-                datasets: [{
-                    label: 'Total Bill Payments',
-                    data: data.billPayments.map(item => item.total_paid),
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1
-                }]
-            };
+                // Bill Payment Chart
+                const billCtx = document.getElementById('billPaymentChart').getContext('2d');
+                const billData = {
+                    labels: data.billPayments.map(item => `Month ${item.month}`),
+                    datasets: [{
+                        label: 'Total Bill Payments',
+                        data: data.billPayments.map(item => item.total_paid),
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                };
 
-            new Chart(billCtx, {
-                type: 'line',
-                data: billData,
-                options: {
-                    responsive: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Bill Payments'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
+                new Chart(billCtx, {
+                    type: 'line',
+                    data: billData,
+                    options: {
+                        responsive: true,
+                        plugins: {
                             title: {
                                 display: true,
-                                text: 'Total Paid'
+                                text: 'Bill Payments'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Total Paid'
+                                }
                             }
                         }
                     }
-                }
-            });
-        },
-        error: function(error) {
-            console.error('Error fetching data:', error);
-        }
+                });
+            },
+            error: function(error) {
+                console.error('Error fetching data:', error);
+            }
+        });
     });
-});
-
 </script>
 
 <?php

@@ -72,6 +72,11 @@ if (isset($_SESSION['success'])) {
     // Unset the session variable
     unset($_SESSION['success']);
 }
+if (isset($_SESSION['error'])) {
+    $errorMessage = $_SESSION['error'];
+    // Unset the session variable
+    unset($_SESSION['error']);
+}
 ?>
 
 <?php if (!isset($_SESSION['user_id'])) { ?>
@@ -299,6 +304,12 @@ function timeAgo($timestamp)
     // Check if the PHP variable is set and display the Toastr alert
     <?php if (isset($successMessage)) : ?>
         toastr.success("<?php echo addslashes($successMessage); ?>");
+    <?php endif; ?>
+</script>
+<script>
+    // Check if the PHP variable is set and display the Toastr alert
+    <?php if (isset($errorMessage)) : ?>
+        toastr.error("<?php echo addslashes($errorMessage); ?>");
     <?php endif; ?>
 </script>
 <script>

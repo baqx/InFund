@@ -130,7 +130,7 @@ try {
         // Commit transaction
         $conn->commit();
 
-        $_SESSION['success'] = "Thank you for your donation! Redirecting to payment gateway...";
+        $_SESSION['success'] = "Thank you for your donation!";
         header("Location: ../../dashboard/campaign.php?id=" . $campaign_id);
         exit();
     } else {

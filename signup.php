@@ -198,6 +198,7 @@ unset($_SESSION['form_data']);
     <script>
         // signup.js
         $(document).ready(function() {
+
             // Load universities on page load
             $.getJSON('includes/get_unis', function(data) {
                 let options = '<option value="">Select University</option>';
@@ -248,7 +249,17 @@ unset($_SESSION['form_data']);
                     $('#department').html('<option value="">Select Department</option>');
                 }
             });
-
+            $('.toggle-password').click(function() {
+                const passwordInput = $(this).siblings('input');
+                const inputType = passwordInput.attr('type');
+                if (inputType === 'password') {
+                    passwordInput.attr('type', 'text');
+                    $(this).find('i').removeClass('far fa-eye').addClass('far fa-eye-slash'); // Change icon to eye-slash
+                } else {
+                    passwordInput.attr('type', 'password');
+                    $(this).find('i').removeClass('far fa-eye-slash').addClass('far fa-eye'); // Change icon back to eye
+                }
+            });
             // Form validation and submission
             $('#registrationForm').submit(function(e) {
                 e.preventDefault();
