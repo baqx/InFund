@@ -125,20 +125,16 @@ $chartData = [
             <h3>Donation Statistics</h3>
             <div class="stats-grid">
                 <div class="stat-item">
-                    <span class="stat-label">Total Donations</span>
-                    <span class="stat-value"><?php echo $donationStats['total_donations']; ?></span>
-                </div>
-                <div class="stat-item">
                     <span class="stat-label">Average Donation</span>
-                    <span class="stat-value">₦<?php echo number_format($donationStats['avg_donation'], 2); ?></span>
+                    <span class="stat-value">₦<?php echo $donationStats['avg_donation'] !== null ? number_format($donationStats['avg_donation'], 2) : '0.00'; ?></span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Largest Donation</span>
-                    <span class="stat-value">₦<?php echo number_format($donationStats['largest_donation'], 2); ?></span>
+                    <span class="stat-value">₦<?php echo $donationStats['largest_donation'] !== null ? number_format($donationStats['largest_donation'], 2) : '0.00'; ?></span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Smallest Donation</span>
-                    <span class="stat-value">₦<?php echo number_format($donationStats['smallest_donation'], 2); ?></span>
+                    <span class="stat-value">₦<?php echo $donationStats['smallest_donation'] !== null ? number_format($donationStats['smallest_donation'], 2) : '0.00'; ?></span>
                 </div>
             </div>
         </div>
@@ -147,79 +143,79 @@ $chartData = [
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const ctx = document.getElementById('donationsChart').getContext('2d');
-    const dates = <?php echo $chartData['dates']; ?>;
-    const amounts = <?php echo $chartData['amounts']; ?>;
-    const counts = <?php echo $chartData['counts']; ?>;
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('donationsChart').getContext('2d');
+        const dates = <?php echo $chartData['dates']; ?>;
+        const amounts = <?php echo $chartData['amounts']; ?>;
+        const counts = <?php echo $chartData['counts']; ?>;
 
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: dates,
-            datasets: [{
-                label: 'Daily Donations (₦)',
-                data: amounts,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1,
-                yAxisID: 'y'
-            }, {
-                label: 'Number of Donations',
-                data: counts,
-                borderColor: 'rgb(255, 99, 132)',
-                tension: 0.1,
-                yAxisID: 'y1'
-            }]
-        },
-        options: {
-            responsive: true,
-            interaction: {
-                mode: 'index',
-                intersect: false,
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'Daily Donations (₦)',
+                    data: amounts,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1,
+                    yAxisID: 'y'
+                }, {
+                    label: 'Number of Donations',
+                    data: counts,
+                    borderColor: 'rgb(255, 99, 132)',
+                    tension: 0.1,
+                    yAxisID: 'y1'
+                }]
             },
-            scales: {
-                y: {
-                    type: 'linear',
-                    display: true,
-                    position: 'left',
-                    title: {
-                        display: true,
-                        text: 'Amount (₦)'
-                    }
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
                 },
-                y1: {
-                    type: 'linear',
-                    display: true,
-                    position: 'right',
-                    title: {
+                scales: {
+                    y: {
+                        type: 'linear',
                         display: true,
-                        text: 'Number of Donations'
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: 'Amount (₦)'
+                        }
                     },
-                    grid: {
-                        drawOnChartArea: false
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: 'Number of Donations'
+                        },
+                        grid: {
+                            drawOnChartArea: false
+                        }
                     }
                 }
             }
-        }
-    });
+        });
 
-    window.shareCampaign = function() {
-        const url = '<?php $shortLink = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . "/p/" . htmlspecialchars($campaign['link']);
+        window.shareCampaign = function() {
+            const url = '<?php $shortLink = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . "/p/" . htmlspecialchars($campaign['link']);
                             echo $shortLink; ?>';
-        if (navigator.share) {
-            navigator.share({
-                title: <?php echo json_encode($campaign['title']); ?>,
-                text: 'Check out this campaign!',
-                url: url
-            });
-        } else {
-            // Fallback copy to clipboard
-            navigator.clipboard.writeText(url)
-                .then(() => alert('Campaign link copied to clipboard!'))
-                .catch(err => console.error('Failed to copy:', err));
-        }
-    };
-});
+            if (navigator.share) {
+                navigator.share({
+                    title: <?php echo json_encode($campaign['title']); ?>,
+                    text: 'Check out this campaign!',
+                    url: url
+                });
+            } else {
+                // Fallback copy to clipboard
+                navigator.clipboard.writeText(url)
+                    .then(() => alert('Campaign link copied to clipboard!'))
+                    .catch(err => console.error('Failed to copy:', err));
+            }
+        };
+    });
 </script>
 
 <?php
